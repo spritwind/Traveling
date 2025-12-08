@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "Bash(git add:*)",
-      "Bash(git commit -m \"$(cat <<''EOF''\nInitial commit: Kansai Travel App with Vite + React + Tailwind\n\n- 5-day itinerary for Osaka, Kyoto, and Uji\n- Interactive day selector with smooth animations\n- Google Maps integration for all locations\n- Share functionality for each spot\n- Mobile-optimized responsive design\n- Coupon links for drug stores\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n)\")"
+      "Bash(git commit -m \"$(cat <<''EOF''\nInitial commit: Kansai Travel App with Vite + React + Tailwind\n\n- 5-day itinerary for Osaka, Kyoto, and Uji\n- Interactive day selector with smooth animations\n- Google Maps integration for all locations\n- Share functionality for each spot\n- Mobile-optimized responsive design\n- Coupon links for drug stores\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git push:*)",
+      "Bash(npm install)",
+      "Bash(npm run dev)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []

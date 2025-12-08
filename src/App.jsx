@@ -36,7 +36,9 @@ const App = () => {
                         { type: "dessert", name: "PABLO", desc: "經典半熟起司塔，濃郁滑順的口感。", rating: 4.0, reviewCount: 1800, priceLevel: "$", mapQuery: "PABLO Shinsaibashi" },
                         { type: "food", name: "美津の (Mizuno)", desc: "米其林必比登推薦大阪燒，排隊名店。", rating: 4.5, reviewCount: 3240, priceLevel: "$$", mapQuery: "Mizuno Osaka Dotonbori" },
                         { type: "snack", name: "Rikuro 老爺爺起司蛋糕", desc: "剛出爐搖晃的蓬鬆起司蛋糕，必吃。", rating: 4.6, reviewCount: 8900, priceLevel: "$", mapQuery: "Rikuro Ojisan Namba" },
-                        { type: "shopping", name: "Parco 心齋橋", desc: "年輕潮流品牌、動漫周邊 (吉卜力、寶可夢)。", rating: 4.4, reviewCount: 1500, priceLevel: "$$$", mapQuery: "Shinsaibashi PARCO" }
+                        { type: "shopping", name: "Parco 心齋橋", desc: "年輕潮流品牌、動漫周邊 (吉卜力、寶可夢)。", rating: 4.4, reviewCount: 1500, priceLevel: "$$$", mapQuery: "Shinsaibashi PARCO" },
+                        { type: "food", name: "和牛燒肉 六宮 難波心齋橋筋店", desc: "高品質和牛燒肉，價格合理 (建議先預約)。", rating: 4.5, reviewCount: 800, priceLevel: "$$$", mapQuery: "wagyu yakiniku rokunomiya nanba Shinsaibashisuji", externalLink: "https://maps.app.goo.gl/KmFcW1RdZ2Qz5HHj6" },
+                        { type: "food", name: "燒肉屋 大牧場 道頓堀店", desc: "道頓堀人氣燒肉店，肉質新鮮 (建議先預約)。", rating: 4.4, reviewCount: 650, priceLevel: "$$$", mapQuery: "燒肉屋 大牧場 道頓堀店", externalLink: "https://maps.app.goo.gl/LadnJzYipRj87Jqz7" }
                     ]
                 },
                 {
@@ -182,7 +184,7 @@ const App = () => {
             <div className={`pt-12 pb-6 px-6 bg-gradient-to-br ${currentItinerary.color} rounded-b-[40px] shadow-sm transition-all duration-500`}>
                 <div className="flex justify-between items-center mb-4">
                     <span className="bg-white/60 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-600 tracking-widest border border-white/40">
-                        KANSAI TRIP 2025
+                        君の京阪之旅 2025
                     </span>
                     <div className="w-8 h-8 bg-white/60 rounded-full flex items-center justify-center backdrop-blur-sm">
                         <Calendar size={16} className="text-gray-600" />
