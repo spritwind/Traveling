@@ -1,4 +1,4 @@
-import { useState, createContext, useContext } from 'react';
+import { useState, useEffect, createContext, useContext } from 'react';
 import { MapPin, Coffee, Utensils, ShoppingBag, Star, Heart, Share2, Check, ExternalLink, Ticket, Navigation, Loader } from 'lucide-react';
 
 // --- Geolocation Context ---
@@ -93,6 +93,99 @@ const estimateWalkTime = (meters) => {
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;
     return `${hours}h ${mins}m`;
+};
+
+// --- 天氣圖示組件 (使用 Open-Meteo 免費 API) ---
+const WeatherIcon = ({ day, coords }) => {
+    const [weather, setWeather] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    // 每天的地標 emoji
+    const landmarks = {
+        1: "🏯", // 大阪城
+        2: "⛩️", // 京都鳥居
+        3: "🍵", // 宇治抹茶
+        4: "🎢", // USJ
+        5: "✈️", // 機場
+    };
+
+    // 天氣代碼對應 emoji
+    const getWeatherEmoji = (code) => {
+        if (code === 0) return "☀️";
+        if (code <= 3) return "🌤️";
+        if (code <= 48) return "☁️";
+        if (code <= 67) return "🌧️";
+        if (code <= 77) return "🌨️";
+        if (code <= 99) return "⛈️";
+        return "🌤️";
+    };
+
+    // 計算目標日期 (2024/12/9 + day - 1)
+    const getTargetDate = (dayNum) => {
+        const baseDate = new Date(2024, 11, 9); // 12月9日
+        baseDate.setDate(baseDate.getDate() + dayNum - 1);
+        return baseDate.toISOString().split('T')[0];
+    };
+
+    useEffect(() => {
+        const fetchWeather = async () => {
+            if (!coords) {
+                setLoading(false);
+                return;
+            }
+
+            try {
+                const targetDate = getTargetDate(day);
+                // Open-Meteo 免費 API，不需要 API Key
+                const response = await fetch(
+                    `https://api.open-meteo.com/v1/forecast?latitude=${coords.lat}&longitude=${coords.lng}&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=Asia/Tokyo&start_date=${targetDate}&end_date=${targetDate}`
+                );
+                const data = await response.json();
+
+                if (data.daily) {
+                    setWeather({
+                        code: data.daily.weather_code[0],
+                        tempMax: Math.round(data.daily.temperature_2m_max[0]),
+                        tempMin: Math.round(data.daily.temperature_2m_min[0]),
+                    });
+                }
+            } catch (error) {
+                console.error('Weather fetch error:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchWeather();
+    }, [day, coords]);
+
+    const landmark = landmarks[day] || "📍";
+
+    if (loading) {
+        return (
+            <div className="flex items-center gap-1 bg-white/70 backdrop-blur-sm px-2 py-1 rounded-full border border-white/50">
+                <span className="text-base">{landmark}</span>
+                <Loader size={12} className="animate-spin text-gray-400" />
+            </div>
+        );
+    }
+
+    if (!weather) {
+        return (
+            <div className="flex items-center gap-1 bg-white/70 backdrop-blur-sm px-2 py-1 rounded-full border border-white/50">
+                <span className="text-base">{landmark}🌤️</span>
+            </div>
+        );
+    }
+
+    return (
+        <div className="flex items-center gap-1 bg-white/70 backdrop-blur-sm px-2 py-1 rounded-full border border-white/50">
+            <span className="text-base">{landmark}{getWeatherEmoji(weather.code)}</span>
+            <div className="flex flex-col">
+                <span className="text-[10px] font-bold text-gray-700 leading-none">{weather.tempMin}-{weather.tempMax}°C</span>
+            </div>
+        </div>
+    );
 };
 
 const App = () => {
@@ -290,7 +383,10 @@ const App = () => {
                         <span className="bg-white/60 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-600 tracking-widest border border-white/40">
                             君&媽咪の京阪之旅 2025
                         </span>
-                        <LocationButton />
+                        <div className="flex items-center gap-2">
+                            <WeatherIcon day={activeDay} coords={currentItinerary.hotelCoords} />
+                            <LocationButton />
+                        </div>
                     </div>
                     <h1 className="text-3xl font-bold text-gray-800 mb-1">{currentItinerary.location}</h1>
                     <p className="text-gray-600 font-medium opacity-80 flex items-center gap-1">
