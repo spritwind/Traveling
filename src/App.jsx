@@ -38,7 +38,9 @@ const App = () => {
                         { type: "snack", name: "Rikuro 老爺爺起司蛋糕", desc: "剛出爐搖晃的蓬鬆起司蛋糕，必吃。", rating: 4.6, reviewCount: 8900, priceLevel: "$", mapQuery: "Rikuro Ojisan Namba" },
                         { type: "shopping", name: "Parco 心齋橋", desc: "年輕潮流品牌、動漫周邊 (吉卜力、寶可夢)。", rating: 4.4, reviewCount: 1500, priceLevel: "$$$", mapQuery: "Shinsaibashi PARCO" },
                         { type: "food", name: "和牛燒肉 六宮 難波心齋橋筋店", desc: "高品質和牛燒肉，價格合理 (建議先預約)。", rating: 4.5, reviewCount: 800, priceLevel: "$$$", mapQuery: "wagyu yakiniku rokunomiya nanba Shinsaibashisuji", externalLink: "https://maps.app.goo.gl/KmFcW1RdZ2Qz5HHj6" },
-                        { type: "food", name: "燒肉屋 大牧場 道頓堀店", desc: "道頓堀人氣燒肉店，肉質新鮮 (建議先預約)。", rating: 4.4, reviewCount: 650, priceLevel: "$$$", mapQuery: "燒肉屋 大牧場 道頓堀店", externalLink: "https://maps.app.goo.gl/LadnJzYipRj87Jqz7" }
+                        { type: "food", name: "燒肉屋 大牧場 道頓堀店", desc: "道頓堀人氣燒肉店，肉質新鮮 (建議先預約)。", rating: 4.4, reviewCount: 650, priceLevel: "$$$", mapQuery: "燒肉屋 大牧場 道頓堀店", externalLink: "https://maps.app.goo.gl/LadnJzYipRj87Jqz7" },
+                        { type: "shopping", name: "驚安殿堂 唐吉訶德 道頓堀店", desc: "24小時營業！零食、藥妝、電器、伴手禮一次買齊，記得用優惠券。", rating: 4.3, reviewCount: 15000, priceLevel: "$$", mapQuery: "Don Quijote Dotonbori" },
+                        { type: "shopping", name: "唐吉訶德摩天輪 (惠比壽塔)", desc: "道頓堀地標！搭乘摩天輪欣賞大阪夜景，車廂內有冷氣。", rating: 4.4, reviewCount: 5600, priceLevel: "$$", mapQuery: "Don Quijote Ferris Wheel Dotonbori" }
                     ]
                 },
                 {
@@ -184,7 +186,7 @@ const App = () => {
             <div className={`pt-12 pb-6 px-6 bg-gradient-to-br ${currentItinerary.color} rounded-b-[40px] shadow-sm transition-all duration-500`}>
                 <div className="flex justify-between items-center mb-4">
                     <span className="bg-white/60 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-600 tracking-widest border border-white/40">
-                        君の京阪之旅 2025
+                        君&媽咪の京阪之旅 2025
                     </span>
                     <div className="w-8 h-8 bg-white/60 rounded-full flex items-center justify-center backdrop-blur-sm">
                         <Calendar size={16} className="text-gray-600" />
