@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext, useContext } from 'react';
-import { MapPin, Coffee, Utensils, ShoppingBag, Star, Heart, Share2, Check, ExternalLink, Ticket, Navigation, Loader } from 'lucide-react';
+import { MapPin, Coffee, Utensils, ShoppingBag, Star, Heart, Share2, Check, ExternalLink, Ticket, Navigation, Loader, Clock, Smartphone, ChevronRight, AlertTriangle, Zap } from 'lucide-react';
 
 // --- Geolocation Context ---
 const LocationContext = createContext(null);
@@ -188,8 +188,177 @@ const WeatherIcon = ({ day, coords }) => {
     );
 };
 
+// --- USJ Guide Component ---
+const USJGuide = () => {
+    const usjAppLinks = {
+        ios: "https://apps.apple.com/jp/app/universal-studios-japan/id547753987",
+        android: "https://play.google.com/store/apps/details?id=com.usj.usjportalapp"
+    };
+
+    const strategies = [
+        {
+            title: "📍 開園衝刺攻略",
+            icon: "🏃",
+            tips: [
+                "提早 1-1.5 小時到達入口排隊",
+                "入園後先衝「咚奇剛國度」(2024/12/11新開幕！排隊 180 分鐘起)",
+                "瑪利歐樂園需先抽整理券，無券無法入場",
+                "哈利波特禁忌之旅一早排隊最短"
+            ]
+        },
+        {
+            title: "🎫 整理券/快速通關",
+            icon: "🎟️",
+            tips: [
+                "整理券：免費但數量有限，在 APP 上抽取",
+                "快速通關：Express Pass 需另外購買 (¥7,800-21,000+)",
+                "熱門設施建議買快速通關：哈利波特、瑪利歐",
+                "咚奇剛國度目前無快速通關，只能現場排"
+            ]
+        },
+        {
+            title: "🎯 黃金路線建議",
+            icon: "🗺️",
+            tips: [
+                "早上：咚奇剛國度 → 瑪利歐賽車 → 耀西冒險",
+                "中午：哈利波特禁忌之旅 → 鷹馬飛行",
+                "下午：小小兵/侏羅紀公園",
+                "晚上：遊行/夜間設施重玩"
+            ]
+        },
+        {
+            title: "💡 單人通道 (Single Rider)",
+            icon: "👤",
+            tips: [
+                "不介意分開坐可省大量時間",
+                "適用：蜘蛛人、侏羅紀公園、好萊塢雲霄飛車",
+                "瑪利歐賽車也有單人通道！",
+                "排隊時間可縮短 50-70%"
+            ]
+        },
+        {
+            title: "🍽️ 用餐策略",
+            icon: "🍔",
+            tips: [
+                "避開 11:30-13:00 尖峰時段用餐",
+                "奇諾比奧餐廳需整理券才能入場",
+                "三根掃帚 (哈利波特) 11 點前較好排",
+                "可帶輕食入園節省排隊時間"
+            ]
+        },
+        {
+            title: "📱 APP 必備功能",
+            icon: "📲",
+            tips: [
+                "即時查看各設施等待時間",
+                "抽取整理券 (入園後才能抽)",
+                "園區地圖與設施位置",
+                "遊行時間表與演出資訊"
+            ]
+        }
+    ];
+
+    return (
+        <div className="mb-8 animate-fade-in">
+            {/* USJ APP Download Section */}
+            <div className="bg-gradient-to-r from-yellow-50 to-orange-50 border border-orange-200 rounded-2xl p-4 mb-4">
+                <div className="flex items-center gap-2 mb-3">
+                    <div className="bg-orange-500 p-2 rounded-xl text-white">
+                        <Smartphone size={20} />
+                    </div>
+                    <div>
+                        <h3 className="font-bold text-gray-800">USJ 官方 APP</h3>
+                        <p className="text-xs text-gray-500">即時排隊時間 & 整理券抽取</p>
+                    </div>
+                </div>
+                <div className="flex gap-2">
+                    <a
+                        href={usjAppLinks.ios}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 bg-black text-white text-center py-2 rounded-xl text-xs font-bold hover:bg-gray-800 transition-all flex items-center justify-center gap-1"
+                    >
+                        🍎 iOS 下載
+                    </a>
+                    <a
+                        href={usjAppLinks.android}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 bg-green-600 text-white text-center py-2 rounded-xl text-xs font-bold hover:bg-green-700 transition-all flex items-center justify-center gap-1"
+                    >
+                        🤖 Android 下載
+                    </a>
+                </div>
+            </div>
+
+            {/* Important Notice */}
+            <div className="bg-red-50 border border-red-200 rounded-2xl p-4 mb-4">
+                <div className="flex items-start gap-2">
+                    <AlertTriangle size={18} className="text-red-500 mt-0.5 shrink-0" />
+                    <div>
+                        <h4 className="font-bold text-red-700 text-sm mb-1">⚠️ 12/12 注意事項</h4>
+                        <ul className="text-xs text-red-600 space-y-1">
+                            <li>• 咚奇剛國度剛開幕 (12/11)，預計人潮爆滿</li>
+                            <li>• 週五入園人數較多，建議 7:00 前到場</li>
+                            <li>• 瑪利歐整理券可能 10 點前就發完</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            {/* Strategy Cards */}
+            <div className="space-y-3">
+                {strategies.map((strategy, idx) => (
+                    <div key={idx} className="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm">
+                        <div className="flex items-center gap-2 mb-3">
+                            <span className="text-2xl">{strategy.icon}</span>
+                            <h4 className="font-bold text-gray-800">{strategy.title}</h4>
+                        </div>
+                        <ul className="space-y-2">
+                            {strategy.tips.map((tip, tipIdx) => (
+                                <li key={tipIdx} className="flex items-start gap-2 text-sm text-gray-600">
+                                    <ChevronRight size={14} className="text-orange-400 mt-0.5 shrink-0" />
+                                    <span>{tip}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                ))}
+            </div>
+
+            {/* Quick Reference */}
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-4 mt-4">
+                <h4 className="font-bold text-blue-800 mb-3 flex items-center gap-2">
+                    <Zap size={16} className="text-yellow-500" />
+                    快速參考：預估排隊時間
+                </h4>
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div className="bg-white/70 rounded-lg p-2">
+                        <div className="font-bold text-gray-700">🦍 咚奇剛礦車</div>
+                        <div className="text-red-500 font-bold">180-240 分</div>
+                    </div>
+                    <div className="bg-white/70 rounded-lg p-2">
+                        <div className="font-bold text-gray-700">🏎️ 瑪利歐賽車</div>
+                        <div className="text-orange-500 font-bold">90-150 分</div>
+                    </div>
+                    <div className="bg-white/70 rounded-lg p-2">
+                        <div className="font-bold text-gray-700">🧙 禁忌之旅</div>
+                        <div className="text-orange-500 font-bold">60-120 分</div>
+                    </div>
+                    <div className="bg-white/70 rounded-lg p-2">
+                        <div className="font-bold text-gray-700">🦖 侏羅紀飛車</div>
+                        <div className="text-yellow-600 font-bold">45-90 分</div>
+                    </div>
+                </div>
+                <p className="text-[10px] text-blue-600 mt-2 text-center">* 實際時間請以 APP 為準</p>
+            </div>
+        </div>
+    );
+};
+
 const App = () => {
     const [activeDay, setActiveDay] = useState(1);
+    const [usjTab, setUsjTab] = useState('food'); // 'food' or 'guide'
 
     // 所有景點資料 (含經緯度)
     const itineraryData = [
@@ -426,9 +595,40 @@ const App = () => {
 
                 {/* Content */}
                 <div className="px-6 animate-fade-in pb-16">
-                    {currentItinerary.spots.map((spot, index) => (
-                        <SpotSection key={index} spot={spot} />
-                    ))}
+                    {/* Day 4 (USJ) Tab Switcher */}
+                    {activeDay === 4 && (
+                        <div className="flex gap-2 mb-6">
+                            <button
+                                onClick={() => setUsjTab('food')}
+                                className={`flex-1 py-3 rounded-xl text-sm font-bold transition-all ${
+                                    usjTab === 'food'
+                                        ? 'bg-orange-500 text-white shadow-lg'
+                                        : 'bg-white text-gray-500 border border-gray-200'
+                                }`}
+                            >
+                                🍔 美食推薦
+                            </button>
+                            <button
+                                onClick={() => setUsjTab('guide')}
+                                className={`flex-1 py-3 rounded-xl text-sm font-bold transition-all ${
+                                    usjTab === 'guide'
+                                        ? 'bg-orange-500 text-white shadow-lg'
+                                        : 'bg-white text-gray-500 border border-gray-200'
+                                }`}
+                            >
+                                🎢 排隊攻略
+                            </button>
+                        </div>
+                    )}
+
+                    {/* Show USJ Guide or regular spots */}
+                    {activeDay === 4 && usjTab === 'guide' ? (
+                        <USJGuide />
+                    ) : (
+                        currentItinerary.spots.map((spot, index) => (
+                            <SpotSection key={index} spot={spot} />
+                        ))
+                    )}
                 </div>
 
                 {/* Footer / Floating Info */}
