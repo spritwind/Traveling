@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext, useContext } from 'react';
-import { MapPin, Coffee, Utensils, ShoppingBag, Star, Heart, Share2, Check, ExternalLink, Ticket, Navigation, Loader, Clock, Smartphone, ChevronRight, AlertTriangle, Zap } from 'lucide-react';
+import { MapPin, Coffee, Utensils, ShoppingBag, Star, Heart, Share2, Check, ExternalLink, Ticket, Navigation, Loader, Smartphone, ChevronRight, AlertTriangle, Zap } from 'lucide-react';
 
 // --- Geolocation Context ---
 const LocationContext = createContext(null);
@@ -201,7 +201,7 @@ const USJGuide = () => {
             icon: "🏃",
             tips: [
                 "提早 1-1.5 小時到達入口排隊",
-                "入園後先衝「咚奇剛國度」(2024/12/11新開幕！排隊 180 分鐘起)",
+                "入園後先衝「咚奇剛國度」(持續超人氣！排隊 120-180 分鐘)",
                 "瑪利歐樂園需先抽整理券，無券無法入場",
                 "哈利波特禁忌之旅一早排隊最短"
             ]
@@ -211,9 +211,9 @@ const USJGuide = () => {
             icon: "🎟️",
             tips: [
                 "整理券：免費但數量有限，在 APP 上抽取",
-                "快速通關：Express Pass 需另外購買 (¥7,800-21,000+)",
-                "熱門設施建議買快速通關：哈利波特、瑪利歐",
-                "咚奇剛國度目前無快速通關，只能現場排"
+                "快速通關：Express Pass 需另外購買 (¥10,800-26,000+)",
+                "熱門設施建議買快速通關：哈利波特、瑪利歐、咚奇剛",
+                "咚奇剛國度已有快速通關可購買"
             ]
         },
         {
@@ -296,9 +296,9 @@ const USJGuide = () => {
                 <div className="flex items-start gap-2">
                     <AlertTriangle size={18} className="text-red-500 mt-0.5 shrink-0" />
                     <div>
-                        <h4 className="font-bold text-red-700 text-sm mb-1">⚠️ 12/12 注意事項</h4>
+                        <h4 className="font-bold text-red-700 text-sm mb-1">⚠️ 入園注意事項</h4>
                         <ul className="text-xs text-red-600 space-y-1">
-                            <li>• 咚奇剛國度剛開幕 (12/11)，預計人潮爆滿</li>
+                            <li>• 咚奇剛國度持續超人氣，建議優先排隊</li>
                             <li>• 週五入園人數較多，建議 7:00 前到場</li>
                             <li>• 瑪利歐整理券可能 10 點前就發完</li>
                         </ul>
@@ -335,19 +335,19 @@ const USJGuide = () => {
                 <div className="grid grid-cols-2 gap-2 text-xs">
                     <div className="bg-white/70 rounded-lg p-2">
                         <div className="font-bold text-gray-700">🦍 咚奇剛礦車</div>
-                        <div className="text-red-500 font-bold">180-240 分</div>
+                        <div className="text-red-500 font-bold">120-180 分</div>
                     </div>
                     <div className="bg-white/70 rounded-lg p-2">
                         <div className="font-bold text-gray-700">🏎️ 瑪利歐賽車</div>
-                        <div className="text-orange-500 font-bold">90-150 分</div>
-                    </div>
-                    <div className="bg-white/70 rounded-lg p-2">
-                        <div className="font-bold text-gray-700">🧙 禁忌之旅</div>
                         <div className="text-orange-500 font-bold">60-120 分</div>
                     </div>
                     <div className="bg-white/70 rounded-lg p-2">
+                        <div className="font-bold text-gray-700">🧙 禁忌之旅</div>
+                        <div className="text-orange-500 font-bold">45-90 分</div>
+                    </div>
+                    <div className="bg-white/70 rounded-lg p-2">
                         <div className="font-bold text-gray-700">🦖 侏羅紀飛車</div>
-                        <div className="text-yellow-600 font-bold">45-90 分</div>
+                        <div className="text-yellow-600 font-bold">30-60 分</div>
                     </div>
                 </div>
                 <p className="text-[10px] text-blue-600 mt-2 text-center">* 實際時間請以 APP 為準</p>
