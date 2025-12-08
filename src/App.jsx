@@ -503,20 +503,36 @@ const App = () => {
             color: "from-yellow-100 to-orange-100",
             spots: [
                 {
-                    name: "USJ 園區內",
-                    desc: "推薦預約與排隊美食",
+                    name: "USJ 園區內餐廳",
+                    desc: "人氣餐廳 Top 5 (部分需整理券)",
                     recs: [
-                        { type: "food", name: "Kinopio's Cafe", desc: "瑪利歐賽車漢堡，氣氛滿分 (需整理券)。", rating: 4.2, reviewCount: 1500, priceLevel: "$$$", mapQuery: "Kinopio's Cafe USJ", coords: { lat: 34.6663, lng: 135.4323 } },
-                        { type: "snack", name: "奶油啤酒 (Butterbeer)", desc: "哈利波特園區必喝，無酒精。", rating: 4.5, reviewCount: 3000, priceLevel: "$$", mapQuery: "Three Broomsticks USJ", coords: { lat: 34.6680, lng: 135.4318 } },
-                        { type: "food", name: "Park Side Grille", desc: "園區內較高級的牛排館，適合好好休息。", rating: 4.0, reviewCount: 600, priceLevel: "$$$", mapQuery: "Park Side Grille USJ", coords: { lat: 34.6654, lng: 135.4320 } }
+                        { type: "food", name: "奇諾比奧咖啡店 (Kinopio's Cafe)", desc: "🍄 人氣斷層第一！必點瑪利歐培根起司漢堡、超級蘑菇披薩碗、問號磚塊提拉米蘇。需整理券，入園就掃碼預約！", rating: 4.8, reviewCount: 8500, priceLevel: "$$$", mapQuery: "Kinopio's Cafe USJ", coords: { lat: 34.6663, lng: 135.4323 } },
+                        { type: "food", name: "三根掃帚 (Three Broomsticks)", desc: "🍗 哈利波特區氣氛與美味兼具！必點烤雞拼盤、牧羊人派。戶外座位可欣賞霍格華茲城堡倒影。", rating: 4.6, reviewCount: 6200, priceLevel: "$$", mapQuery: "Three Broomsticks USJ", coords: { lat: 34.6680, lng: 135.4318 } },
+                        { type: "food", name: "園畔護柵 (Park Side Grille)", desc: "🥩 園內最好吃的正式西餐！必點熟成牛排、安格斯牛肉。想好好休息享受高級服務的首選。", rating: 4.5, reviewCount: 2800, priceLevel: "$$$", mapQuery: "Park Side Grille USJ", coords: { lat: 34.6654, lng: 135.4320 } },
+                        { type: "food", name: "史努比外景咖啡廳", desc: "🍔 親子友善首選！史努比造型漢堡餐、史努比包子超可愛，適合拍照打卡。", rating: 4.3, reviewCount: 1800, priceLevel: "$$", mapQuery: "Snoopy Backlot Cafe USJ", coords: { lat: 34.6670, lng: 135.4335 } },
+                        { type: "food", name: "路易紐約披薩餅舖", desc: "🍕 高CP值速食！瑪格麗特披薩、四種起司披薩。座位多出餐快，不想排太久的好選擇。", rating: 4.2, reviewCount: 2100, priceLevel: "$$", mapQuery: "Louie's N.Y. Pizza Parlor USJ", coords: { lat: 34.6658, lng: 135.4328 } }
+                    ]
+                },
+                {
+                    name: "USJ 園區內小食",
+                    desc: "邊走邊吃人氣點心 Top 5",
+                    recs: [
+                        { type: "snack", name: "龜殼披薩餃 (Koopa Calzone)", desc: "🐢 耀西小吃島必買！綠色龜殼造型，內餡是拿坡里義大利麵與起司，鹹香好吃。", rating: 4.5, reviewCount: 3200, priceLevel: "$", mapQuery: "Yoshi's Snack Island USJ", coords: { lat: 34.6665, lng: 135.4325 } },
+                        { type: "snack", name: "奶油啤酒 (Butterbeer)", desc: "🍺 哈利波特區經典必喝！推薦買冰沙版本 (Frozen) 比較不甜膩，無酒精。", rating: 4.7, reviewCount: 12000, priceLevel: "$$", mapQuery: "Butterbeer Cart USJ", coords: { lat: 34.6680, lng: 135.4318 } },
+                        { type: "snack", name: "小小兵餅乾三明治", desc: "🍌 口味隨季節更換 (香蕉冰淇淋、草莓等)，巨大且拍照效果極佳！", rating: 4.4, reviewCount: 4500, priceLevel: "$", mapQuery: "Minion Park USJ", coords: { lat: 34.6672, lng: 135.4340 } },
+                        { type: "dessert", name: "瑪利歐帽子鬆餅", desc: "🎩 瑪利歐咖啡店限定！造型精緻夾心鬆餅 (草莓/葡萄起司)，沒抽到整理券也能過乾癮。", rating: 4.3, reviewCount: 2800, priceLevel: "$$", mapQuery: "Mario Cafe Store USJ", coords: { lat: 34.6660, lng: 135.4345 } },
+                        { type: "snack", name: "火雞腿 (Turkey Leg)", desc: "🦃 侏羅紀公園區經典！肉大塊多汁，補充體力首選。", rating: 4.2, reviewCount: 3500, priceLevel: "$$", mapQuery: "Jurassic Park USJ", coords: { lat: 34.6675, lng: 135.4310 } }
                     ]
                 },
                 {
                     name: "USJ City Walk (園區外)",
-                    desc: "結束後的晚餐選擇",
+                    desc: "結束後的晚餐選擇 Top 5",
                     recs: [
-                        { type: "food", name: "SHAKE SHACK", desc: "來自紐約的經典漢堡，穩定好吃。", rating: 4.4, reviewCount: 2200, priceLevel: "$$", mapQuery: "Shake Shack Universal CityWalk", coords: { lat: 34.6657, lng: 135.4350 } },
-                        { type: "snack", name: "551 Horai", desc: "大阪名物豬肉包，回飯店當宵夜最棒。", rating: 4.3, reviewCount: 1800, priceLevel: "$", mapQuery: "551 Horai Universal City", coords: { lat: 34.6655, lng: 135.4355 } }
+                        { type: "food", name: "大阪章魚燒博物館", desc: "🐙 一次吃遍大阪名店！內有會津屋元祖章魚燒、甲賀流、十八番等 5-6 家名店，不用跑市區。", rating: 4.5, reviewCount: 5800, priceLevel: "$", mapQuery: "Takoyaki Museum Universal CityWalk", coords: { lat: 34.6655, lng: 135.4352 } },
+                        { type: "food", name: "Shake Shack", desc: "🍔 來自紐約的經典漢堡，肉質鮮嫩多汁，薯條濃郁。玩累了一天吃到會覺得復活！", rating: 4.4, reviewCount: 4200, priceLevel: "$$", mapQuery: "Shake Shack Universal CityWalk", coords: { lat: 34.6657, lng: 135.4350 } },
+                        { type: "snack", name: "551 蓬萊 (HORAI)", desc: "🥟 大阪靈魂美食！豬肉包和燒賣必買，適合買回飯店當宵夜，經常大排長龍。", rating: 4.6, reviewCount: 6800, priceLevel: "$", mapQuery: "551 Horai Universal City", coords: { lat: 34.6655, lng: 135.4355 } },
+                        { type: "food", name: "Bubba Gump 阿甘蝦餐廳", desc: "🦐 以電影《阿甘正傳》為主題，擅長各種蝦料理。窗邊可看園區夜景，適合家庭聚餐。", rating: 4.3, reviewCount: 2800, priceLevel: "$$$", mapQuery: "Bubba Gump Shrimp Universal CityWalk Osaka", coords: { lat: 34.6658, lng: 135.4348 } },
+                        { type: "food", name: "京都勝牛", desc: "🥩 想吃熱騰騰白飯與炸物的好選擇！炸牛排外酥內嫩，醬料豐富。", rating: 4.4, reviewCount: 2200, priceLevel: "$$", mapQuery: "Kyoto Katsugyu Universal CityWalk", coords: { lat: 34.6656, lng: 135.4353 } }
                     ]
                 }
             ]
