@@ -313,7 +313,7 @@ const USJGuide = () => {
             {/* Ride Intensity Chart */}
             <div className="bg-white border border-gray-200 rounded-2xl p-4 mb-4 shadow-sm">
                 <h4 className="font-bold text-gray-800 mb-3 flex items-center gap-2">
-                    ❤️ 設施刺激程度 & 心臟病風險
+                    ❤️ 設施刺激程度 & 心臟風險
                 </h4>
                 <div className="space-y-2">
                     {rideIntensity.map((ride, idx) => (
