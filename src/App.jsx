@@ -613,11 +613,77 @@ const App = () => {
             color: "from-slate-100 to-gray-200",
             spots: [
                 {
-                    name: "關西機場",
-                    desc: "最後衝刺",
+                    name: "T1 2F 美食街 (安檢前)",
+                    desc: "所有旅客皆可進入，送機者也OK",
                     recs: [
-                        { type: "shopping", name: "免稅店 (Fa-So-La)", desc: "購買白色戀人、Tokyo Banana、Royce巧克力。", rating: 4.0, reviewCount: 1200, priceLevel: "$$", mapQuery: "Kansai Airport Duty Free", coords: { lat: 34.4347, lng: 135.2441 } },
-                        { type: "food", name: "Pote-Rico (Calbee+)", desc: "現炸薯條棒，外脆內軟。", rating: 4.3, reviewCount: 800, priceLevel: "$", mapQuery: "Calbee+ Kansai Airport", coords: { lat: 34.4347, lng: 135.2441 } }
+                        { type: "food", name: "551 HORAI 蓬萊", desc: "🥟 大阪必吃靈魂美食！現蒸豬肉包 (豚まん) 皮厚餡多汁。⚠️ 注意：肉製品無法帶回台灣，只能現場吃或帶回飯店。另有冷凍燒賣可買。", rating: 4.1, reviewCount: 2800, priceLevel: "$", mapQuery: "551 Horai Kansai Airport", coords: { lat: 34.4347, lng: 135.2441 }, externalLink: "https://maps.app.goo.gl/pxn5bqcZjGf8Y7Ur9" },
+                        { type: "food", name: "道頓堀 神座拉麵", desc: "🍜 大阪人氣拉麵！特色是加入大量白菜的清甜湯頭，口味清爽不油膩。離開日本前想喝熱湯的好選擇。", rating: 3.7, reviewCount: 650, priceLevel: "$", mapQuery: "Kamukura Ramen Kansai Airport", coords: { lat: 34.4347, lng: 135.2441 }, externalLink: "https://maps.app.goo.gl/Ub6qKmcHe3j5uM7r5" },
+                        { type: "snack", name: "章魚昌 (Takomasa)", desc: "🐙 創業1979年老字號。除了現吃，冷凍章魚燒是知名伴手禮！(評分較低因機場價格偏高，但仍具代表性)", rating: 2.9, reviewCount: 420, priceLevel: "$", mapQuery: "Takomasa Kansai Airport", coords: { lat: 34.4347, lng: 135.2441 }, externalLink: "https://maps.app.goo.gl/tE4nQ3YhqfTvNnGj6" }
+                    ]
+                },
+                {
+                    name: "T1 2F 出境區 (安檢後)",
+                    desc: "僅限出國旅客，整修後精華區域",
+                    recs: [
+                        { type: "coffee", name: "Café Dior by Anne-Sophie Pic", desc: "✨ 全球首間機場 Dior 咖啡廳！由法國米其林三星女主廚監修，精緻甜點與拉花拿鐵。極致奢華的候機體驗，值得打卡！", rating: 4.5, reviewCount: 380, priceLevel: "$$$", mapQuery: "Cafe Dior Kansai Airport", coords: { lat: 34.4347, lng: 135.2441 }, externalLink: "https://maps.app.goo.gl/C5oYY3J9tFRKvdwT9" },
+                        { type: "food", name: "OnigiriBurger", desc: "🍙 4.7分高評價新美食！日式飯糰與美式漢堡結合，使用優質海苔與米飯。神戶牛口味超受歡迎！", rating: 4.7, reviewCount: 520, priceLevel: "$$", mapQuery: "OnigiriBurger Kansai Airport", coords: { lat: 34.4347, lng: 135.2441 }, externalLink: "https://maps.app.goo.gl/2QRkjkC9qc8kWQbW9" },
+                        { type: "food", name: "壽司處 西屋 (Nishiya)", desc: "🍣 大阪天滿壽司老店分店。上飛機前吃正宗握壽司的好選擇，雖評分普通但品質穩定。", rating: 3.4, reviewCount: 280, priceLevel: "$$$", mapQuery: "Nishiya Sushi Kansai Airport", coords: { lat: 34.4347, lng: 135.2441 }, externalLink: "https://maps.app.goo.gl/HfEBnUvNvfYpT5gf9" }
+                    ]
+                },
+                {
+                    name: "T2 航廈 (樂桃專用)",
+                    desc: "廉航旅客適用 (國內/國際線)",
+                    recs: [
+                        { type: "food", name: "Japan Traveling Restaurant", desc: "🍳 由大阪燒名店 BOTEJYU 營運！不僅有大阪燒，還集結日本各地知名鄉土料理，選擇多樣。廉航旅客的好選擇。", rating: 3.2, reviewCount: 180, priceLevel: "$$", mapQuery: "Japan Traveling Restaurant Kansai Airport T2", coords: { lat: 34.4272, lng: 135.2302 }, externalLink: "https://maps.app.goo.gl/pJGc9VkDqWQQR5Dn9" }
+                    ]
+                },
+                {
+                    name: "必買伴手禮 (免稅店)",
+                    desc: "KIX DUTY FREE - T1 2F 管制區內最大",
+                    recs: [
+                        { type: "shopping", name: "呼吸巧克力 (關西限定)", desc: "🍫 提拉米蘇口味最經典！關西限定伴手禮，入口即化的空氣感巧克力。送禮自用兩相宜。", rating: 4.5, reviewCount: 3200, priceLevel: "$$", mapQuery: "KIX Duty Free Kansai Airport", coords: { lat: 34.4347, lng: 135.2441 } },
+                        { type: "shopping", name: "Frantz 神戶草莓松露巧克力", desc: "🍓 紅色盒子經典包裝！整顆草莓乾包在巧克力裡，酸甜平衡。神戶名產，送禮超體面。", rating: 4.6, reviewCount: 2800, priceLevel: "$$", mapQuery: "KIX Duty Free Kansai Airport", coords: { lat: 34.4347, lng: 135.2441 } },
+                        { type: "shopping", name: "赤福 (Akafuku)", desc: "🍡 伊勢神宮名產紅豆麻糬！保存期限極短 (2-3天)，機場買最方便。軟糯紅豆餡是經典日本味。", rating: 4.4, reviewCount: 1500, priceLevel: "$", mapQuery: "KIX Duty Free Kansai Airport", coords: { lat: 34.4347, lng: 135.2441 } },
+                        { type: "shopping", name: "Bâton d'or (Pocky界的LV)", desc: "🥢 高級版Pocky！只有關西買得到，使用發酵奶油，口感層次豐富。送禮極佳，常缺貨請早買。", rating: 4.7, reviewCount: 4200, priceLevel: "$$", mapQuery: "KIX Duty Free Kansai Airport", coords: { lat: 34.4347, lng: 135.2441 } },
+                        { type: "shopping", name: "ROYCE' 巧克力洋芋片", desc: "🍟 北海道超人氣！鹹甜絕配，機場依然是熱銷冠軍。建議買保冷袋保存。", rating: 4.6, reviewCount: 5800, priceLevel: "$$", mapQuery: "KIX Duty Free Kansai Airport", coords: { lat: 34.4347, lng: 135.2441 } },
+                        { type: "shopping", name: "白色戀人", desc: "🍪 北海道經典！白巧克力夾心餅乾，送禮永不出錯的選擇。", rating: 4.5, reviewCount: 8900, priceLevel: "$$", mapQuery: "KIX Duty Free Kansai Airport", coords: { lat: 34.4347, lng: 135.2441 } }
+                    ]
+                },
+                {
+                    name: "藥妝最後補貨",
+                    desc: "⚠️ 液體超過100ml需安檢前買並託運",
+                    recs: [
+                        { type: "drug", name: "Cocokara Fine (安檢前・最大)", desc: "💊 T1 2F 北側麥當勞旁，營業 07:00-22:00。機場最大間！若有大量液體藥妝 (化妝水等) 要買，請在這裡買完塞進行李箱託運。", rating: 4.0, reviewCount: 850, priceLevel: "$$", mapQuery: "Cocokara Fine Kansai Airport T1", coords: { lat: 34.4347, lng: 135.2441 }, externalLink: "https://maps.app.goo.gl/v8QDr7xPqwjYG5gB9" },
+                        { type: "drug", name: "Cocokara Fine (安檢後)", desc: "💊 T1 2F 國際線出境區南側，營業 06:30-00:15。位於管制區內，適合補買小東西或非液體藥妝 (100ml以下OK)。", rating: 3.8, reviewCount: 420, priceLevel: "$$", mapQuery: "Cocokara Fine Kansai Airport Departure", coords: { lat: 34.4347, lng: 135.2441 } },
+                        { type: "drug", name: "Cocokara Fine (T2 安檢前)", desc: "💊 T2 國際線大廳，營業 05:45-末班機。廉航旅客的最後補貨站！", rating: 3.5, reviewCount: 180, priceLevel: "$$", mapQuery: "Cocokara Fine Kansai Airport T2", coords: { lat: 34.4272, lng: 135.2302 } }
+                    ]
+                },
+                {
+                    name: "機場地圖與資訊",
+                    desc: "出發前先看好位置，省時省力",
+                    recs: [
+                        {
+                            type: "coupon",
+                            name: "關西機場官方樓層地圖",
+                            desc: "📍 T1 航廈完整樓層圖，包含美食街、免稅店、藥妝店位置。建議截圖保存！",
+                            rating: 5.0,
+                            reviewCount: 99999,
+                            priceLevel: "必看",
+                            mapQuery: "Kansai International Airport",
+                            coords: { lat: 34.4347, lng: 135.2441 },
+                            externalLink: "https://www.kansai-airport.or.jp/tw/map/t1"
+                        },
+                        {
+                            type: "coupon",
+                            name: "T2 航廈地圖 (樂桃)",
+                            desc: "📍 T2 航廈樓層圖，適用樂桃等廉航旅客。",
+                            rating: 5.0,
+                            reviewCount: 99999,
+                            priceLevel: "必看",
+                            mapQuery: "Kansai International Airport T2",
+                            coords: { lat: 34.4272, lng: 135.2302 },
+                            externalLink: "https://www.kansai-airport.or.jp/tw/map/t2"
+                        }
                     ]
                 }
             ]
