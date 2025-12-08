@@ -1,15 +1,111 @@
-import React, { useState } from 'react';
-import { MapPin, Coffee, Utensils, ShoppingBag, Star, Calendar, Heart, Share2, Check, ExternalLink, Ticket } from 'lucide-react';
+import { useState, createContext, useContext } from 'react';
+import { MapPin, Coffee, Utensils, ShoppingBag, Star, Heart, Share2, Check, ExternalLink, Ticket, Navigation, Loader } from 'lucide-react';
+
+// --- Geolocation Context ---
+const LocationContext = createContext(null);
+
+const LocationProvider = ({ children }) => {
+    const [userLocation, setUserLocation] = useState(null);
+    const [locationError, setLocationError] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const requestLocation = () => {
+        if (!navigator.geolocation) {
+            setLocationError('您的瀏覽器不支援定位功能');
+            return;
+        }
+
+        setIsLoading(true);
+        setLocationError(null);
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                setUserLocation({
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                    accuracy: position.coords.accuracy
+                });
+                setIsLoading(false);
+            },
+            (error) => {
+                let message = '無法取得位置';
+                switch (error.code) {
+                    case error.PERMISSION_DENIED:
+                        message = '請允許位置存取權限';
+                        break;
+                    case error.POSITION_UNAVAILABLE:
+                        message = '無法取得位置資訊';
+                        break;
+                    case error.TIMEOUT:
+                        message = '位置請求逾時';
+                        break;
+                }
+                setLocationError(message);
+                setIsLoading(false);
+            },
+            {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 60000 // 快取 1 分鐘
+            }
+        );
+    };
+
+    return (
+        <LocationContext.Provider value={{ userLocation, locationError, isLoading, requestLocation }}>
+            {children}
+        </LocationContext.Provider>
+    );
+};
+
+const useLocation = () => useContext(LocationContext);
+
+// --- Haversine 公式計算兩點距離 (公尺) ---
+const calculateDistance = (lat1, lon1, lat2, lon2) => {
+    if (!lat1 || !lon1 || !lat2 || !lon2) return null;
+
+    const R = 6371000; // 地球半徑 (公尺)
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+};
+
+// --- 格式化距離顯示 ---
+const formatDistance = (meters) => {
+    if (meters === null) return null;
+    if (meters < 1000) {
+        return `${Math.round(meters)}m`;
+    }
+    return `${(meters / 1000).toFixed(1)}km`;
+};
+
+// --- 估算步行時間 (假設 5km/h = 83m/min) ---
+const estimateWalkTime = (meters) => {
+    if (meters === null) return null;
+    const minutes = Math.round(meters / 83);
+    if (minutes < 1) return '< 1 分鐘';
+    if (minutes < 60) return `${minutes} 分鐘`;
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    return `${hours}h ${mins}m`;
+};
 
 const App = () => {
     const [activeDay, setActiveDay] = useState(1);
 
+    // 所有景點資料 (含經緯度)
     const itineraryData = [
         {
             day: 1,
             date: "12/09 (二)",
             location: "大阪・心齋橋/梅田",
             hotel: "大阪 PLAZA HOTEL (十三站)",
+            hotelCoords: { lat: 34.7208, lng: 135.4729 },
             color: "from-pink-100 to-rose-100",
             spots: [
                 {
@@ -24,49 +120,50 @@ const App = () => {
                             reviewCount: 99999,
                             priceLevel: "必備",
                             mapQuery: "Dotonbori",
+                            coords: { lat: 34.6687, lng: 135.5013 },
                             externalLink: "https://www.callingtaiwan.com.tw/%E6%97%A5%E6%9C%AC%E8%97%A5%E5%A6%9D%E5%84%AA%E6%83%A0%E5%88%B8/"
                         },
-                        { type: "snack", name: "甲賀流章魚燒 (美國村)", desc: "連續三年榮獲「米其林必比登」推薦！口感軟嫩，加上滿滿蔥花與特製美乃滋。", rating: 4.5, reviewCount: 3800, priceLevel: "$", mapQuery: "Kogaryu Takoyaki Americamura" },
-                        { type: "drug", name: "松本清 心齋橋店", desc: "貨品最齊全，價格競爭力強 (記得用上方優惠券)。", rating: 4.0, reviewCount: 500, priceLevel: "$$", mapQuery: "Matsumoto Kiyoshi Shinsaibashi" },
-                        { type: "food", name: "北極星蛋包飯", desc: "蛋包飯創始店，在傳統日式老屋享用美味。", rating: 4.3, reviewCount: 4500, priceLevel: "$$", mapQuery: "Hokkyokusei Shinsaibashi Main Store" },
-                        { type: "food", name: "味乃家 (Ajinoya)", desc: "米其林必比登推薦，口感鬆軟的大阪燒。", rating: 4.4, reviewCount: 3100, priceLevel: "$$", mapQuery: "Ajinoya Okonomiyaki" },
-                        { type: "food", name: "一蘭拉麵 道頓堀店", desc: "台灣人最愛，豚骨湯頭客製化。", rating: 4.5, reviewCount: 12000, priceLevel: "$$", mapQuery: "Ichiran Ramen Dotonbori" },
-                        { type: "food", name: "元祖串炸達摩", desc: "大阪名物，外皮酥脆，禁止二次沾醬！", rating: 4.2, reviewCount: 3500, priceLevel: "$$", mapQuery: "Kushikatsu Daruma Dotonbori" },
-                        { type: "dessert", name: "HARBS 大丸心齋橋店", desc: "水果千層蛋糕，鮮奶油清爽不膩。", rating: 4.5, reviewCount: 1500, priceLevel: "$$", mapQuery: "HARBS Daimaru Shinsaibashi" },
-                        { type: "dessert", name: "PABLO", desc: "經典半熟起司塔，濃郁滑順的口感。", rating: 4.0, reviewCount: 1800, priceLevel: "$", mapQuery: "PABLO Shinsaibashi" },
-                        { type: "food", name: "美津の (Mizuno)", desc: "米其林必比登推薦大阪燒，排隊名店。", rating: 4.5, reviewCount: 3240, priceLevel: "$$", mapQuery: "Mizuno Osaka Dotonbori" },
-                        { type: "snack", name: "Rikuro 老爺爺起司蛋糕", desc: "剛出爐搖晃的蓬鬆起司蛋糕，必吃。", rating: 4.6, reviewCount: 8900, priceLevel: "$", mapQuery: "Rikuro Ojisan Namba" },
-                        { type: "shopping", name: "Parco 心齋橋", desc: "年輕潮流品牌、動漫周邊 (吉卜力、寶可夢)。", rating: 4.4, reviewCount: 1500, priceLevel: "$$$", mapQuery: "Shinsaibashi PARCO" },
-                        { type: "food", name: "和牛燒肉 六宮 難波心齋橋筋店", desc: "高品質和牛燒肉，價格合理 (建議先預約)。", rating: 4.5, reviewCount: 800, priceLevel: "$$$", mapQuery: "wagyu yakiniku rokunomiya nanba Shinsaibashisuji", externalLink: "https://maps.app.goo.gl/KmFcW1RdZ2Qz5HHj6" },
-                        { type: "food", name: "燒肉屋 大牧場 道頓堀店", desc: "道頓堀人氣燒肉店，肉質新鮮 (建議先預約)。", rating: 4.4, reviewCount: 650, priceLevel: "$$$", mapQuery: "燒肉屋 大牧場 道頓堀店", externalLink: "https://maps.app.goo.gl/LadnJzYipRj87Jqz7" },
-                        { type: "shopping", name: "驚安殿堂 唐吉訶德 道頓堀店", desc: "24小時營業！零食、藥妝、電器、伴手禮一次買齊，記得用優惠券。", rating: 4.3, reviewCount: 15000, priceLevel: "$$", mapQuery: "Don Quijote Dotonbori" },
-                        { type: "shopping", name: "唐吉訶德摩天輪 (惠比壽塔)", desc: "道頓堀地標！搭乘摩天輪欣賞大阪夜景，車廂內有冷氣。", rating: 4.4, reviewCount: 5600, priceLevel: "$$", mapQuery: "Don Quijote Ferris Wheel Dotonbori" }
+                        { type: "snack", name: "甲賀流章魚燒 (美國村)", desc: "連續三年榮獲「米其林必比登」推薦！口感軟嫩，加上滿滿蔥花與特製美乃滋。", rating: 4.5, reviewCount: 3800, priceLevel: "$", mapQuery: "Kogaryu Takoyaki Americamura", coords: { lat: 34.6725, lng: 135.4985 } },
+                        { type: "drug", name: "松本清 心齋橋店", desc: "貨品最齊全，價格競爭力強 (記得用上方優惠券)。", rating: 4.0, reviewCount: 500, priceLevel: "$$", mapQuery: "Matsumoto Kiyoshi Shinsaibashi", coords: { lat: 34.6717, lng: 135.5014 } },
+                        { type: "food", name: "北極星蛋包飯", desc: "蛋包飯創始店，在傳統日式老屋享用美味。", rating: 4.3, reviewCount: 4500, priceLevel: "$$", mapQuery: "Hokkyokusei Shinsaibashi Main Store", coords: { lat: 34.6693, lng: 135.5034 } },
+                        { type: "food", name: "味乃家 (Ajinoya)", desc: "米其林必比登推薦，口感鬆軟的大阪燒。", rating: 4.4, reviewCount: 3100, priceLevel: "$$", mapQuery: "Ajinoya Okonomiyaki", coords: { lat: 34.6679, lng: 135.5025 } },
+                        { type: "food", name: "一蘭拉麵 道頓堀店", desc: "台灣人最愛，豚骨湯頭客製化。", rating: 4.5, reviewCount: 12000, priceLevel: "$$", mapQuery: "Ichiran Ramen Dotonbori", coords: { lat: 34.6686, lng: 135.5008 } },
+                        { type: "food", name: "元祖串炸達摩", desc: "大阪名物，外皮酥脆，禁止二次沾醬！", rating: 4.2, reviewCount: 3500, priceLevel: "$$", mapQuery: "Kushikatsu Daruma Dotonbori", coords: { lat: 34.6685, lng: 135.5017 } },
+                        { type: "dessert", name: "HARBS 大丸心齋橋店", desc: "水果千層蛋糕，鮮奶油清爽不膩。", rating: 4.5, reviewCount: 1500, priceLevel: "$$", mapQuery: "HARBS Daimaru Shinsaibashi", coords: { lat: 34.6747, lng: 135.5010 } },
+                        { type: "dessert", name: "PABLO", desc: "經典半熟起司塔，濃郁滑順的口感。", rating: 4.0, reviewCount: 1800, priceLevel: "$", mapQuery: "PABLO Shinsaibashi", coords: { lat: 34.6715, lng: 135.5012 } },
+                        { type: "food", name: "美津の (Mizuno)", desc: "米其林必比登推薦大阪燒，排隊名店。", rating: 4.5, reviewCount: 3240, priceLevel: "$$", mapQuery: "Mizuno Osaka Dotonbori", coords: { lat: 34.6688, lng: 135.5023 } },
+                        { type: "snack", name: "Rikuro 老爺爺起司蛋糕", desc: "剛出爐搖晃的蓬鬆起司蛋糕，必吃。", rating: 4.6, reviewCount: 8900, priceLevel: "$", mapQuery: "Rikuro Ojisan Namba", coords: { lat: 34.6656, lng: 135.5013 } },
+                        { type: "shopping", name: "Parco 心齋橋", desc: "年輕潮流品牌、動漫周邊 (吉卜力、寶可夢)。", rating: 4.4, reviewCount: 1500, priceLevel: "$$$", mapQuery: "Shinsaibashi PARCO", coords: { lat: 34.6745, lng: 135.5007 } },
+                        { type: "food", name: "和牛燒肉 六宮 難波心齋橋筋店", desc: "高品質和牛燒肉，價格合理 (建議先預約)。", rating: 4.5, reviewCount: 800, priceLevel: "$$$", mapQuery: "wagyu yakiniku rokunomiya nanba Shinsaibashisuji", coords: { lat: 34.6695, lng: 135.5018 }, externalLink: "https://maps.app.goo.gl/KmFcW1RdZ2Qz5HHj6" },
+                        { type: "food", name: "燒肉屋 大牧場 道頓堀店", desc: "道頓堀人氣燒肉店，肉質新鮮 (建議先預約)。", rating: 4.4, reviewCount: 650, priceLevel: "$$$", mapQuery: "燒肉屋 大牧場 道頓堀店", coords: { lat: 34.6688, lng: 135.5018 }, externalLink: "https://maps.app.goo.gl/LadnJzYipRj87Jqz7" },
+                        { type: "shopping", name: "驚安殿堂 唐吉訶德 道頓堀店", desc: "24小時營業！零食、藥妝、電器、伴手禮一次買齊，記得用優惠券。", rating: 4.3, reviewCount: 15000, priceLevel: "$$", mapQuery: "Don Quijote Dotonbori", coords: { lat: 34.6687, lng: 135.5020 } },
+                        { type: "shopping", name: "唐吉訶德摩天輪 (惠比壽塔)", desc: "道頓堀地標！搭乘摩天輪欣賞大阪夜景，車廂內有冷氣。", rating: 4.4, reviewCount: 5600, priceLevel: "$$", mapQuery: "Don Quijote Ferris Wheel Dotonbori", coords: { lat: 34.6687, lng: 135.5020 } }
                     ]
                 },
                 {
-                    name: "難波・千日前 (新增)",
+                    name: "難波・千日前",
                     desc: "在地人也愛的排隊名店區",
                     recs: [
-                        { type: "snack", name: "章魚燒道樂 Wanaka (千日前本店)", desc: "大阪人心中No.1！外皮薄脆內餡軟嫩，就在福太郎隔壁。", rating: 4.4, reviewCount: 4500, priceLevel: "$", mapQuery: "Takoyaki Wanaka Sennichimae", externalLink: "https://maps.app.goo.gl/RXb4wTEmXzL6ihCPA" },
-                        { type: "food", name: "福太郎 本店 (Fukutaro)", desc: "Top1 大阪燒名店！必點蔥燒 (Negiyaki)，口感軟嫩。", rating: 4.2, reviewCount: 3300, priceLevel: "$$", mapQuery: "Fukutaro Okonomiyaki Main Store" },
-                        { type: "food", name: "鳥貴族 難波千日前店", desc: "高CP值連鎖居酒屋，均一價！必點貴族燒與釜飯。", rating: 4.0, reviewCount: 800, priceLevel: "$", mapQuery: "Torikizoku Namba Sennichimae" }
+                        { type: "snack", name: "章魚燒道樂 Wanaka (千日前本店)", desc: "大阪人心中No.1！外皮薄脆內餡軟嫩，就在福太郎隔壁。", rating: 4.4, reviewCount: 4500, priceLevel: "$", mapQuery: "Takoyaki Wanaka Sennichimae", coords: { lat: 34.6663, lng: 135.5050 }, externalLink: "https://maps.app.goo.gl/RXb4wTEmXzL6ihCPA" },
+                        { type: "food", name: "福太郎 本店 (Fukutaro)", desc: "Top1 大阪燒名店！必點蔥燒 (Negiyaki)，口感軟嫩。", rating: 4.2, reviewCount: 3300, priceLevel: "$$", mapQuery: "Fukutaro Okonomiyaki Main Store", coords: { lat: 34.6663, lng: 135.5048 } },
+                        { type: "food", name: "鳥貴族 難波千日前店", desc: "高CP值連鎖居酒屋，均一價！必點貴族燒與釜飯。", rating: 4.0, reviewCount: 800, priceLevel: "$", mapQuery: "Torikizoku Namba Sennichimae", coords: { lat: 34.6658, lng: 135.5035 } }
                     ]
                 },
                 {
                     name: "梅田 (自由活動)",
                     desc: "時尚百貨與地下迷宮",
                     recs: [
-                        { type: "dessert", name: "Harbs Diamor Osaka", desc: "傳說中的水果千層蛋糕，不甜不膩。", rating: 4.4, reviewCount: 1200, priceLevel: "$$", mapQuery: "Harbs Diamor Osaka" },
-                        { type: "food", name: "龜壽司 (Kame Sushi)", desc: "老字號高CP值壽司，當地人也愛。", rating: 4.5, reviewCount: 2800, priceLevel: "$$", mapQuery: "Kame Sushi Total Main Shop" },
-                        { type: "shopping", name: "LUCUA / LUCUA 1100", desc: "年輕女生最愛的服飾品牌集散地。", rating: 4.3, reviewCount: 4100, priceLevel: "$$", mapQuery: "LUCUA Osaka" }
+                        { type: "dessert", name: "Harbs Diamor Osaka", desc: "傳說中的水果千層蛋糕，不甜不膩。", rating: 4.4, reviewCount: 1200, priceLevel: "$$", mapQuery: "Harbs Diamor Osaka", coords: { lat: 34.7025, lng: 135.4983 } },
+                        { type: "food", name: "龜壽司 (Kame Sushi)", desc: "老字號高CP值壽司，當地人也愛。", rating: 4.5, reviewCount: 2800, priceLevel: "$$", mapQuery: "Kame Sushi Total Main Shop", coords: { lat: 34.7045, lng: 135.4991 } },
+                        { type: "shopping", name: "LUCUA / LUCUA 1100", desc: "年輕女生最愛的服飾品牌集散地。", rating: 4.3, reviewCount: 4100, priceLevel: "$$", mapQuery: "LUCUA Osaka", coords: { lat: 34.7050, lng: 135.4960 } }
                     ]
                 },
                 {
                     name: "飯店周邊 (十三 Juso)",
                     desc: "在地美食激戰區",
                     recs: [
-                        { type: "food", name: "Negiyaki Yamamoto", desc: "蔥燒大阪燒發源地，香氣十足。", rating: 4.4, reviewCount: 1100, priceLevel: "$$", mapQuery: "Negiyaki Yamamoto Main Store" },
-                        { type: "snack", name: "喜八洲總本舖", desc: "必買御手洗糰子，焦香醬甜。", rating: 4.5, reviewCount: 2300, priceLevel: "$", mapQuery: "Kiyasu Sohonpo Head Office" }
+                        { type: "food", name: "Negiyaki Yamamoto", desc: "蔥燒大阪燒發源地，香氣十足。", rating: 4.4, reviewCount: 1100, priceLevel: "$$", mapQuery: "Negiyaki Yamamoto Main Store", coords: { lat: 34.7195, lng: 135.4735 } },
+                        { type: "snack", name: "喜八洲總本舖", desc: "必買御手洗糰子，焦香醬甜。", rating: 4.5, reviewCount: 2300, priceLevel: "$", mapQuery: "Kiyasu Sohonpo Head Office", coords: { lat: 34.7202, lng: 135.4732 } }
                     ]
                 }
             ]
@@ -76,32 +173,33 @@ const App = () => {
             date: "12/10 (三)",
             location: "京都・清水寺/嵐山/伏見",
             hotel: "Chisun Premium Kyoto Kujo",
+            hotelCoords: { lat: 34.9833, lng: 135.7594 },
             color: "from-blue-100 to-indigo-100",
             spots: [
                 {
                     name: "清水寺 & 二三年坂",
                     desc: "世界遺產與古老坡道",
                     recs: [
-                        { type: "coffee", name: "% ARABICA Kyoto Higashiyama", desc: "網紅咖啡始祖，拿鐵極致順滑。", rating: 4.4, reviewCount: 3500, priceLevel: "$$", mapQuery: "% ARABICA Kyoto Higashiyama" },
-                        { type: "food", name: "奧丹清水 (Okutan)", desc: "380年歷史的湯豆腐老店，庭園極美。", rating: 4.3, reviewCount: 1200, priceLevel: "$$$", mapQuery: "Okutan Kiyomizu" },
-                        { type: "dessert", name: "藤菜美 三年坂本店", desc: "洛水與蕨餅，口感冰涼軟糯。", rating: 4.5, reviewCount: 800, priceLevel: "$", mapQuery: "Fujinami Sannenzaka" }
+                        { type: "coffee", name: "% ARABICA Kyoto Higashiyama", desc: "網紅咖啡始祖，拿鐵極致順滑。", rating: 4.4, reviewCount: 3500, priceLevel: "$$", mapQuery: "% ARABICA Kyoto Higashiyama", coords: { lat: 34.9986, lng: 135.7811 } },
+                        { type: "food", name: "奧丹清水 (Okutan)", desc: "380年歷史的湯豆腐老店，庭園極美。", rating: 4.3, reviewCount: 1200, priceLevel: "$$$", mapQuery: "Okutan Kiyomizu", coords: { lat: 34.9953, lng: 135.7823 } },
+                        { type: "dessert", name: "藤菜美 三年坂本店", desc: "洛水與蕨餅，口感冰涼軟糯。", rating: 4.5, reviewCount: 800, priceLevel: "$", mapQuery: "Fujinami Sannenzaka", coords: { lat: 34.9980, lng: 135.7805 } }
                     ]
                 },
                 {
                     name: "嵐山",
                     desc: "竹林與渡月橋",
                     recs: [
-                        { type: "food", name: "史提克 奧茲卡 (Steak Otsuka)", desc: "A5黑毛和牛牛排，需預約或早排隊。", rating: 4.7, reviewCount: 950, priceLevel: "$$$", mapQuery: "Steak Otsuka Arashiyama" },
-                        { type: "dessert", name: "中村屋可樂餅", desc: "嵐山散步美食，肉舖現炸可樂餅。", rating: 4.4, reviewCount: 1500, priceLevel: "$", mapQuery: "Nakamuraya Arashiyama" },
-                        { type: "coffee", name: "eX cafe 嵐山", desc: "自己動手烤糰子，日式庭園風。", rating: 4.3, reviewCount: 1800, priceLevel: "$$", mapQuery: "eX cafe Arashiyama" }
+                        { type: "food", name: "史提克 奧茲卡 (Steak Otsuka)", desc: "A5黑毛和牛牛排，需預約或早排隊。", rating: 4.7, reviewCount: 950, priceLevel: "$$$", mapQuery: "Steak Otsuka Arashiyama", coords: { lat: 35.0149, lng: 135.6784 } },
+                        { type: "dessert", name: "中村屋可樂餅", desc: "嵐山散步美食，肉舖現炸可樂餅。", rating: 4.4, reviewCount: 1500, priceLevel: "$", mapQuery: "Nakamuraya Arashiyama", coords: { lat: 35.0155, lng: 135.6785 } },
+                        { type: "coffee", name: "eX cafe 嵐山", desc: "自己動手烤糰子，日式庭園風。", rating: 4.3, reviewCount: 1800, priceLevel: "$$", mapQuery: "eX cafe Arashiyama", coords: { lat: 35.0162, lng: 135.6745 } }
                     ]
                 },
                 {
                     name: "伏見稻荷大社",
                     desc: "千本鳥居",
                     recs: [
-                        { type: "coffee", name: "Vermillion - cafe", desc: "鳥居參拜後的森林系咖啡廳。", rating: 4.6, reviewCount: 600, priceLevel: "$$", mapQuery: "Vermillion - cafe." },
-                        { type: "snack", name: "寶玉堂", desc: "傳統狐狸煎餅創始店。", rating: 4.5, reviewCount: 400, priceLevel: "$", mapQuery: "Hogyokudo" }
+                        { type: "coffee", name: "Vermillion - cafe", desc: "鳥居參拜後的森林系咖啡廳。", rating: 4.6, reviewCount: 600, priceLevel: "$$", mapQuery: "Vermillion - cafe.", coords: { lat: 34.9672, lng: 135.7727 } },
+                        { type: "snack", name: "寶玉堂", desc: "傳統狐狸煎餅創始店。", rating: 4.5, reviewCount: 400, priceLevel: "$", mapQuery: "Hogyokudo", coords: { lat: 34.9671, lng: 135.7726 } }
                     ]
                 }
             ]
@@ -111,24 +209,25 @@ const App = () => {
             date: "12/11 (四)",
             location: "宇治・大阪本町",
             hotel: "HOTEL androoms 大阪本町",
+            hotelCoords: { lat: 34.6834, lng: 135.5011 },
             color: "from-green-100 to-emerald-100",
             spots: [
                 {
                     name: "宇治 (平等院)",
                     desc: "抹茶的故鄉",
                     recs: [
-                        { type: "dessert", name: "中村藤吉 本店", desc: "宇治必吃！生茶果凍與抹茶蕎麥麵。", rating: 4.5, reviewCount: 5200, priceLevel: "$$", mapQuery: "Nakamura Tokichi Honten" },
-                        { type: "dessert", name: "伊藤久右衛門", desc: "抹茶巴菲聖代，季節限定款必點。", rating: 4.4, reviewCount: 3100, priceLevel: "$$", mapQuery: "Itohkyuemon Uji Main Store" },
-                        { type: "food", name: "地雞家心 (Kokoro)", desc: "宇治當地人推薦的雞肉料理與燒鳥。", rating: 4.5, reviewCount: 450, priceLevel: "$$", mapQuery: "Jidoriya Kokoro Uji" }
+                        { type: "dessert", name: "中村藤吉 本店", desc: "宇治必吃！生茶果凍與抹茶蕎麥麵。", rating: 4.5, reviewCount: 5200, priceLevel: "$$", mapQuery: "Nakamura Tokichi Honten", coords: { lat: 34.8891, lng: 135.8078 } },
+                        { type: "dessert", name: "伊藤久右衛門", desc: "抹茶巴菲聖代，季節限定款必點。", rating: 4.4, reviewCount: 3100, priceLevel: "$$", mapQuery: "Itohkyuemon Uji Main Store", coords: { lat: 34.8895, lng: 135.8037 } },
+                        { type: "food", name: "地雞家心 (Kokoro)", desc: "宇治當地人推薦的雞肉料理與燒鳥。", rating: 4.5, reviewCount: 450, priceLevel: "$$", mapQuery: "Jidoriya Kokoro Uji", coords: { lat: 34.8898, lng: 135.8002 } }
                     ]
                 },
                 {
                     name: "大阪本町 (飯店周邊)",
                     desc: "商務區隱藏美食",
                     recs: [
-                        { type: "food", name: "中華蕎麥 葛 (Kazura)", desc: "超人氣泡沫系雞白湯拉麵，高分名店。", rating: 4.6, reviewCount: 1800, priceLevel: "$", mapQuery: "Chuka Soba Kazura" },
-                        { type: "coffee", name: "Wad Omotenashi Cafe", desc: "極簡日式茶屋，非常有質感的刨冰與茶。", rating: 4.7, reviewCount: 650, priceLevel: "$$", mapQuery: "Wad Omotenashi Cafe" },
-                        { type: "shopping", name: "Standard Products", desc: "大創的高級副牌，簡約生活雜貨。", rating: 4.3, reviewCount: 200, priceLevel: "$", mapQuery: "Standard Products Shinsaibashi" }
+                        { type: "food", name: "中華蕎麥 葛 (Kazura)", desc: "超人氣泡沫系雞白湯拉麵，高分名店。", rating: 4.6, reviewCount: 1800, priceLevel: "$", mapQuery: "Chuka Soba Kazura", coords: { lat: 34.6823, lng: 135.5025 } },
+                        { type: "coffee", name: "Wad Omotenashi Cafe", desc: "極簡日式茶屋，非常有質感的刨冰與茶。", rating: 4.7, reviewCount: 650, priceLevel: "$$", mapQuery: "Wad Omotenashi Cafe", coords: { lat: 34.6798, lng: 135.5028 } },
+                        { type: "shopping", name: "Standard Products", desc: "大創的高級副牌，簡約生活雜貨。", rating: 4.3, reviewCount: 200, priceLevel: "$", mapQuery: "Standard Products Shinsaibashi", coords: { lat: 34.6730, lng: 135.5012 } }
                     ]
                 }
             ]
@@ -138,23 +237,24 @@ const App = () => {
             date: "12/12 (五)",
             location: "大阪環球影城 USJ",
             hotel: "HOTEL androoms 大阪本町",
+            hotelCoords: { lat: 34.6834, lng: 135.5011 },
             color: "from-yellow-100 to-orange-100",
             spots: [
                 {
                     name: "USJ 園區內",
                     desc: "推薦預約與排隊美食",
                     recs: [
-                        { type: "food", name: "Kinopio's Cafe", desc: "瑪利歐賽車漢堡，氣氛滿分 (需整理券)。", rating: 4.2, reviewCount: 1500, priceLevel: "$$$", mapQuery: "Kinopio's Cafe USJ" },
-                        { type: "snack", name: "奶油啤酒 (Butterbeer)", desc: "哈利波特園區必喝，無酒精。", rating: 4.5, reviewCount: 3000, priceLevel: "$$", mapQuery: "Three Broomsticks USJ" },
-                        { type: "food", name: "Park Side Grille", desc: "園區內較高級的牛排館，適合好好休息。", rating: 4.0, reviewCount: 600, priceLevel: "$$$", mapQuery: "Park Side Grille USJ" }
+                        { type: "food", name: "Kinopio's Cafe", desc: "瑪利歐賽車漢堡，氣氛滿分 (需整理券)。", rating: 4.2, reviewCount: 1500, priceLevel: "$$$", mapQuery: "Kinopio's Cafe USJ", coords: { lat: 34.6663, lng: 135.4323 } },
+                        { type: "snack", name: "奶油啤酒 (Butterbeer)", desc: "哈利波特園區必喝，無酒精。", rating: 4.5, reviewCount: 3000, priceLevel: "$$", mapQuery: "Three Broomsticks USJ", coords: { lat: 34.6680, lng: 135.4318 } },
+                        { type: "food", name: "Park Side Grille", desc: "園區內較高級的牛排館，適合好好休息。", rating: 4.0, reviewCount: 600, priceLevel: "$$$", mapQuery: "Park Side Grille USJ", coords: { lat: 34.6654, lng: 135.4320 } }
                     ]
                 },
                 {
                     name: "USJ City Walk (園區外)",
                     desc: "結束後的晚餐選擇",
                     recs: [
-                        { type: "food", name: "SHAKE SHACK", desc: "來自紐約的經典漢堡，穩定好吃。", rating: 4.4, reviewCount: 2200, priceLevel: "$$", mapQuery: "Shake Shack Daimaru Shinsaibashi" },
-                        { type: "snack", name: "551 Horai", desc: "大阪名物豬肉包，回飯店當宵夜最棒。", rating: 4.3, reviewCount: 1800, priceLevel: "$", mapQuery: "551 Horai Universal City" }
+                        { type: "food", name: "SHAKE SHACK", desc: "來自紐約的經典漢堡，穩定好吃。", rating: 4.4, reviewCount: 2200, priceLevel: "$$", mapQuery: "Shake Shack Universal CityWalk", coords: { lat: 34.6657, lng: 135.4350 } },
+                        { type: "snack", name: "551 Horai", desc: "大阪名物豬肉包，回飯店當宵夜最棒。", rating: 4.3, reviewCount: 1800, priceLevel: "$", mapQuery: "551 Horai Universal City", coords: { lat: 34.6655, lng: 135.4355 } }
                     ]
                 }
             ]
@@ -164,14 +264,15 @@ const App = () => {
             date: "12/13 (六)",
             location: "關西機場・返台",
             hotel: "溫暖的家",
+            hotelCoords: null,
             color: "from-slate-100 to-gray-200",
             spots: [
                 {
                     name: "關西機場",
                     desc: "最後衝刺",
                     recs: [
-                        { type: "shopping", name: "免稅店 (Fa-So-La)", desc: "購買白色戀人、Tokyo Banana、Royce巧克力。", rating: 4.0, reviewCount: 1200, priceLevel: "$$", mapQuery: "Kansai Airport Duty Free" },
-                        { type: "food", name: "Pote-Rico (Calbee+)", desc: "現炸薯條棒，外脆內軟。", rating: 4.3, reviewCount: 800, priceLevel: "$", mapQuery: "Calbee+ Kansai Airport" }
+                        { type: "shopping", name: "免稅店 (Fa-So-La)", desc: "購買白色戀人、Tokyo Banana、Royce巧克力。", rating: 4.0, reviewCount: 1200, priceLevel: "$$", mapQuery: "Kansai Airport Duty Free", coords: { lat: 34.4347, lng: 135.2441 } },
+                        { type: "food", name: "Pote-Rico (Calbee+)", desc: "現炸薯條棒，外脆內軟。", rating: 4.3, reviewCount: 800, priceLevel: "$", mapQuery: "Calbee+ Kansai Airport", coords: { lat: 34.4347, lng: 135.2441 } }
                     ]
                 }
             ]
@@ -181,68 +282,93 @@ const App = () => {
     const currentItinerary = itineraryData.find(d => d.day === activeDay);
 
     return (
-        <div className="min-h-screen pb-20 max-w-md mx-auto bg-[#FAFAFA] shadow-2xl relative overflow-hidden font-sans">
-            {/* Header */}
-            <div className={`pt-12 pb-6 px-6 bg-gradient-to-br ${currentItinerary.color} rounded-b-[40px] shadow-sm transition-all duration-500`}>
-                <div className="flex justify-between items-center mb-4">
-                    <span className="bg-white/60 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-600 tracking-widest border border-white/40">
-                        君&媽咪の京阪之旅 2025
-                    </span>
-                    <div className="w-8 h-8 bg-white/60 rounded-full flex items-center justify-center backdrop-blur-sm">
-                        <Calendar size={16} className="text-gray-600" />
+        <LocationProvider>
+            <div className="min-h-screen pb-20 max-w-md mx-auto bg-[#FAFAFA] shadow-2xl relative overflow-hidden font-sans">
+                {/* Header */}
+                <div className={`pt-12 pb-6 px-6 bg-gradient-to-br ${currentItinerary.color} rounded-b-[40px] shadow-sm transition-all duration-500`}>
+                    <div className="flex justify-between items-center mb-4">
+                        <span className="bg-white/60 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-gray-600 tracking-widest border border-white/40">
+                            君&媽咪の京阪之旅 2025
+                        </span>
+                        <LocationButton />
+                    </div>
+                    <h1 className="text-3xl font-bold text-gray-800 mb-1">{currentItinerary.location}</h1>
+                    <p className="text-gray-600 font-medium opacity-80 flex items-center gap-1">
+                        <span className="text-xs bg-black text-white px-2 py-0.5 rounded mr-1">Day {activeDay}</span>
+                        {currentItinerary.date}
+                    </p>
+
+                    {/* Hotel Info Mini Card */}
+                    <div className="mt-6 bg-white/70 backdrop-blur-sm p-3 rounded-xl border border-white/50 flex items-start gap-3">
+                        <div className="bg-gray-800 p-2 rounded-full text-white mt-0.5">
+                            <MapPin size={14} />
+                        </div>
+                        <div>
+                            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Accommodation</p>
+                            <p className="text-sm font-bold text-gray-800 leading-tight">{currentItinerary.hotel}</p>
+                        </div>
                     </div>
                 </div>
-                <h1 className="text-3xl font-bold text-gray-800 mb-1">{currentItinerary.location}</h1>
-                <p className="text-gray-600 font-medium opacity-80 flex items-center gap-1">
-                    <span className="text-xs bg-black text-white px-2 py-0.5 rounded mr-1">Day {activeDay}</span>
-                    {currentItinerary.date}
-                </p>
 
-                {/* Hotel Info Mini Card */}
-                <div className="mt-6 bg-white/70 backdrop-blur-sm p-3 rounded-xl border border-white/50 flex items-start gap-3">
-                    <div className="bg-gray-800 p-2 rounded-full text-white mt-0.5">
-                        <MapPin size={14} />
-                    </div>
-                    <div>
-                        <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Accommodation</p>
-                        <p className="text-sm font-bold text-gray-800 leading-tight">{currentItinerary.hotel}</p>
+                {/* Day Selector */}
+                <div className="flex gap-3 overflow-x-auto px-6 py-6 no-scrollbar snap-x">
+                    {itineraryData.map((d) => (
+                        <button
+                            key={d.day}
+                            onClick={() => setActiveDay(d.day)}
+                            className={`snap-center shrink-0 flex flex-col items-center justify-center w-14 h-20 rounded-2xl border transition-all duration-300 ${
+                                activeDay === d.day
+                                ? 'bg-gray-800 text-white border-gray-800 shadow-lg scale-105'
+                                : 'bg-white text-gray-400 border-gray-100'
+                            }`}
+                        >
+                            <span className="text-xs font-medium">Day</span>
+                            <span className="text-xl font-bold">{d.day}</span>
+                        </button>
+                    ))}
+                </div>
+
+                {/* Content */}
+                <div className="px-6 animate-fade-in pb-16">
+                    {currentItinerary.spots.map((spot, index) => (
+                        <SpotSection key={index} spot={spot} />
+                    ))}
+                </div>
+
+                {/* Footer / Floating Info */}
+                <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
+                    <div className="bg-white/90 backdrop-blur-xl border border-gray-200 shadow-xl rounded-full px-6 py-3 flex items-center gap-3">
+                        <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                        <span className="text-xs font-bold text-gray-600">旅途愉快 Have a nice trip!</span>
                     </div>
                 </div>
             </div>
+        </LocationProvider>
+    );
+};
 
-            {/* Day Selector */}
-            <div className="flex gap-3 overflow-x-auto px-6 py-6 no-scrollbar snap-x">
-                {itineraryData.map((d) => (
-                    <button
-                        key={d.day}
-                        onClick={() => setActiveDay(d.day)}
-                        className={`snap-center shrink-0 flex flex-col items-center justify-center w-14 h-20 rounded-2xl border transition-all duration-300 ${
-                            activeDay === d.day
-                            ? 'bg-gray-800 text-white border-gray-800 shadow-lg scale-105'
-                            : 'bg-white text-gray-400 border-gray-100'
-                        }`}
-                    >
-                        <span className="text-xs font-medium">Day</span>
-                        <span className="text-xl font-bold">{d.day}</span>
-                    </button>
-                ))}
-            </div>
+// --- Location Button Component ---
+const LocationButton = () => {
+    const { userLocation, locationError, isLoading, requestLocation } = useLocation();
 
-            {/* Content */}
-            <div className="px-6 animate-fade-in pb-16">
-                {currentItinerary.spots.map((spot, index) => (
-                    <SpotSection key={index} spot={spot} />
-                ))}
-            </div>
-
-            {/* Footer / Floating Info */}
-            <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
-                <div className="bg-white/90 backdrop-blur-xl border border-gray-200 shadow-xl rounded-full px-6 py-3 flex items-center gap-3">
-                    <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                    <span className="text-xs font-bold text-gray-600">旅途愉快 Have a nice trip!</span>
-                </div>
-            </div>
-        </div>
+    return (
+        <button
+            onClick={requestLocation}
+            className={`w-8 h-8 rounded-full flex items-center justify-center backdrop-blur-sm transition-all ${
+                userLocation
+                    ? 'bg-green-500 text-white'
+                    : locationError
+                        ? 'bg-red-100 text-red-500'
+                        : 'bg-white/60 text-gray-600 hover:bg-white/80'
+            }`}
+            title={userLocation ? '已取得位置' : locationError || '點擊取得位置'}
+        >
+            {isLoading ? (
+                <Loader size={16} className="animate-spin" />
+            ) : (
+                <Navigation size={16} className={userLocation ? 'fill-current' : ''} />
+            )}
+        </button>
     );
 };
 
@@ -259,6 +385,31 @@ const TypeIcon = ({ type }) => {
         case 'coupon': return <div className="p-1.5 bg-red-100 text-red-500 rounded-full animate-bounce"><Ticket size={14} /></div>;
         default: return <div className="p-1.5 bg-gray-100 text-gray-500 rounded-full"><Star size={14} /></div>;
     }
+};
+
+const DistanceBadge = ({ coords }) => {
+    const { userLocation } = useLocation();
+
+    if (!userLocation || !coords) return null;
+
+    const distance = calculateDistance(
+        userLocation.lat,
+        userLocation.lng,
+        coords.lat,
+        coords.lng
+    );
+
+    const formattedDistance = formatDistance(distance);
+    const walkTime = estimateWalkTime(distance);
+
+    return (
+        <div className="flex items-center gap-1 bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full text-[10px] font-bold">
+            <Navigation size={10} className="fill-current" />
+            <span>{formattedDistance}</span>
+            <span className="text-blue-400">•</span>
+            <span className="text-blue-500">{walkTime}</span>
+        </div>
+    );
 };
 
 const RecCard = ({ item }) => {
@@ -305,7 +456,7 @@ const RecCard = ({ item }) => {
                     <TypeIcon type={item.type} />
                     <div className="flex flex-col">
                         <h4 className={`font-bold text-base leading-tight ${isCoupon ? "text-red-600" : "text-gray-800"}`}>{item.name}</h4>
-                        <div className="flex items-center gap-1 mt-0.5">
+                        <div className="flex items-center gap-1 mt-0.5 flex-wrap">
                             <span className="text-xs font-bold text-gray-800">{item.rating}</span>
                             <div className="flex">
                                 {[...Array(5)].map((_, i) => (
@@ -319,6 +470,10 @@ const RecCard = ({ item }) => {
                             <span className="text-[10px] text-gray-400 font-medium">{formatReviews(item.reviewCount)}</span>
                             <span className="text-[10px] text-gray-300 mx-1">•</span>
                             <span className="text-[10px] text-gray-500 font-medium">{item.priceLevel}</span>
+                        </div>
+                        {/* Distance Badge */}
+                        <div className="mt-1">
+                            <DistanceBadge coords={item.coords} />
                         </div>
                     </div>
                 </div>
