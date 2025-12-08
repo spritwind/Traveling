@@ -435,33 +435,49 @@ const App = () => {
             date: "12/10 (三)",
             location: "京都・清水寺/嵐山/伏見",
             hotel: "Chisun Premium Kyoto Kujo",
-            hotelCoords: { lat: 34.9833, lng: 135.7594 },
+            hotelCoords: { lat: 34.980512, lng: 135.763981 },
             color: "from-blue-100 to-indigo-100",
             spots: [
                 {
-                    name: "清水寺 & 二三年坂",
-                    desc: "世界遺產與古老坡道",
+                    name: "清水寺・二三年坂・祇園",
+                    desc: "世界遺產與古老坡道，米其林老店林立",
                     recs: [
-                        { type: "coffee", name: "% ARABICA Kyoto Higashiyama", desc: "網紅咖啡始祖，拿鐵極致順滑。", rating: 4.4, reviewCount: 3500, priceLevel: "$$", mapQuery: "% ARABICA Kyoto Higashiyama", coords: { lat: 34.9986, lng: 135.7811 } },
-                        { type: "food", name: "奧丹清水 (Okutan)", desc: "380年歷史的湯豆腐老店，庭園極美。", rating: 4.3, reviewCount: 1200, priceLevel: "$$$", mapQuery: "Okutan Kiyomizu", coords: { lat: 34.9953, lng: 135.7823 } },
-                        { type: "dessert", name: "藤菜美 三年坂本店", desc: "洛水與蕨餅，口感冰涼軟糯。", rating: 4.5, reviewCount: 800, priceLevel: "$", mapQuery: "Fujinami Sannenzaka", coords: { lat: 34.9980, lng: 135.7805 } }
+                        { type: "food", name: "奧丹 清水店 (Okutan)", desc: "🏛️ 創業380年湯豆腐始祖！在優美日式庭園中享用京都名物湯豆腐，口感綿密，體驗京都飲食文化經典。", rating: 3.9, reviewCount: 1800, priceLevel: "$$$", mapQuery: "Okutan Kiyomizu", coords: { lat: 34.9979, lng: 135.7807 } },
+                        { type: "dessert", name: "藤菜美 三年坂本店", desc: "🍡 三年坂必吃！現烤醬油糰子沾鹹甜醬汁，配上冰抹茶「洛水」，走累了最好的休息點。", rating: 4.4, reviewCount: 1200, priceLevel: "$", mapQuery: "Fujinami Sannenzaka Kyoto", coords: { lat: 34.9966, lng: 135.7810 } },
+                        { type: "coffee", name: "星巴克 京都二寧坂茶屋店", desc: "☕ 全球唯一榻榻米星巴克！改建自百年町家老屋，在日式老屋喝咖啡的獨特氛圍 (需排隊)。", rating: 4.4, reviewCount: 8500, priceLevel: "$$", mapQuery: "Starbucks Kyoto Ninenzaka Yasaka Chaya", coords: { lat: 34.9998, lng: 135.7803 } },
+                        { type: "food", name: "葫蘆 (ひさご)", desc: "🍳 高台寺旁必吃親子丼！半熟滑嫩雞蛋配上山椒粉，京都親子丼名店，通常需排隊。", rating: 4.1, reviewCount: 2200, priceLevel: "$$", mapQuery: "Hisago Kyoto", coords: { lat: 35.0013, lng: 135.7792 } },
+                        { type: "coffee", name: "% ARABICA 京都東山", desc: "☕ 網紅咖啡始祖！拿鐵極致順滑，白色建築在古街中格外醒目。", rating: 4.2, reviewCount: 5500, priceLevel: "$$", mapQuery: "% ARABICA Kyoto Higashiyama", coords: { lat: 34.9986, lng: 135.7811 } }
                     ]
                 },
                 {
-                    name: "嵐山",
-                    desc: "竹林與渡月橋",
+                    name: "嵐山・竹林・渡月橋",
+                    desc: "米其林密集區域，建議午餐在此享用",
                     recs: [
-                        { type: "food", name: "史提克 奧茲卡 (Steak Otsuka)", desc: "A5黑毛和牛牛排，需預約或早排隊。", rating: 4.7, reviewCount: 950, priceLevel: "$$$", mapQuery: "Steak Otsuka Arashiyama", coords: { lat: 35.0149, lng: 135.6784 } },
-                        { type: "dessert", name: "中村屋可樂餅", desc: "嵐山散步美食，肉舖現炸可樂餅。", rating: 4.4, reviewCount: 1500, priceLevel: "$", mapQuery: "Nakamuraya Arashiyama", coords: { lat: 35.0155, lng: 135.6785 } },
-                        { type: "coffee", name: "eX cafe 嵐山", desc: "自己動手烤糰子，日式庭園風。", rating: 4.3, reviewCount: 1800, priceLevel: "$$", mapQuery: "eX cafe Arashiyama", coords: { lat: 35.0162, lng: 135.6745 } }
+                        { type: "food", name: "廣川鰻魚飯 (Hirokawa)", desc: "⭐ 米其林一星！嵐山最強美食，關西風烤鰻魚外酥內嫩，醬汁濃郁。強烈建議事先網路預約！", rating: 4.3, reviewCount: 3200, priceLevel: "$$$", mapQuery: "Unagi Hirokawa Arashiyama", coords: { lat: 35.0169, lng: 135.6772 } },
+                        { type: "food", name: "鯛匠 HANANA", desc: "🐟 米其林必比登！必吃鯛魚茶泡飯，三種吃法：生魚片沾胡麻醬、配飯吃、淋熱茶做茶泡飯。", rating: 4.2, reviewCount: 2800, priceLevel: "$$", mapQuery: "Taisho Hanana Arashiyama", coords: { lat: 35.0152, lng: 135.6776 } },
+                        { type: "snack", name: "中村屋可樂餅 (Nakamuraya)", desc: "🥔 老牌肉舖的現炸可樂餅！牛肉可樂餅約100多日圓，炸得酥脆熱燙，嵐山散步必備平價美食。", rating: 4.2, reviewCount: 2500, priceLevel: "$", mapQuery: "Nakamuraya Korokke Arashiyama", coords: { lat: 35.0163, lng: 135.6803 } },
+                        { type: "coffee", name: "% ARABICA 京都嵐山", desc: "☕ 世界級網紅咖啡！純白建築坐落桂川畔，買杯拿鐵坐河岸欣賞渡月橋與山景，最Chill體驗。", rating: 4.2, reviewCount: 6800, priceLevel: "$$", mapQuery: "% ARABICA Kyoto Arashiyama", coords: { lat: 35.0135, lng: 135.6764 } },
+                        { type: "coffee", name: "eX cafe 嵐山本店", desc: "🍵 自己動手烤糰子！日式庭園風咖啡廳，抹茶與甜點都很有水準。", rating: 4.3, reviewCount: 2200, priceLevel: "$$", mapQuery: "eX cafe Arashiyama", coords: { lat: 35.0162, lng: 135.6745 } }
                     ]
                 },
                 {
                     name: "伏見稻荷大社",
-                    desc: "千本鳥居",
+                    desc: "千本鳥居，特色美食：稻荷壽司",
                     recs: [
-                        { type: "coffee", name: "Vermillion - cafe", desc: "鳥居參拜後的森林系咖啡廳。", rating: 4.6, reviewCount: 600, priceLevel: "$$", mapQuery: "Vermillion - cafe.", coords: { lat: 34.9672, lng: 135.7727 } },
-                        { type: "snack", name: "寶玉堂", desc: "傳統狐狸煎餅創始店。", rating: 4.5, reviewCount: 400, priceLevel: "$", mapQuery: "Hogyokudo", coords: { lat: 34.9671, lng: 135.7726 } }
+                        { type: "food", name: "祢ざめ家 (Nezameya)", desc: "🏛️ 470年歷史老店！傳說名字由豐臣秀吉所賜，招牌烤鰻魚與稻荷壽司，歷史地位無可取代。", rating: 2.9, reviewCount: 1500, priceLevel: "$$", mapQuery: "Nezameya Fushimi Inari", coords: { lat: 34.9678, lng: 135.7708 } },
+                        { type: "food", name: "手打烏龍麵 Kendonya", desc: "🍜 高評價手打烏龍！麵條Q彈有勁，比神社門口觀光店更受好評，價格公道。", rating: 4.5, reviewCount: 850, priceLevel: "$", mapQuery: "Kendonya Udon Fushimi", coords: { lat: 34.9683, lng: 135.7683 } },
+                        { type: "coffee", name: "Vermillion - cafe", desc: "☕ 澳式森林系咖啡廳！老闆曾在墨爾本生活，露台座位面對森林池塘，參拜後休息首選。", rating: 4.5, reviewCount: 1200, priceLevel: "$$", mapQuery: "Vermillion cafe Fushimi Inari", coords: { lat: 34.9684, lng: 135.7741 } },
+                        { type: "snack", name: "寶玉堂", desc: "🦊 傳統狐狸煎餅創始店！稻荷神社參拜必買伴手禮。", rating: 4.5, reviewCount: 600, priceLevel: "$", mapQuery: "Hogyokudo Fushimi Inari", coords: { lat: 34.9671, lng: 135.7726 } }
+                    ]
+                },
+                {
+                    name: "飯店周邊 (京都九條)",
+                    desc: "步行可達的購物與消夜選擇",
+                    recs: [
+                        { type: "drug", name: "唐吉訶德 京都Avanti店", desc: "🛒 營業至午夜24:00！位於Avanti百貨2樓，藥妝零食電器一站購足，回飯店前補貨首選。", rating: 3.7, reviewCount: 1800, priceLevel: "$$", mapQuery: "Don Quijote Kyoto Avanti", coords: { lat: 34.9832, lng: 135.7588 } },
+                        { type: "shopping", name: "AEON MALL KYOTO", desc: "🏬 大型購物中心！1樓超市 KOHYO 營業至22:00，買水果消夜日本酒。也有無印良品與Uniqlo。", rating: 4.0, reviewCount: 5200, priceLevel: "$$", mapQuery: "AEON Mall Kyoto", coords: { lat: 34.9855, lng: 135.7590 } },
+                        { type: "food", name: "大黑拉麵 (ラーメン大黒)", desc: "🍜 在地老店消夜！價格超親民(約500-600日圓)，經典豚骨醬油，當地人愛的高CP值選擇。", rating: 4.2, reviewCount: 650, priceLevel: "$", mapQuery: "Ramen Daikoku Kyoto Kujo", coords: { lat: 34.9788, lng: 135.7615 } },
+                        { type: "food", name: "殿田食堂 (Tonoda)", desc: "🍛 老字號食堂！必吃「たぬきうどん」勾芡烏龍麵或親子丼，充滿昭和風情的溫暖家常味。", rating: 4.1, reviewCount: 420, priceLevel: "$", mapQuery: "Tonoda Shokudo Kyoto", coords: { lat: 34.9795, lng: 135.7620 } }
                     ]
                 }
             ]
