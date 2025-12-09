@@ -95,36 +95,124 @@ const estimateWalkTime = (meters) => {
     return `${hours}h ${mins}m`;
 };
 
+// --- 精美天氣圖示 SVG 組件 ---
+const WeatherSVG = ({ code, size = 24 }) => {
+    // Open-Meteo WMO Weather interpretation codes
+    // 0: Clear, 1-3: Partly cloudy, 45-48: Fog, 51-67: Drizzle/Rain, 71-77: Snow, 80-99: Showers/Thunderstorm
+
+    if (code === 0) {
+        // 晴天 - 太陽
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="5" fill="#FFB800" />
+                <g stroke="#FFB800" strokeWidth="2" strokeLinecap="round">
+                    <line x1="12" y1="1" x2="12" y2="3" />
+                    <line x1="12" y1="21" x2="12" y2="23" />
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                    <line x1="1" y1="12" x2="3" y2="12" />
+                    <line x1="21" y1="12" x2="23" y2="12" />
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                </g>
+            </svg>
+        );
+    }
+
+    if (code <= 3) {
+        // 多雲 - 太陽+雲
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+                <circle cx="8" cy="8" r="4" fill="#FFB800" />
+                <g stroke="#FFB800" strokeWidth="1.5" strokeLinecap="round">
+                    <line x1="8" y1="1" x2="8" y2="2.5" />
+                    <line x1="2.5" y1="5" x2="3.5" y2="6" />
+                    <line x1="1" y1="8" x2="2.5" y2="8" />
+                    <line x1="13.5" y1="5" x2="12.5" y2="6" />
+                </g>
+                <path d="M19.5 16.5C20.8807 16.5 22 15.3807 22 14C22 12.6193 20.8807 11.5 19.5 11.5C19.5 9.01472 17.4853 7 15 7C12.7909 7 10.9532 8.6 10.5516 10.7004C10.0389 10.5693 9.5 10.5 9 10.5C6.79086 10.5 5 12.2909 5 14.5C5 16.7091 6.79086 18.5 9 18.5H19.5" fill="#E5E7EB" stroke="#9CA3AF" strokeWidth="1.5" />
+            </svg>
+        );
+    }
+
+    if (code <= 48) {
+        // 陰天/霧 - 雲
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+                <path d="M19.5 15C21.1569 15 22.5 13.6569 22.5 12C22.5 10.3431 21.1569 9 19.5 9C19.5 6.23858 17.2614 4 14.5 4C12.0147 4 9.96044 5.82823 9.55889 8.21062C8.93242 8.07251 8.27642 8 7.6 8C4.50721 8 2 10.5072 2 13.6C2 16.6928 4.50721 19.2 7.6 19.2H19.5" fill="#D1D5DB" stroke="#6B7280" strokeWidth="1.5" />
+            </svg>
+        );
+    }
+
+    if (code <= 67) {
+        // 雨天 - 雲+雨滴
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+                <path d="M17 9C18.6569 9 20 7.65685 20 6C20 4.34315 18.6569 3 17 3C17 1.34315 15.2091 0 13 0C10.7909 0 9 1.79086 9 4C9 4.17157 9.01 4.34 9.028 4.505C8.37651 4.18041 7.64401 4 6.87 4C4.18315 4 2 6.18315 2 8.87C2 11.5569 4.18315 13.74 6.87 13.74H17" fill="#93C5FD" stroke="#3B82F6" strokeWidth="1.5" transform="translate(1, 1)" />
+                <g stroke="#3B82F6" strokeWidth="1.5" strokeLinecap="round">
+                    <line x1="8" y1="17" x2="8" y2="21" />
+                    <line x1="12" y1="17" x2="12" y2="23" />
+                    <line x1="16" y1="17" x2="16" y2="20" />
+                </g>
+            </svg>
+        );
+    }
+
+    if (code <= 77) {
+        // 雪天 - 雲+雪花
+        return (
+            <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+                <path d="M17 8C18.6569 8 20 6.65685 20 5C20 3.34315 18.6569 2 17 2C17 0.343146 15.2091 -1 13 -1C10.7909 -1 9 0.790861 9 3C9 3.17157 9.01 3.34 9.028 3.505C8.37651 3.18041 7.64401 3 6.87 3C4.18315 3 2 5.18315 2 7.87C2 10.5569 4.18315 12.74 6.87 12.74H17" fill="#BFDBFE" stroke="#60A5FA" strokeWidth="1.5" transform="translate(1, 2)" />
+                <g fill="#60A5FA">
+                    <circle cx="7" cy="18" r="1.5" />
+                    <circle cx="12" cy="20" r="1.5" />
+                    <circle cx="17" cy="17" r="1.5" />
+                    <circle cx="9" cy="22" r="1" />
+                    <circle cx="15" cy="22" r="1" />
+                </g>
+            </svg>
+        );
+    }
+
+    // 雷雨 - 雲+閃電
+    return (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+            <path d="M17 7C18.6569 7 20 5.65685 20 4C20 2.34315 18.6569 1 17 1C17 -0.656854 15.2091 -2 13 -2C10.7909 -2 9 -0.209139 9 2C9 2.17157 9.01 2.34 9.028 2.505C8.37651 2.18041 7.64401 2 6.87 2C4.18315 2 2 4.18315 2 6.87C2 9.55685 4.18315 11.74 6.87 11.74H17" fill="#6B7280" stroke="#374151" strokeWidth="1.5" transform="translate(1, 3)" />
+            <polygon points="13,13 10,18 12,18 10,23 16,16 13,16 15,13" fill="#FBBF24" stroke="#F59E0B" strokeWidth="0.5" />
+        </svg>
+    );
+};
+
 // --- 天氣圖示組件 (使用 Open-Meteo 免費 API) ---
 const WeatherIcon = ({ day, coords }) => {
     const [weather, setWeather] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // 每天的地標 emoji
-    const landmarks = {
-        1: "🏯", // 大阪城
-        2: "⛩️", // 京都鳥居
-        3: "🍵", // 宇治抹茶
-        4: "🎢", // USJ
-        5: "✈️", // 機場
-    };
-
-    // 天氣代碼對應 emoji
-    const getWeatherEmoji = (code) => {
-        if (code === 0) return "☀️";
-        if (code <= 3) return "🌤️";
-        if (code <= 48) return "☁️";
-        if (code <= 67) return "🌧️";
-        if (code <= 77) return "🌨️";
-        if (code <= 99) return "⛈️";
-        return "🌤️";
-    };
-
-    // 計算目標日期 (2024/12/9 + day - 1)
+    // 計算目標日期 (2025/12/9 + day - 1)
     const getTargetDate = (dayNum) => {
-        const baseDate = new Date(2024, 11, 9); // 12月9日
+        const baseDate = new Date(2025, 11, 9); // 2025年12月9日
         baseDate.setDate(baseDate.getDate() + dayNum - 1);
         return baseDate.toISOString().split('T')[0];
+    };
+
+    // 取得天氣描述
+    const getWeatherDesc = (code) => {
+        if (code === 0) return "晴";
+        if (code <= 3) return "多雲";
+        if (code <= 48) return "陰";
+        if (code <= 67) return "雨";
+        if (code <= 77) return "雪";
+        return "雷雨";
+    };
+
+    // 取得背景漸層色
+    const getWeatherGradient = (code) => {
+        if (code === 0) return "from-amber-100 to-orange-100"; // 晴
+        if (code <= 3) return "from-sky-100 to-blue-100"; // 多雲
+        if (code <= 48) return "from-gray-200 to-slate-200"; // 陰
+        if (code <= 67) return "from-blue-200 to-indigo-200"; // 雨
+        if (code <= 77) return "from-blue-100 to-cyan-100"; // 雪
+        return "from-gray-300 to-slate-300"; // 雷雨
     };
 
     useEffect(() => {
@@ -137,8 +225,9 @@ const WeatherIcon = ({ day, coords }) => {
             try {
                 const targetDate = getTargetDate(day);
                 // Open-Meteo 免費 API，不需要 API Key
+                // 加入降水機率、風速等更多資訊
                 const response = await fetch(
-                    `https://api.open-meteo.com/v1/forecast?latitude=${coords.lat}&longitude=${coords.lng}&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=Asia/Tokyo&start_date=${targetDate}&end_date=${targetDate}`
+                    `https://api.open-meteo.com/v1/forecast?latitude=${coords.lat}&longitude=${coords.lng}&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Asia/Tokyo&start_date=${targetDate}&end_date=${targetDate}`
                 );
                 const data = await response.json();
 
@@ -147,6 +236,7 @@ const WeatherIcon = ({ day, coords }) => {
                         code: data.daily.weather_code[0],
                         tempMax: Math.round(data.daily.temperature_2m_max[0]),
                         tempMin: Math.round(data.daily.temperature_2m_min[0]),
+                        rainProb: data.daily.precipitation_probability_max?.[0] || 0,
                     });
                 }
             } catch (error) {
@@ -159,30 +249,39 @@ const WeatherIcon = ({ day, coords }) => {
         fetchWeather();
     }, [day, coords]);
 
-    const landmark = landmarks[day] || "📍";
-
     if (loading) {
         return (
-            <div className="flex items-center gap-1 bg-white/70 backdrop-blur-sm px-2 py-1 rounded-full border border-white/50">
-                <span className="text-base">{landmark}</span>
-                <Loader size={12} className="animate-spin text-gray-400" />
+            <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-2xl border border-white/60 shadow-sm">
+                <Loader size={16} className="animate-spin text-gray-400" />
+                <span className="text-xs text-gray-400">載入中...</span>
             </div>
         );
     }
 
     if (!weather) {
         return (
-            <div className="flex items-center gap-1 bg-white/70 backdrop-blur-sm px-2 py-1 rounded-full border border-white/50">
-                <span className="text-base">{landmark}🌤️</span>
+            <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-2xl border border-white/60 shadow-sm">
+                <span className="text-lg">🌤️</span>
+                <span className="text-xs text-gray-500">--°C</span>
             </div>
         );
     }
 
     return (
-        <div className="flex items-center gap-1 bg-white/70 backdrop-blur-sm px-2 py-1 rounded-full border border-white/50">
-            <span className="text-base">{landmark}{getWeatherEmoji(weather.code)}</span>
+        <div className={`flex items-center gap-2 bg-gradient-to-r ${getWeatherGradient(weather.code)} backdrop-blur-sm px-3 py-1.5 rounded-2xl border border-white/60 shadow-sm`}>
+            <WeatherSVG code={weather.code} size={28} />
             <div className="flex flex-col">
-                <span className="text-[10px] font-bold text-gray-700 leading-none">{weather.tempMin}-{weather.tempMax}°C</span>
+                <div className="flex items-baseline gap-1">
+                    <span className="text-sm font-bold text-gray-800">{weather.tempMin}</span>
+                    <span className="text-[10px] text-gray-500">~</span>
+                    <span className="text-sm font-bold text-gray-800">{weather.tempMax}°</span>
+                </div>
+                <div className="flex items-center gap-1">
+                    <span className="text-[10px] text-gray-600">{getWeatherDesc(weather.code)}</span>
+                    {weather.rainProb > 0 && (
+                        <span className="text-[10px] text-blue-600 font-medium">💧{weather.rainProb}%</span>
+                    )}
+                </div>
             </div>
         </div>
     );
