@@ -1545,7 +1545,7 @@ const App = () => {
                 <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
                     <div className="bg-white/90 backdrop-blur-xl border border-gray-200 shadow-xl rounded-full px-6 py-3 flex items-center gap-3">
                         <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                        <span className="text-xs font-bold text-gray-600">旅途愉快 Have a nice trip!</span>
+                        <span className="text-xs font-bold text-gray-600">旅途愉快 Have a nice trip ♡</span>
                     </div>
                 </div>
             </div>
