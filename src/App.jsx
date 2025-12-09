@@ -1169,6 +1169,211 @@ const UmedaGuide = () => {
     );
 };
 
+// --- Shopping Guide Component (心齋橋購物攻略) ---
+const ShoppingGuide = () => {
+    // 角色周邊店家
+    const characterShops = [
+        {
+            name: "Sanrio Gallery 心齋橋店",
+            nameJp: "サンリオギャラリー",
+            icon: "🎀",
+            desc: "關西旗艦店，整棟三層樓都是 Hello Kitty 與三麗鷗角色的夢幻世界。擁有許多「大阪限定」商品（如穿著章魚燒裝的 Kitty），門口大型公仔是必拍打卡點。",
+            highlight: "Hello Kitty 旗艦店",
+            rating: 4.5,
+            mapQuery: "サンリオギャラリー 心斎橋",
+            coords: { lat: 34.671380, lng: 135.501350 }
+        },
+        {
+            name: "心齋橋 PARCO 6F",
+            nameJp: "POP CULTURE SHINSAIBASHI",
+            icon: "🏪",
+            desc: "最強可愛聖地！整層樓集結各大 IP 專賣店：橡子共和國（龍貓、神隱少女）、Snoopy Town Shop、Rilakkuma Store、角落小夥伴、Miffy Style。",
+            highlight: "一站購足所有可愛小物",
+            rating: 4.5,
+            mapQuery: "心斎橋パルコ",
+            coords: { lat: 34.673150, lng: 135.500350 }
+        },
+        {
+            name: "Disney Store 心齋橋店",
+            nameJp: "ディズニーストア",
+            icon: "🏰",
+            desc: "奇幻風格店面裝潢，販售迪士尼樂園以外的獨家商品。二樓通常有特價區，是挖寶好地方。",
+            highlight: "裝潢夢幻，二樓有特價",
+            rating: 4.3,
+            mapQuery: "ディズニーストア 心斎橋",
+            coords: { lat: 34.671050, lng: 135.500850 }
+        },
+        {
+            name: "B-SIDE LABEL 心齋橋店",
+            nameJp: "ビーサイドレーベル",
+            icon: "🏷️",
+            desc: "日本知名原創貼紙藝術店，風格獨特帶點搞怪可愛。貼紙防水抗UV，非常適合貼在行李箱或筆電上，是很有個性的紀念品。提供一年保固！",
+            highlight: "離固力果跑跑人很近",
+            rating: 4.6,
+            mapQuery: "B-SIDE LABEL 心斎橋",
+            coords: { lat: 34.669850, lng: 135.500550 }
+        }
+    ];
+
+    // 少女飾品與服飾店家
+    const fashionShops = [
+        {
+            name: "Lattice 難波 Walk 店",
+            nameJp: "ラティス",
+            icon: "💍",
+            desc: "日本超人氣飾品店，絕大多數耳環、項鍊、髮飾都只要 330 日圓！設計感極佳，看起來有千元日幣的質感，是掃貨飾品的最佳地點。",
+            highlight: "330日圓飾品天堂",
+            rating: 4.4,
+            mapQuery: "Lattice なんばウォーク",
+            coords: { lat: 34.667850, lng: 135.501500 }
+        },
+        {
+            name: "3COINS+plus 心齋橋店",
+            nameJp: "スリーコインズ",
+            icon: "🛍️",
+            desc: "主打 300 日圓商品的雜貨店。可愛色系居家小物、追星族應援收納周邊、高CP值飾品區，什麼都想買！",
+            highlight: "高CP值雜貨",
+            rating: 4.3,
+            mapQuery: "3COINS 心斎橋",
+            coords: { lat: 34.669500, lng: 135.500700 }
+        },
+        {
+            name: "WEGO 心齋橋店",
+            nameJp: "ウィゴー",
+            icon: "👗",
+            desc: "位於美國村 (Americamura)，日本高中生潮流發信地。販售最新古著混搭風、粉嫩少女服飾與痛包（展示動漫徽章的包包）。",
+            highlight: "美國村潮流地標",
+            rating: 4.2,
+            mapQuery: "WEGO 心斎橋",
+            coords: { lat: 34.672200, lng: 135.499000 }
+        }
+    ];
+
+    // Google Maps 搜尋
+    const openGoogleMaps = (mapQuery) => {
+        if (!mapQuery) return;
+        const encodedQuery = encodeURIComponent(mapQuery);
+        window.open(`https://www.google.com/maps/search/?api=1&query=${encodedQuery}`, '_blank');
+    };
+
+    const ShopCard = ({ shop, colorScheme }) => (
+        <button
+            onClick={() => openGoogleMaps(shop.mapQuery)}
+            className={`w-full text-left p-4 rounded-2xl border transition-all hover:shadow-md ${
+                colorScheme === 'pink'
+                    ? 'bg-gradient-to-r from-pink-50 to-rose-50 border-pink-200 hover:border-pink-300'
+                    : 'bg-gradient-to-r from-purple-50 to-indigo-50 border-purple-200 hover:border-purple-300'
+            }`}
+        >
+            <div className="flex items-start justify-between gap-3">
+                <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                        <span className="text-xl">{shop.icon}</span>
+                        <div className="min-w-0">
+                            <div className="font-bold text-sm text-gray-800 truncate">{shop.name}</div>
+                            <div className="text-[10px] text-gray-400">{shop.nameJp}</div>
+                        </div>
+                    </div>
+                    <p className="text-xs text-gray-600 leading-relaxed mb-2">{shop.desc}</p>
+                    <div className="flex items-center gap-2 flex-wrap">
+                        <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
+                            colorScheme === 'pink'
+                                ? 'bg-pink-100 text-pink-600'
+                                : 'bg-purple-100 text-purple-600'
+                        }`}>
+                            {shop.highlight}
+                        </span>
+                        <span className="text-[10px] text-yellow-600 font-bold">⭐ {shop.rating}</span>
+                    </div>
+                </div>
+                <div className="flex flex-col items-end gap-1 shrink-0">
+                    {shop.coords && <DistanceBadge coords={shop.coords} />}
+                    <ExternalLink size={14} className="text-gray-400" />
+                </div>
+            </div>
+        </button>
+    );
+
+    return (
+        <div className="mb-8 animate-fade-in">
+            {/* Header */}
+            <div className="bg-gradient-to-r from-pink-50 to-purple-50 border border-pink-200 rounded-2xl p-4 mb-4">
+                <div className="flex items-center gap-2 mb-2">
+                    <span className="text-2xl">🛒</span>
+                    <div>
+                        <h3 className="font-bold text-gray-800">心齋橋購物攻略</h3>
+                        <p className="text-xs text-gray-500">角色周邊 & 少女飾品 | 道頓堀步行 3-10 分鐘</p>
+                    </div>
+                </div>
+                <p className="text-xs text-gray-600 leading-relaxed">
+                    這些店舖集中在心齋橋筋商店街與 PARCO 百貨，是購買正版授權周邊與平價高質感飾品的首選！
+                </p>
+            </div>
+
+            {/* Section 1: Character & Kawaii */}
+            <div className="mb-6">
+                <div className="flex items-center gap-2 mb-3">
+                    <span className="text-lg">🎀</span>
+                    <h4 className="font-bold text-gray-800">必逛：超人氣角色與可愛小物</h4>
+                </div>
+                <div className="space-y-3">
+                    {characterShops.map((shop, idx) => (
+                        <ShopCard key={idx} shop={shop} colorScheme="pink" />
+                    ))}
+                </div>
+            </div>
+
+            {/* Section 2: Girly Fashion */}
+            <div className="mb-6">
+                <div className="flex items-center gap-2 mb-3">
+                    <span className="text-lg">💍</span>
+                    <h4 className="font-bold text-gray-800">必逛：少女飾品與流行服飾</h4>
+                </div>
+                <p className="text-xs text-gray-500 mb-3">主打「平價高質感」，日本年輕女生最愛！</p>
+                <div className="space-y-3">
+                    {fashionShops.map((shop, idx) => (
+                        <ShopCard key={idx} shop={shop} colorScheme="purple" />
+                    ))}
+                </div>
+            </div>
+
+            {/* Quick Reference Table */}
+            <div className="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm">
+                <h4 className="font-bold text-gray-800 mb-3 flex items-center gap-2">
+                    🗺️ 快速導覽
+                </h4>
+                <div className="space-y-2">
+                    <div className="grid grid-cols-3 gap-2 text-[10px] font-bold text-gray-500 border-b pb-2">
+                        <span>店家</span>
+                        <span>類型</span>
+                        <span>特色</span>
+                    </div>
+                    {[...characterShops, ...fashionShops].map((shop, idx) => (
+                        <div key={idx} className="grid grid-cols-3 gap-2 text-xs py-1 border-b border-gray-50">
+                            <span className="text-gray-700 truncate">{shop.icon} {shop.name.split(' ')[0]}</span>
+                            <span className="text-gray-500">{idx < 4 ? '角色周邊' : '飾品雜貨'}</span>
+                            <span className="text-gray-400 truncate">{shop.highlight}</span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Tips */}
+            <div className="bg-gradient-to-r from-yellow-50 to-amber-50 border border-yellow-200 rounded-2xl p-4 mt-4">
+                <h4 className="font-bold text-yellow-800 mb-2 flex items-center gap-2">
+                    💡 購物小提醒
+                </h4>
+                <ul className="text-xs text-yellow-700 space-y-1">
+                    <li>• 心齋橋筋商店街有遮雨棚，下雨天也能輕鬆逛</li>
+                    <li>• PARCO 6F 可以一次逛完吉卜力、Snoopy、拉拉熊等多家店</li>
+                    <li>• Lattice 飾品均一價 330 日圓，CP值超高</li>
+                    <li>• 建議傍晚來逛，結束後直接去道頓堀吃晚餐</li>
+                </ul>
+            </div>
+        </div>
+    );
+};
+
 // --- USJ Guide Component ---
 const USJGuide = () => {
     // 設施刺激程度與心臟病風險
@@ -1374,7 +1579,7 @@ const USJGuide = () => {
 
 const App = () => {
     const [activeDay, setActiveDay] = useState(1);
-    const [umedaTab, setUmedaTab] = useState('food'); // 'food' or 'guide'
+    const [umedaTab, setUmedaTab] = useState('food'); // 'food', 'guide', or 'shopping'
     const [usjTab, setUsjTab] = useState('food'); // 'food' or 'guide'
     const [kyotoTab, setKyotoTab] = useState('food'); // 'food' or 'guide'
 
@@ -1854,12 +2059,12 @@ const App = () => {
 
                 {/* Content */}
                 <div className="px-6 animate-fade-in pb-16">
-                    {/* Day 1 (Umeda) Tab Switcher */}
+                    {/* Day 1 (Umeda) Tab Switcher - 3 tabs */}
                     {activeDay === 1 && (
                         <div className="flex gap-2 mb-6">
                             <button
                                 onClick={() => setUmedaTab('food')}
-                                className={`flex-1 py-3 rounded-xl text-sm font-bold transition-all ${
+                                className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-all ${
                                     umedaTab === 'food'
                                         ? 'bg-pink-500 text-white shadow-lg'
                                         : 'bg-white text-gray-500 border border-gray-200'
@@ -1869,13 +2074,23 @@ const App = () => {
                             </button>
                             <button
                                 onClick={() => setUmedaTab('guide')}
-                                className={`flex-1 py-3 rounded-xl text-sm font-bold transition-all ${
+                                className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-all ${
                                     umedaTab === 'guide'
                                         ? 'bg-pink-500 text-white shadow-lg'
                                         : 'bg-white text-gray-500 border border-gray-200'
                                 }`}
                             >
-                                🚶‍♂️ 梅田順路攻略
+                                🚶‍♂️ 梅田攻略
+                            </button>
+                            <button
+                                onClick={() => setUmedaTab('shopping')}
+                                className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-all ${
+                                    umedaTab === 'shopping'
+                                        ? 'bg-purple-500 text-white shadow-lg'
+                                        : 'bg-white text-gray-500 border border-gray-200'
+                                }`}
+                            >
+                                🛒 購物推薦
                             </button>
                         </div>
                     )}
@@ -1935,6 +2150,8 @@ const App = () => {
                     {/* Show Guide components or regular spots */}
                     {activeDay === 1 && umedaTab === 'guide' ? (
                         <UmedaGuide />
+                    ) : activeDay === 1 && umedaTab === 'shopping' ? (
+                        <ShoppingGuide />
                     ) : activeDay === 2 && kyotoTab === 'guide' ? (
                         <KyotoKimonoGuide />
                     ) : activeDay === 4 && usjTab === 'guide' ? (
