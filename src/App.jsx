@@ -1058,12 +1058,123 @@ const App = () => {
                     ]
                 },
                 {
-                    name: "梅田 (自由活動)",
-                    desc: "時尚百貨與地下迷宮",
+                    name: "梅田：必吃高分美食",
+                    desc: "Google 4.5⭐以上 / 米其林 / 必吃老店",
                     recs: [
-                        { type: "dessert", name: "Harbs Diamor Osaka", desc: "傳說中的水果千層蛋糕，不甜不膩。", rating: 4.4, reviewCount: 1200, priceLevel: "$$", mapQuery: "Harbs Diamor Osaka", coords: { lat: 34.7025, lng: 135.4983 } },
-                        { type: "food", name: "龜壽司 (Kame Sushi)", desc: "老字號高CP值壽司，當地人也愛。", rating: 4.5, reviewCount: 2800, priceLevel: "$$", mapQuery: "Kame Sushi Total Main Shop", coords: { lat: 34.7045, lng: 135.4991 } },
-                        { type: "shopping", name: "LUCUA / LUCUA 1100", desc: "年輕女生最愛的服飾品牌集散地。", rating: 4.3, reviewCount: 4100, priceLevel: "$$", mapQuery: "LUCUA Osaka", coords: { lat: 34.7050, lng: 135.4960 } }
+                        {
+                            type: "food",
+                            name: "拉麵 彌七 (Ramen Yashichi)",
+                            desc: "🏆 Tabelog 百名店+米其林必比登！大阪拉麵界傳奇。雞骨長時間熬煮的奶油般湯頭，配上自家製中太麵。⚠️ 平日中午限定，需抽整理券，建議 10:15 前去拿券！",
+                            rating: 4.6,
+                            reviewCount: 3500,
+                            priceLevel: "$$",
+                            mapQuery: "拉麺 彌七 大阪"
+                        },
+                        {
+                            type: "dessert",
+                            name: "Grenier (グルニエ)",
+                            desc: "🥐 IG爆紅甜點！必點「烤布蕾千層酥 Brûlée Mille-feuille」，酥皮超級酥脆，卡士達醬爆漿。位於阪急 Grand Building 1樓，HEP FIVE 摩天輪附近。",
+                            rating: 4.5,
+                            reviewCount: 1800,
+                            priceLevel: "$$",
+                            mapQuery: "グルニエ 梅田"
+                        },
+                        {
+                            type: "food",
+                            name: "龜壽司 總本店 (Kame Sushi)",
+                            desc: "🍣 昭和風情老字號壽司店！外國旅客極高評價。食材新鮮厚切，價格比道頓堀公道，師傅熱情。推薦鮪魚肚 (Toro) 和鰻魚。位於曾根崎商店街附近。",
+                            rating: 4.4,
+                            reviewCount: 2800,
+                            priceLevel: "$$",
+                            mapQuery: "龜壽司總本店 曽根崎"
+                        },
+                        {
+                            type: "snack",
+                            name: "はなだこ (Hanadako)",
+                            desc: "🐙 蔥花章魚燒之王！位於「新梅田食道街」入口，章魚燒上堆滿像小山的蔥花 (Negi Mayo)，每一口都充滿蔥香與美乃滋的罪惡感。JR 大阪站高架橋下。",
+                            rating: 4.3,
+                            reviewCount: 5200,
+                            priceLevel: "$",
+                            mapQuery: "はなだこ 新梅田食道街"
+                        },
+                        {
+                            type: "food",
+                            name: "大阪燒 木地 (Okonomiyaki Kiji)",
+                            desc: "🥞 米其林必比登推薦！位於藍天大廈 B1 瀧見小路懷舊美食街。老闆超親切，必點「摩登燒 Modan-yaki」，口感偏酥脆，醬汁濃郁。適合看完夜景後下來吃！",
+                            rating: 4.3,
+                            reviewCount: 4100,
+                            priceLevel: "$$",
+                            mapQuery: "きじ 梅田スカイビル"
+                        },
+                        {
+                            type: "dessert",
+                            name: "Harbs Diamor Osaka",
+                            desc: "🍰 傳說中的水果千層蛋糕！鮮奶油不甜不膩，水果超新鮮。位於 Diamor 地下街。",
+                            rating: 4.4,
+                            reviewCount: 1200,
+                            priceLevel: "$$",
+                            mapQuery: "HARBS ディアモール大阪店"
+                        }
+                    ]
+                },
+                {
+                    name: "梅田：必逛必玩",
+                    desc: "動漫天堂 / 夜景地標 / 2025新熱點",
+                    recs: [
+                        {
+                            type: "shopping",
+                            name: "Nintendo OSAKA (任天堂大阪)",
+                            desc: "🎮 日本第二間任天堂直營店！有超級瑪利歐、薩爾達傳說、動物森友會的限定周邊。門口有超大瑪利歐雕像可拍照。位於大丸梅田店 13F (直通 JR 大阪站)。",
+                            rating: 4.5,
+                            reviewCount: 8500,
+                            priceLevel: "$$",
+                            mapQuery: "Nintendo OSAKA 大丸梅田"
+                        },
+                        {
+                            type: "shopping",
+                            name: "Pokémon Center Osaka (寶可夢中心)",
+                            desc: "⚡ 關西最大寶可夢中心！就在任天堂隔壁 (大丸梅田 13F)。門口有固拉多與蓋歐卡模型。有大阪限定皮卡丘商品 (穿漫才師衣服的皮卡丘)！",
+                            rating: 4.4,
+                            reviewCount: 6200,
+                            priceLevel: "$$",
+                            mapQuery: "ポケモンセンターオーサカ"
+                        },
+                        {
+                            type: "attraction",
+                            name: "梅田藍天大廈 空中庭園展望台",
+                            desc: "🌃 大阪最佳夜景之一！搭乘懸空手扶梯通往 173 公尺高空，頂樓是 360 度露天展望台 (Sky Walk)，地上有螢光石鋪成的銀河步道。看完夜景下樓吃「木地」大阪燒！",
+                            rating: 4.6,
+                            reviewCount: 25000,
+                            priceLevel: "$$$",
+                            mapQuery: "梅田スカイビル 空中庭園展望台"
+                        },
+                        {
+                            type: "new",
+                            name: "KITTE Osaka (2024新開幕)",
+                            desc: "🆕 2024年7月全新開幕！JR大阪站西口直結。集結日本各地物產店和高質感餐廳，想買其他縣市伴手禮來這！比 Grand Front 更新更潮。",
+                            rating: 4.3,
+                            reviewCount: 3200,
+                            priceLevel: "$$",
+                            mapQuery: "KITTE大阪"
+                        },
+                        {
+                            type: "shopping",
+                            name: "LUCUA / LUCUA 1100",
+                            desc: "👗 年輕女生最愛！直通 JR 大阪站的大型百貨，服飾品牌齊全，地下美食街也很讚。",
+                            rating: 4.3,
+                            reviewCount: 4100,
+                            priceLevel: "$$",
+                            mapQuery: "LUCUA osaka"
+                        },
+                        {
+                            type: "attraction",
+                            name: "HEP FIVE 摩天輪",
+                            desc: "🎡 梅田地標紅色摩天輪！位於 HEP FIVE 百貨 7 樓，搭乘約 15 分鐘，可眺望大阪市景。摩天輪車廂有冷氣，情侶必去。",
+                            rating: 4.2,
+                            reviewCount: 8900,
+                            priceLevel: "$$",
+                            mapQuery: "HEP FIVE 観覧車"
+                        }
                     ]
                 },
                 {
@@ -1469,6 +1580,8 @@ const TypeIcon = ({ type }) => {
         case 'drug': return <div className="p-1.5 bg-blue-100 text-blue-500 rounded-full"><Heart size={14} /></div>;
         case 'coffee': return <div className="p-1.5 bg-amber-100 text-amber-600 rounded-full"><Coffee size={14} /></div>;
         case 'coupon': return <div className="p-1.5 bg-red-100 text-red-500 rounded-full animate-bounce"><Ticket size={14} /></div>;
+        case 'attraction': return <div className="p-1.5 bg-indigo-100 text-indigo-500 rounded-full"><Star size={14} /></div>;
+        case 'new': return <div className="p-1.5 bg-emerald-100 text-emerald-500 rounded-full animate-pulse"><Zap size={14} /></div>;
         default: return <div className="p-1.5 bg-gray-100 text-gray-500 rounded-full"><Star size={14} /></div>;
     }
 };
