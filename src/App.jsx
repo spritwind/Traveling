@@ -793,6 +793,376 @@ const KyotoKimonoGuide = () => {
     );
 };
 
+// --- Umeda Guide Component ---
+const UmedaGuide = () => {
+    // 詳細步驟行程
+    const detailedSteps = [
+        {
+            step: 1,
+            time: "15:00",
+            duration: "約 1.5 小時",
+            zone: "南區",
+            title: "【購物】Nintendo OSAKA & Pokémon Center",
+            icon: "🎮",
+            mainDesc: "抵達 JR 大阪站後，直接進入相連的「大丸梅田店」，搭電梯直達 13 樓朝聖！任天堂和寶可夢中心在同一層樓，一次逛完。",
+            locations: [
+                { label: "任天堂大阪", name: "Nintendo OSAKA (大丸梅田 13F)", mapQuery: "Nintendo OSAKA 大丸梅田" },
+                { label: "寶可夢中心", name: "Pokémon Center Osaka", mapQuery: "ポケモンセンターオーサカ" }
+            ],
+            streetGuide: [
+                "從 JR 大阪站「中央口」或「南口」出站",
+                "直接進入與車站連通的「大丸梅田店 (Daimaru)」",
+                "搭電梯直上 13 樓",
+                "任天堂門口有超大瑪利歐雕像，寶可夢門口有固拉多與蓋歐卡"
+            ],
+            tips: "人潮眾多，買完戰利品若太重可先寄放車站置物櫃 (JR 中央口附近有)",
+            color: "pink"
+        },
+        {
+            step: 2,
+            time: "16:00",
+            duration: "約 45 分鐘",
+            zone: "南區",
+            title: "【下午茶】HARBS 水果千層蛋糕",
+            icon: "🍰",
+            mainDesc: "逛累了直接搭電梯下到 6 樓，完全不用走出戶外找路！HARBS 是日本超人氣甜點店，必點水果千層蛋糕 (Mille Crepes)。",
+            locations: [
+                { label: "HARBS 大丸店", name: "HARBS 大丸梅田店 (6F)", mapQuery: "HARBS 大丸梅田店" }
+            ],
+            streetGuide: [
+                "從 13 樓直接搭電梯下到 6 樓",
+                "HARBS 位於甜點區，跟著指標走即可"
+            ],
+            tips: "建議逛完任天堂先派人來抽號碼牌，避免等太久",
+            color: "yellow"
+        },
+        {
+            step: 3,
+            time: "17:30",
+            duration: "約 30 分鐘",
+            zone: "東區",
+            title: "【點心】Grenier 烤布蕾千層酥",
+            icon: "🥐",
+            mainDesc: "IG 爆紅甜點！必點「烤布蕾千層酥 Brûlée Mille-feuille」，酥皮超級酥脆，卡士達醬爆漿。因為剛吃過 HARBS，建議買一份大家分食嘗鮮即可，邊走邊吃前往下一站。",
+            locations: [
+                { label: "Grenier", name: "Grenier グルニエ (阪急 Grand Building 1F)", mapQuery: "グルニエ 梅田" }
+            ],
+            streetGuide: [
+                "從大丸 1F 出來",
+                "走過寬闘的連通橋往「阪急百貨 / 紅色摩天輪」方向",
+                "阪急 Grand Building 就在 HEP FIVE 摩天輪附近"
+            ],
+            tips: "甜點控可以買一份帶著走，邊走邊享用",
+            color: "orange"
+        },
+        {
+            step: 4,
+            time: "18:15",
+            duration: "約 1.5 小時",
+            zone: "北區",
+            title: "【晚餐】金沢まいもん寿司",
+            icon: "🍣",
+            mainDesc: "網友激推「吃了會感動」的迴轉壽司！金澤直送海鮮，必點「能登黑喉魚 No-doguro」、「富山白蝦 Shiro-ebi」、「加賀螃蟹」。選擇這個時間點是因為 Grenier 往北走剛好會經過 LUCUA，且吃完後 LUCUA 離藍天大廈的通道最近。",
+            locations: [
+                { label: "金沢まいもん寿司", name: "金沢まいもん寿司 (LUCUA 1100 10F)", mapQuery: "金沢まいもん寿司 ルクア大阪店" }
+            ],
+            streetGuide: [
+                "從 Grenier 往回走",
+                "進入 JR 車站北側的 LUCUA 1100 (Lucua Ile)",
+                "搭電梯到 10 樓美食街「LUCUA Dining」"
+            ],
+            tips: "不能預約，需現場排隊。下午 4-5 點是離峰時段，排隊時間最短！",
+            color: "blue"
+        },
+        {
+            step: 5,
+            time: "19:45",
+            duration: "約 1 小時",
+            zone: "西北區",
+            title: "【夜景】梅田藍天大廈 空中庭園",
+            icon: "🌃",
+            mainDesc: "大阪最佳夜景之一！搭乘懸空手扶梯通往 173 公尺高空，頂樓是 360 度露天展望台 (Sky Walk)，地上有螢光石鋪成的銀河步道。",
+            locations: [
+                { label: "藍天大廈", name: "梅田藍天大廈 空中庭園展望台", mapQuery: "梅田スカイビル 空中庭園展望台" }
+            ],
+            streetGuide: [
+                "⚠️ 這是梅田最難找的路段！",
+                "從 LUCUA 出來，就是 Grand Front Osaka",
+                "沿著 Grand Front 南館旁的大馬路走",
+                "找到 Grand Front 與 Yodobashi Camera 之間的路",
+                "穿過「地下人行道」(部分已改為地面通道，跟著人潮走)",
+                "那棟長得像凱旋門的大樓就是藍天大廈"
+            ],
+            tips: "建議太陽下山前 30 分鐘抵達，可以同時看到夕陽和夜景！",
+            color: "indigo"
+        },
+        {
+            step: 6,
+            time: "20:45",
+            duration: "約 45 分鐘",
+            zone: "西北區",
+            title: "【宵夜】大阪燒 木地 (Kiji)",
+            icon: "🥞",
+            mainDesc: "米其林必比登推薦！位於藍天大廈 B1「瀧見小路」懷舊美食街，重現昭和時代的復古氛圍。老闆非常熱情，必點「摩登燒 Modan-yaki」，用完美的大阪燒畫下今天的句點。",
+            locations: [
+                { label: "大阪燒木地", name: "きじ 梅田スカイビル店", mapQuery: "きじ 梅田スカイビル" }
+            ],
+            streetGuide: [
+                "看完夜景直接搭電梯到 B1",
+                "往「瀧見小路」方向走",
+                "這條復古美食街很有昭和風情，慢慢逛"
+            ],
+            tips: "如果排隊超過 1 小時，備案可搭計程車回東邊的「龜壽司」(曾根崎)",
+            backup: { name: "龜壽司 總本店", mapQuery: "龜壽司總本店 曽根崎" },
+            color: "purple"
+        }
+    ];
+
+    // Google Maps 搜尋
+    const openGoogleMaps = (mapQuery) => {
+        if (!mapQuery) return;
+        const encodedQuery = encodeURIComponent(mapQuery);
+        window.open(`https://www.google.com/maps/search/?api=1&query=${encodedQuery}`, '_blank');
+    };
+
+    // 完整路線地圖連結
+    const fullRouteMapUrl = "https://maps.app.goo.gl/qpwYjhjgfLqdn8sFA";
+
+    return (
+        <div className="mb-8 animate-fade-in">
+            {/* Header */}
+            <div className="bg-gradient-to-r from-pink-50 to-rose-50 border border-pink-200 rounded-2xl p-4 mb-4">
+                <div className="flex items-center gap-2 mb-2">
+                    <span className="text-2xl">🚶‍♂️</span>
+                    <div>
+                        <h3 className="font-bold text-gray-800">梅田商圈順路攻略</h3>
+                        <p className="text-xs text-gray-500">2025/12/11 下午～晚上 | 專為新手設計</p>
+                    </div>
+                </div>
+                <p className="text-xs text-gray-600 leading-relaxed">
+                    這天您從宇治過來，抵達大阪約為下午。這條路線由車站中心開始，往東吃甜點，最後往西北看夜景，動線最順！
+                </p>
+            </div>
+
+            {/* Full Route Map Button */}
+            <a
+                href={fullRouteMapUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-gradient-to-r from-blue-500 to-indigo-500 text-white text-center py-4 rounded-2xl text-sm font-bold hover:from-blue-600 hover:to-indigo-600 transition-all flex items-center justify-center gap-2 mb-4 shadow-lg"
+            >
+                <MapPin size={18} />
+                📍 一鍵開啟完整路線地圖
+                <ExternalLink size={14} />
+            </a>
+
+            {/* Zone Overview */}
+            <div className="bg-white border border-gray-200 rounded-2xl p-4 mb-4 shadow-sm">
+                <h4 className="font-bold text-gray-800 mb-3 flex items-center gap-2">
+                    🗺️ 區域概覽
+                </h4>
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div className="bg-pink-50 rounded-lg p-2 border border-pink-100">
+                        <div className="font-bold text-pink-700">🛍️ 南區 (大丸)</div>
+                        <div className="text-gray-600">任天堂、寶可夢、HARBS</div>
+                    </div>
+                    <div className="bg-orange-50 rounded-lg p-2 border border-orange-100">
+                        <div className="font-bold text-orange-700">🥐 東區 (阪急)</div>
+                        <div className="text-gray-600">Grenier、HEP FIVE</div>
+                    </div>
+                    <div className="bg-blue-50 rounded-lg p-2 border border-blue-100">
+                        <div className="font-bold text-blue-700">🍣 北區 (LUCUA)</div>
+                        <div className="text-gray-600">金沢まいもん寿司</div>
+                    </div>
+                    <div className="bg-indigo-50 rounded-lg p-2 border border-indigo-100">
+                        <div className="font-bold text-indigo-700">🌃 西北區 (新梅田)</div>
+                        <div className="text-gray-600">藍天大廈、木地</div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Step by Step Guide */}
+            <div className="space-y-4">
+                {detailedSteps.map((step, idx) => (
+                    <div
+                        key={idx}
+                        className={`bg-white border rounded-2xl overflow-hidden shadow-sm ${
+                            step.color === 'pink' ? 'border-pink-200' :
+                            step.color === 'yellow' ? 'border-yellow-200' :
+                            step.color === 'orange' ? 'border-orange-200' :
+                            step.color === 'blue' ? 'border-blue-200' :
+                            step.color === 'indigo' ? 'border-indigo-200' : 'border-purple-200'
+                        }`}
+                    >
+                        {/* Step Header */}
+                        <div className={`px-4 py-3 ${
+                            step.color === 'pink' ? 'bg-gradient-to-r from-pink-50 to-rose-50' :
+                            step.color === 'yellow' ? 'bg-gradient-to-r from-yellow-50 to-amber-50' :
+                            step.color === 'orange' ? 'bg-gradient-to-r from-orange-50 to-amber-50' :
+                            step.color === 'blue' ? 'bg-gradient-to-r from-blue-50 to-cyan-50' :
+                            step.color === 'indigo' ? 'bg-gradient-to-r from-indigo-50 to-blue-50' : 'bg-gradient-to-r from-purple-50 to-indigo-50'
+                        }`}>
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-2">
+                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm ${
+                                        step.color === 'pink' ? 'bg-pink-500' :
+                                        step.color === 'yellow' ? 'bg-yellow-500' :
+                                        step.color === 'orange' ? 'bg-orange-500' :
+                                        step.color === 'blue' ? 'bg-blue-500' :
+                                        step.color === 'indigo' ? 'bg-indigo-500' : 'bg-purple-500'
+                                    }`}>
+                                        {step.step}
+                                    </div>
+                                    <span className="text-2xl">{step.icon}</span>
+                                    <div>
+                                        <div className="font-bold text-gray-800 text-sm">{step.title}</div>
+                                        <div className="text-[10px] text-gray-500">{step.zone}</div>
+                                    </div>
+                                </div>
+                                <div className="text-right">
+                                    <div className={`font-bold text-sm ${
+                                        step.color === 'pink' ? 'text-pink-600' :
+                                        step.color === 'yellow' ? 'text-yellow-600' :
+                                        step.color === 'orange' ? 'text-orange-600' :
+                                        step.color === 'blue' ? 'text-blue-600' :
+                                        step.color === 'indigo' ? 'text-indigo-600' : 'text-purple-600'
+                                    }`}>{step.time}</div>
+                                    <div className="text-[10px] text-gray-400">{step.duration}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Step Content */}
+                        <div className="p-4 space-y-3">
+                            {/* Main Description */}
+                            <p className="text-sm text-gray-700 leading-relaxed">{step.mainDesc}</p>
+
+                            {/* Locations */}
+                            <div className="space-y-2">
+                                {step.locations.map((loc, locIdx) => (
+                                    <button
+                                        key={locIdx}
+                                        onClick={() => openGoogleMaps(loc.mapQuery)}
+                                        className={`w-full flex items-center justify-between p-3 rounded-xl transition-all ${
+                                            step.color === 'pink' ? 'bg-pink-50 hover:bg-pink-100' :
+                                            step.color === 'yellow' ? 'bg-yellow-50 hover:bg-yellow-100' :
+                                            step.color === 'orange' ? 'bg-orange-50 hover:bg-orange-100' :
+                                            step.color === 'blue' ? 'bg-blue-50 hover:bg-blue-100' :
+                                            step.color === 'indigo' ? 'bg-indigo-50 hover:bg-indigo-100' : 'bg-purple-50 hover:bg-purple-100'
+                                        }`}
+                                    >
+                                        <div className="flex items-center gap-2">
+                                            <MapPin size={14} className={
+                                                step.color === 'pink' ? 'text-pink-500' :
+                                                step.color === 'yellow' ? 'text-yellow-500' :
+                                                step.color === 'orange' ? 'text-orange-500' :
+                                                step.color === 'blue' ? 'text-blue-500' :
+                                                step.color === 'indigo' ? 'text-indigo-500' : 'text-purple-500'
+                                            } />
+                                            <div className="text-left">
+                                                <div className="text-[10px] text-gray-400">{loc.label}</div>
+                                                <div className="font-medium text-xs text-gray-700">{loc.name}</div>
+                                            </div>
+                                        </div>
+                                        <ExternalLink size={14} className="text-gray-400" />
+                                    </button>
+                                ))}
+                            </div>
+
+                            {/* Street Guide */}
+                            <div className="bg-gray-50 rounded-xl p-3">
+                                <div className="text-xs font-bold text-gray-600 mb-2 flex items-center gap-1">
+                                    <Navigation size={12} />
+                                    怎麼走：
+                                </div>
+                                <ol className="space-y-1">
+                                    {step.streetGuide.map((guide, guideIdx) => (
+                                        <li key={guideIdx} className="flex items-start gap-2 text-xs text-gray-600">
+                                            <span className={`w-4 h-4 rounded-full flex items-center justify-center text-[10px] text-white shrink-0 ${
+                                                step.color === 'pink' ? 'bg-pink-400' :
+                                                step.color === 'yellow' ? 'bg-yellow-400' :
+                                                step.color === 'orange' ? 'bg-orange-400' :
+                                                step.color === 'blue' ? 'bg-blue-400' :
+                                                step.color === 'indigo' ? 'bg-indigo-400' : 'bg-purple-400'
+                                            }`}>{guideIdx + 1}</span>
+                                            <span>{guide}</span>
+                                        </li>
+                                    ))}
+                                </ol>
+                            </div>
+
+                            {/* Tips */}
+                            <div className={`rounded-xl p-3 ${
+                                step.color === 'pink' ? 'bg-pink-50 border border-pink-100' :
+                                step.color === 'yellow' ? 'bg-yellow-50 border border-yellow-100' :
+                                step.color === 'orange' ? 'bg-orange-50 border border-orange-100' :
+                                step.color === 'blue' ? 'bg-blue-50 border border-blue-100' :
+                                step.color === 'indigo' ? 'bg-indigo-50 border border-indigo-100' : 'bg-purple-50 border border-purple-100'
+                            }`}>
+                                <div className="flex items-start gap-2">
+                                    <span className="text-sm">💡</span>
+                                    <p className="text-xs text-gray-600">{step.tips}</p>
+                                </div>
+                            </div>
+
+                            {/* Backup Option */}
+                            {step.backup && (
+                                <button
+                                    onClick={() => openGoogleMaps(step.backup.mapQuery)}
+                                    className="w-full flex items-center justify-between p-3 bg-gray-100 hover:bg-gray-200 rounded-xl transition-all"
+                                >
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-sm">🔄</span>
+                                        <div className="text-left">
+                                            <div className="text-[10px] text-gray-400">備案餐廳</div>
+                                            <div className="font-medium text-xs text-gray-700">{step.backup.name}</div>
+                                        </div>
+                                    </div>
+                                    <ExternalLink size={14} className="text-gray-400" />
+                                </button>
+                            )}
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            {/* Summary Card */}
+            <div className="bg-gradient-to-r from-rose-50 to-pink-50 border border-pink-200 rounded-2xl p-4 mt-4">
+                <h4 className="font-bold text-pink-800 mb-3 flex items-center gap-2">
+                    ✨ 今日行程總結
+                </h4>
+                <div className="space-y-2 text-xs">
+                    <div className="flex items-center gap-2">
+                        <span>🎮</span>
+                        <span className="text-gray-700">15:00 任天堂 & 寶可夢 (大丸 13F)</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <span>🍰</span>
+                        <span className="text-gray-700">16:00 HARBS 下午茶 (大丸 6F)</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <span>🥐</span>
+                        <span className="text-gray-700">17:30 Grenier 千層酥 (阪急)</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <span>🍣</span>
+                        <span className="text-gray-700">18:15 金沢まいもん寿司 (LUCUA 10F)</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <span>🌃</span>
+                        <span className="text-gray-700">19:45 藍天大廈夜景</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <span>🥞</span>
+                        <span className="text-gray-700">20:45 大阪燒木地 (B1 瀧見小路)</span>
+                    </div>
+                </div>
+                <p className="text-[10px] text-pink-600 mt-3 text-center">祝您在梅田如同在地人般穿梭自如，享受美食與夜景 ♡</p>
+            </div>
+        </div>
+    );
+};
+
 // --- USJ Guide Component ---
 const USJGuide = () => {
     // 設施刺激程度與心臟病風險
@@ -998,6 +1368,7 @@ const USJGuide = () => {
 
 const App = () => {
     const [activeDay, setActiveDay] = useState(1);
+    const [umedaTab, setUmedaTab] = useState('food'); // 'food' or 'guide'
     const [usjTab, setUsjTab] = useState('food'); // 'food' or 'guide'
     const [kyotoTab, setKyotoTab] = useState('food'); // 'food' or 'guide'
 
@@ -1477,6 +1848,32 @@ const App = () => {
 
                 {/* Content */}
                 <div className="px-6 animate-fade-in pb-16">
+                    {/* Day 1 (Umeda) Tab Switcher */}
+                    {activeDay === 1 && (
+                        <div className="flex gap-2 mb-6">
+                            <button
+                                onClick={() => setUmedaTab('food')}
+                                className={`flex-1 py-3 rounded-xl text-sm font-bold transition-all ${
+                                    umedaTab === 'food'
+                                        ? 'bg-pink-500 text-white shadow-lg'
+                                        : 'bg-white text-gray-500 border border-gray-200'
+                                }`}
+                            >
+                                🍜 美食推薦
+                            </button>
+                            <button
+                                onClick={() => setUmedaTab('guide')}
+                                className={`flex-1 py-3 rounded-xl text-sm font-bold transition-all ${
+                                    umedaTab === 'guide'
+                                        ? 'bg-pink-500 text-white shadow-lg'
+                                        : 'bg-white text-gray-500 border border-gray-200'
+                                }`}
+                            >
+                                🚶‍♂️ 梅田順路攻略
+                            </button>
+                        </div>
+                    )}
+
                     {/* Day 2 (Kyoto) Tab Switcher */}
                     {activeDay === 2 && (
                         <div className="flex gap-2 mb-6">
@@ -1529,8 +1926,10 @@ const App = () => {
                         </div>
                     )}
 
-                    {/* Show Kyoto Kimono Guide or USJ Guide or regular spots */}
-                    {activeDay === 2 && kyotoTab === 'guide' ? (
+                    {/* Show Guide components or regular spots */}
+                    {activeDay === 1 && umedaTab === 'guide' ? (
+                        <UmedaGuide />
+                    ) : activeDay === 2 && kyotoTab === 'guide' ? (
                         <KyotoKimonoGuide />
                     ) : activeDay === 4 && usjTab === 'guide' ? (
                         <USJGuide />
