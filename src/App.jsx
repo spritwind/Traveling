@@ -578,6 +578,103 @@ const App = () => {
             color: "from-blue-100 to-indigo-100",
             spots: [
                 {
+                    name: "和服神社之旅 (行程指南)",
+                    desc: "📍 新手必看！完整交通與換裝攻略",
+                    recs: [
+                        {
+                            type: "coupon",
+                            name: "📋 今日行程總覽 (可截圖)",
+                            desc: "⏰ 07:30 出發 → 08:00 抵達清水寺 → 09:00 換和服 → 12:00 還和服 → 13:00 嵐山 → 16:30 伏見稻荷 → 18:30 回程。複製座標到 Google Maps 就能準確導航！",
+                            rating: 5.0,
+                            reviewCount: 99999,
+                            priceLevel: "必看",
+                            mapQuery: "Kiyomizu-dera",
+                            coords: { lat: 34.994856, lng: 135.785046 },
+                            externalLink: "https://maps.app.goo.gl/kiyomizudera"
+                        },
+                        {
+                            type: "coupon",
+                            name: "1️⃣ 飯店 → 公車站 (步行2分鐘)",
+                            desc: "🚶 走出飯店大門 → 往左手邊走 (北方，往九條通大馬路) → 走到大馬路口不要過馬路 → 右轉沿人行道走幾十公尺 → 找「大石橋」站牌。確認方向：往「東福寺・清水寺・祇園」。",
+                            rating: 5.0,
+                            reviewCount: 99999,
+                            priceLevel: "步驟1",
+                            mapQuery: "Oishibashi Bus Stop Kyoto",
+                            coords: { lat: 34.980350, lng: 135.761500 },
+                            externalLink: "https://maps.app.goo.gl/oishibashi"
+                        },
+                        {
+                            type: "coupon",
+                            name: "2️⃣ 搭公車到清水寺 (15-20分鐘)",
+                            desc: "🚌 搭乘：京都市營巴士 202 或 207 號 → 在「五條坂」下車。下車後往車行方向前方走，會看到大十字路口，從這裡上坡就是往清水寺方向。",
+                            rating: 5.0,
+                            reviewCount: 99999,
+                            priceLevel: "步驟2",
+                            mapQuery: "Gojozaka Bus Stop Kyoto",
+                            coords: { lat: 34.994750, lng: 135.776250 },
+                            externalLink: "https://maps.app.goo.gl/gojozaka"
+                        },
+                        { type: "shopping", name: "👘 梨花和服 清水寺店 (推薦！)", desc: "⭐ 位於前往清水寺的主幹道上，非常顯眼，最適合怕迷路的人！沿著五條坂上坡，遇到岔路走左邊比較熱鬧的那條 (松原通)，店鋪在左手邊。從公車站步行約 5 分鐘。", rating: 4.8, reviewCount: 2800, priceLevel: "$$", mapQuery: "Rikawafuku Kiyomizu", coords: { lat: 34.996195, lng: 135.778553 }, externalLink: "https://maps.app.goo.gl/rikawafuku" },
+                        { type: "shopping", name: "👘 岡本和服 清水寺店", desc: "🏛️ 老字號名店！離清水寺最近但也最「裡面」，需走一段上坡。沿著五條坂上坡，遇到岔路走右邊較安靜的茶碗坂。從公車站步行約 8-10 分鐘 (上坡)。", rating: 4.6, reviewCount: 3500, priceLevel: "$$", mapQuery: "Okamoto Kimono Kiyomizu", coords: { lat: 34.995777, lng: 135.782333 }, externalLink: "https://maps.app.goo.gl/okamoto" },
+                        { type: "shopping", name: "👘 てくてく京都 清水店", desc: "🚶 離公車站最近！適合不想穿便服走太遠的人。就在五條坂公車站下車處附近，店面外觀古樸有質感。從公車站步行僅 1-2 分鐘。", rating: 4.5, reviewCount: 1200, priceLevel: "$$", mapQuery: "TekuTeku Kyoto Kiyomizu", coords: { lat: 34.995295, lng: 135.776953 }, externalLink: "https://maps.app.goo.gl/tekuteku" },
+                        {
+                            type: "coupon",
+                            name: "3️⃣ 清水寺 → 三年坂 (09:30-12:00)",
+                            desc: "📸 換完和服後步行前往清水寺仁王門。逛完後沿著「三年坂」往下走，這裡是著名的階梯拍照點！石階搭配古老町家，穿和服拍照超美。",
+                            rating: 5.0,
+                            reviewCount: 99999,
+                            priceLevel: "步驟3",
+                            mapQuery: "Sannenzaka Kyoto",
+                            coords: { lat: 34.995950, lng: 135.780500 },
+                            externalLink: "https://maps.app.goo.gl/sannenzaka"
+                        },
+                        {
+                            type: "coupon",
+                            name: "4️⃣ 還和服 → 嵐山 (13:00-14:00)",
+                            desc: "🚌 中午還和服後，走回「清水道」公車站 (北上方向) → 搭 207 號公車 → 在「四條大宮」下車 → 轉乘嵐電 (紫色路面電車) → 搭到終點站「嵐山站」。",
+                            rating: 5.0,
+                            reviewCount: 99999,
+                            priceLevel: "步驟4",
+                            mapQuery: "Randen Shijo Omiya Station",
+                            coords: { lat: 35.003650, lng: 135.749250 },
+                            externalLink: "https://maps.app.goo.gl/shijoomiya"
+                        },
+                        {
+                            type: "coupon",
+                            name: "5️⃣ 嵐山散策 (14:00-16:00)",
+                            desc: "🎋 嵐電嵐山站出站後：渡月橋 (往左走3分鐘) → 竹林小徑 (往北走) → 野宮神社 (求良緣學業，在竹林裡)。傍晚 16:30 前離開前往伏見稻荷。",
+                            rating: 5.0,
+                            reviewCount: 99999,
+                            priceLevel: "步驟5",
+                            mapQuery: "Arashiyama Bamboo Grove",
+                            coords: { lat: 35.017200, lng: 135.674500 },
+                            externalLink: "https://maps.app.goo.gl/bamboogrove"
+                        },
+                        {
+                            type: "coupon",
+                            name: "6️⃣ 嵐山 → 伏見稻荷 (16:30-18:00)",
+                            desc: "🚃 從竹林步道步行10分鐘到 JR 嵯峨嵐山站 → 搭 JR 山陰本線到「京都站」→ 站內轉乘 JR 奈良線 (第8-10月台) → 在「JR 稻荷站」下車。出站正對面就是紅色大鳥居！",
+                            rating: 5.0,
+                            reviewCount: 99999,
+                            priceLevel: "步驟6",
+                            mapQuery: "JR Inari Station",
+                            coords: { lat: 34.966900, lng: 135.770200 },
+                            externalLink: "https://maps.app.goo.gl/jrinari"
+                        },
+                        {
+                            type: "coupon",
+                            name: "🏠 回程：稻荷 → 飯店",
+                            desc: "🚃 從「JR 稻荷站」搭 JR 回「京都站」。若還有體力可逛京都站，或搭地鐵烏丸線一站到「九條站」，步行回飯店。辛苦了！",
+                            rating: 5.0,
+                            reviewCount: 99999,
+                            priceLevel: "回程",
+                            mapQuery: "Kujo Station Kyoto",
+                            coords: { lat: 34.983200, lng: 135.759100 },
+                            externalLink: "https://maps.app.goo.gl/kujostation"
+                        }
+                    ]
+                },
+                {
                     name: "清水寺・二三年坂・祇園",
                     desc: "世界遺產與古老坡道，米其林老店林立",
                     recs: [
@@ -592,6 +689,11 @@ const App = () => {
                     name: "嵐山・竹林・渡月橋",
                     desc: "米其林密集區域，建議午餐在此享用",
                     recs: [
+                        { type: "coupon", name: "📍 嵐電嵐山站", desc: "🚃 從四條大宮搭嵐電到這！出站後往左走 3 分鐘即到渡月橋，往北走進入竹林小徑。車站有行李寄放。", rating: 5.0, reviewCount: 99999, priceLevel: "起點", mapQuery: "Randen Arashiyama Station", coords: { lat: 35.015800, lng: 135.677500 }, externalLink: "https://maps.app.goo.gl/randenarashiyama" },
+                        { type: "coupon", name: "📍 渡月橋", desc: "🌉 嵐山地標！全長 155 公尺，橫跨桂川。建議在橋上拍照，背景是嵐山群山。秋天紅葉季節絕美。", rating: 5.0, reviewCount: 99999, priceLevel: "必去", mapQuery: "Togetsukyo Bridge", coords: { lat: 35.013500, lng: 135.677800 }, externalLink: "https://maps.app.goo.gl/togetsukyo" },
+                        { type: "coupon", name: "📍 竹林小徑", desc: "🎋 嵐山最著名景點！兩旁高聳竹林，穿和服拍照絕美。從車站往北走約 5 分鐘進入。建議早上或傍晚人較少。", rating: 5.0, reviewCount: 99999, priceLevel: "必去", mapQuery: "Arashiyama Bamboo Grove", coords: { lat: 35.017200, lng: 135.674500 }, externalLink: "https://maps.app.goo.gl/bamboogrove" },
+                        { type: "coupon", name: "📍 野宮神社", desc: "⛩️ 位於竹林中！求良緣、學業的神社。黑色木鳥居很特別，是日本最古老的鳥居樣式。", rating: 5.0, reviewCount: 99999, priceLevel: "必去", mapQuery: "Nonomiya Shrine", coords: { lat: 35.017800, lng: 135.674200 }, externalLink: "https://maps.app.goo.gl/nonomiya" },
+                        { type: "coupon", name: "📍 JR 嵯峨嵐山站 (往伏見)", desc: "🚃 前往伏見稻荷的轉乘站！從竹林步道步行約 10 分鐘。搭 JR 山陰本線到京都站，轉 JR 奈良線到稻荷站。", rating: 5.0, reviewCount: 99999, priceLevel: "轉乘", mapQuery: "JR Saga-Arashiyama Station", coords: { lat: 35.018600, lng: 135.681200 }, externalLink: "https://maps.app.goo.gl/sagaarashiyama" },
                         { type: "food", name: "廣川鰻魚飯 (Hirokawa)", desc: "⭐ 米其林一星！嵐山最強美食，關西風烤鰻魚外酥內嫩，醬汁濃郁。強烈建議事先網路預約！", rating: 4.3, reviewCount: 3200, priceLevel: "$$$", mapQuery: "Unagi Hirokawa Arashiyama", coords: { lat: 35.0169, lng: 135.6772 } },
                         { type: "food", name: "鯛匠 HANANA", desc: "🐟 米其林必比登！必吃鯛魚茶泡飯，三種吃法：生魚片沾胡麻醬、配飯吃、淋熱茶做茶泡飯。", rating: 4.2, reviewCount: 2800, priceLevel: "$$", mapQuery: "Taisho Hanana Arashiyama", coords: { lat: 35.0152, lng: 135.6776 } },
                         { type: "snack", name: "中村屋可樂餅 (Nakamuraya)", desc: "🥔 老牌肉舖的現炸可樂餅！牛肉可樂餅約100多日圓，炸得酥脆熱燙，嵐山散步必備平價美食。", rating: 4.2, reviewCount: 2500, priceLevel: "$", mapQuery: "Nakamuraya Korokke Arashiyama", coords: { lat: 35.0163, lng: 135.6803 } },
@@ -603,6 +705,8 @@ const App = () => {
                     name: "伏見稻荷大社",
                     desc: "千本鳥居，特色美食：稻荷壽司",
                     recs: [
+                        { type: "coupon", name: "📍 JR 稻荷站", desc: "🚃 從京都站搭 JR 奈良線，只要 1-2 站！出站正對面就是伏見稻荷大社的紅色大鳥居，完全不用找路。", rating: 5.0, reviewCount: 99999, priceLevel: "起點", mapQuery: "JR Inari Station", coords: { lat: 34.966900, lng: 135.770200 }, externalLink: "https://maps.app.goo.gl/jrinari" },
+                        { type: "coupon", name: "⛩️ 伏見稻荷大社 (大鳥居)", desc: "🦊 24小時開放！千本鳥居入口。建議傍晚 16:30-18:00 來，光線最美且人較少。走完全程約 2-3 小時，走到四ツ辻約 1 小時。", rating: 5.0, reviewCount: 99999, priceLevel: "必去", mapQuery: "Fushimi Inari Taisha", coords: { lat: 34.967150, lng: 135.772700 }, externalLink: "https://maps.app.goo.gl/fushimiinari" },
                         { type: "food", name: "祢ざめ家 (Nezameya)", desc: "🏛️ 470年歷史老店！傳說名字由豐臣秀吉所賜，招牌烤鰻魚與稻荷壽司，歷史地位無可取代。", rating: 2.9, reviewCount: 1500, priceLevel: "$$", mapQuery: "Nezameya Fushimi Inari", coords: { lat: 34.9678, lng: 135.7708 } },
                         { type: "food", name: "手打烏龍麵 Kendonya", desc: "🍜 高評價手打烏龍！麵條Q彈有勁，比神社門口觀光店更受好評，價格公道。", rating: 4.5, reviewCount: 850, priceLevel: "$", mapQuery: "Kendonya Udon Fushimi", coords: { lat: 34.9683, lng: 135.7683 } },
                         { type: "coffee", name: "Vermillion - cafe", desc: "☕ 澳式森林系咖啡廳！老闆曾在墨爾本生活，露台座位面對森林池塘，參拜後休息首選。", rating: 4.5, reviewCount: 1200, priceLevel: "$$", mapQuery: "Vermillion cafe Fushimi Inari", coords: { lat: 34.9684, lng: 135.7741 } },
