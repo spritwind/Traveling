@@ -1114,6 +1114,15 @@ const App = () => {
                             reviewCount: 1200,
                             priceLevel: "$$",
                             mapQuery: "HARBS ディアモール大阪店"
+                        },
+                        {
+                            type: "food",
+                            name: "金沢まいもん寿司 LUCUA大阪店",
+                            desc: "🍣 網友激推「吃了會感動」的迴轉壽司！金澤直送海鮮，必點「能登黑喉魚 No-doguro」、「富山白蝦 Shiro-ebi」、「加賀螃蟹」。位於 LUCUA 1100 (Lucua Ile) 10樓美食街，需排隊但免預約，建議避開尖峰時段（下午2-4點較空）。",
+                            rating: 4.2,
+                            reviewCount: 3800,
+                            priceLevel: "$$",
+                            mapQuery: "金沢まいもん寿司 ルクア大阪店"
                         }
                     ]
                 },
