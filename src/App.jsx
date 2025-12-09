@@ -289,99 +289,195 @@ const WeatherIcon = ({ day, coords }) => {
 
 // --- Kyoto Kimono Guide Component ---
 const KyotoKimonoGuide = () => {
-    const timelineSteps = [
+    // 完整詳細行程步驟 - 專為新手設計
+    const detailedSteps = [
         {
+            step: 1,
             time: "07:30",
-            title: "飯店出發",
+            duration: "步行 2 分鐘",
+            title: "【出發】飯店 → 公車站",
             icon: "🏨",
-            desc: "走出大門往左 (北方) → 走到九條通大馬路口不要過馬路 → 右轉走幾十公尺",
-            target: "大石橋公車站",
-            coords: { lat: 34.980350, lng: 135.761500 },
-            tips: ["確認站牌方向：往「東福寺・清水寺・祇園」", "搭乘 202 或 207 號公車"]
+            mainDesc: "您的飯店位置極佳，不用去京都車站，走路出來就有公車直達清水寺。",
+            locations: [
+                { label: "飯店", name: "CHISUN PREMIUM Kyoto Kujo", coords: { lat: 34.980512, lng: 135.760815 } },
+                { label: "目標公車站", name: "大石橋 (Oishibashi)", coords: { lat: 34.980350, lng: 135.761500 } }
+            ],
+            streetGuide: [
+                "走出飯店大門",
+                "往左手邊走（北方，往大馬路「九條通」的方向）",
+                "走到大馬路口（九條通），不要過馬路",
+                "右轉沿著人行道走約幾十公尺，就會看到公車站牌"
+            ],
+            important: "確認站牌方向：請確認站牌上有寫 202 或 207 號公車，且方向是往「東福寺・清水寺・祇園」",
+            color: "blue"
         },
         {
-            time: "08:00",
-            title: "抵達五條坂",
+            step: 2,
+            time: "07:35-07:55",
+            duration: "車程約 15-20 分鐘",
+            title: "【交通】公車移動",
             icon: "🚌",
-            desc: "下車後往車行方向前方走，會看到大十字路口 (五條坂交叉口)",
-            target: "五條坂公車站",
-            coords: { lat: 34.994750, lng: 135.776250 },
-            tips: ["從這裡上坡就是往清水寺方向", "先去和服店換裝再上清水寺"]
+            mainDesc: "搭乘京都市營巴士前往清水寺地區。",
+            locations: [
+                { label: "搭乘路線", name: "京都市營巴士 202 或 207 號", coords: null },
+                { label: "下車站", name: "五條坂 (Gojozaka)", coords: { lat: 34.994750, lng: 135.776250 } }
+            ],
+            streetGuide: [
+                "下車後，您會看到對面有另一邊的公車站",
+                "請往車行方向的前方走一點",
+                "會看到一個大的十字路口（五條坂交叉口）",
+                "從這裡開始上坡就是往清水寺"
+            ],
+            important: "公車費用約 230 日圓，建議準備零錢或使用 IC 卡",
+            color: "green"
         },
         {
-            time: "09:00",
-            title: "換和服",
+            step: 3,
+            time: "08:00-09:00",
+            duration: "換裝約 30-60 分鐘",
+            title: "【換裝】和服店",
             icon: "👘",
-            desc: "選擇預約的和服店換裝，約需 30-60 分鐘",
-            target: "和服店",
-            coords: { lat: 34.996195, lng: 135.778553 },
-            tips: ["建議事先網路預約", "記得帶相機/手機拍美照"]
+            mainDesc: "請根據您預約的店家，複製座標導航前往。建議事先網路預約！",
+            locations: [],
+            streetGuide: [],
+            important: "強烈建議事先預約！現場等候可能需要更長時間",
+            color: "pink",
+            isKimonoSection: true
         },
         {
-            time: "09:30",
-            title: "清水寺參拜",
+            step: 4,
+            time: "09:30-12:00",
+            duration: "觀光約 2.5 小時",
+            title: "【觀光】清水寺 → 二三年坂",
             icon: "⛩️",
-            desc: "換完和服後步行前往清水寺仁王門，沿著三年坂往下走是著名拍照點",
-            target: "清水寺仁王門",
-            coords: { lat: 34.994856, lng: 135.785046 },
-            tips: ["三年坂石階配古老町家，穿和服超美", "可順路逛二寧坂、寧寧之道"]
+            mainDesc: "換完和服後，直接步行前往清水寺，逛完後沿著三年坂往下走拍美照。",
+            locations: [
+                { label: "清水寺仁王門 (入口)", name: "清水寺", coords: { lat: 34.994856, lng: 135.785046 } },
+                { label: "拍照熱點", name: "三年坂階梯", coords: { lat: 34.995950, lng: 135.780500 } }
+            ],
+            streetGuide: [
+                "從和服店出發，沿著坡道往上走約 10-15 分鐘到清水寺",
+                "清水寺門票 400 日圓",
+                "逛完清水寺後，沿著「三年坂 (Sannenzaka)」往下走",
+                "三年坂是著名階梯拍照點，穿和服超級美！",
+                "可順路逛二寧坂、寧寧之道"
+            ],
+            important: "三年坂石階搭配古老町家建築，是京都最經典的和服拍攝地點",
+            color: "red"
         },
         {
-            time: "12:00",
-            title: "歸還和服",
-            icon: "👔",
-            desc: "回到和服店換回便服，準備前往嵐山",
-            target: "和服店",
-            coords: { lat: 34.996195, lng: 135.778553 },
-            tips: ["建議中午前歸還，下午行動力較佳", "換回便服後去「清水道」公車站"]
-        },
-        {
-            time: "13:00",
-            title: "前往嵐山",
+            step: 5,
+            time: "12:00-13:00",
+            duration: "歸還+移動約 1 小時",
+            title: "【歸還 & 移動】清水寺 → 嵐山",
             icon: "🚃",
-            desc: "清水道搭 207 公車 → 四條大宮下車 → 轉乘嵐電 (紫色路面電車) → 嵐山站",
-            target: "嵐電四條大宮站",
-            coords: { lat: 35.003650, lng: 135.749250 },
-            tips: ["嵐電是復古路面電車，很有風情", "搭到終點站「嵐山站」"]
+            mainDesc: "強烈建議中午歸還和服，換回便服後，行動力滿點前往嵐山。",
+            locations: [
+                { label: "回程公車站", name: "清水道 (Kiyomizu-michi)", coords: { lat: 34.997200, lng: 135.775800 } },
+                { label: "下車轉乘", name: "四條大宮 (Shijo Omiya)", coords: { lat: 35.003650, lng: 135.749250 } },
+                { label: "轉乘電車", name: "嵐電 四條大宮站", coords: { lat: 35.003650, lng: 135.749250 } }
+            ],
+            streetGuide: [
+                "先回和服店歸還和服，換回便服",
+                "走到「清水道」公車站（北上方向）",
+                "搭乘 207 號公車",
+                "在「四條大宮」站下車",
+                "走到「嵐電 (Randen) 四條大宮站」（很近）",
+                "搭嵐電到終點站「嵐山站」"
+            ],
+            important: "嵐電是紫色的復古路面電車，很有風情，記得拍照！",
+            color: "purple"
         },
         {
-            time: "14:00",
-            title: "嵐山散策",
+            step: 6,
+            time: "14:00-16:00",
+            duration: "散策約 2 小時",
+            title: "【觀光】嵐山散策",
             icon: "🎋",
-            desc: "渡月橋 (往左走3分鐘) → 竹林小徑 (往北走) → 野宮神社 (求良緣學業)",
-            target: "嵐電嵐山站",
-            coords: { lat: 35.015800, lng: 135.677500 },
-            tips: ["竹林拍照建議早上或傍晚人較少", "16:30 前離開前往伏見稻荷"]
+            mainDesc: "嵐山是京都最美的自然景點，竹林、渡月橋、野宮神社都在步行範圍內。",
+            locations: [
+                { label: "嵐電嵐山站", name: "起點", coords: { lat: 35.015800, lng: 135.677500 } },
+                { label: "渡月橋", name: "出站往左走 3 分鐘", coords: { lat: 35.013500, lng: 135.677800 } },
+                { label: "竹林小徑", name: "從車站往北走", coords: { lat: 35.017200, lng: 135.674500 } },
+                { label: "野宮神社", name: "在竹林裡面", coords: { lat: 35.017800, lng: 135.674200 } }
+            ],
+            streetGuide: [
+                "出嵐電嵐山站後，往左走約 3 分鐘到渡月橋",
+                "渡月橋全長 155 公尺，可在橋上拍照",
+                "從車站往北走，經過商店街約 5 分鐘進入竹林",
+                "野宮神社在竹林裡面，求良緣/學業很靈驗",
+                "16:00 前開始往 JR 站移動"
+            ],
+            important: "傍晚 16:30 前要離開，才能趕上伏見稻荷的夕陽時分！",
+            color: "green"
         },
         {
-            time: "16:30",
-            title: "前往伏見稻荷",
+            step: 7,
+            time: "16:30-17:00",
+            duration: "移動約 30-40 分鐘",
+            title: "【移動】嵐山 → 伏見稻荷",
             icon: "🚃",
-            desc: "步行10分鐘到 JR 嵯峨嵐山站 → 京都站 → 轉 JR 奈良線 → 稻荷站",
-            target: "JR 嵯峨嵐山站",
-            coords: { lat: 35.018600, lng: 135.681200 },
-            tips: ["JR 奈良線在京都站第 8-10 月台", "稻荷站出站正對面就是大鳥居"]
+            mainDesc: "為了趕在天黑前體驗千本鳥居的神祕感，這段移動要快。",
+            locations: [
+                { label: "出發", name: "JR 嵯峨嵐山站", coords: { lat: 35.018600, lng: 135.681200 } },
+                { label: "轉乘", name: "京都車站 (第 8-10 月台)", coords: { lat: 34.985849, lng: 135.758767 } },
+                { label: "抵達", name: "JR 稻荷站", coords: { lat: 34.966900, lng: 135.770200 } }
+            ],
+            streetGuide: [
+                "從竹林步道步行約 10 分鐘到 JR 嵯峨嵐山站",
+                "搭乘 JR 山陰本線（往京都方向）",
+                "抵達京都車站",
+                "在京都車站站內轉乘 JR 奈良線（往奈良方向）",
+                "通常在第 8, 9, 10 月台",
+                "在「JR 稻荷站」下車（京都站的下一站或第二站，所有車都停）"
+            ],
+            important: "JR 稻荷站出口正對面就是伏見稻荷大社的紅色大鳥居，完全不用找路！",
+            color: "orange"
         },
         {
-            time: "17:00",
-            title: "千本鳥居",
+            step: 8,
+            time: "17:00-18:30",
+            duration: "觀光約 1.5 小時",
+            title: "【觀光】千本鳥居",
             icon: "⛩️",
-            desc: "傍晚光線最美！走到四ツ辻約 1 小時，全程約 2-3 小時",
-            target: "伏見稻荷大社",
-            coords: { lat: 34.967150, lng: 135.772700 },
-            tips: ["24小時開放，傍晚人較少", "稻荷壽司是這裡的特色美食"]
+            mainDesc: "傍晚光線最美！千本鳥居是伏見稻荷大社最著名的景點。",
+            locations: [
+                { label: "伏見稻荷大社", name: "正門大鳥居", coords: { lat: 34.967150, lng: 135.772700 } }
+            ],
+            streetGuide: [
+                "出站正對面就是紅色大鳥居",
+                "伏見稻荷 24 小時開放，免費入場",
+                "走到「四ツ辻」眺望台約需 1 小時",
+                "走完全程（山頂）約需 2-3 小時",
+                "建議至少走到四ツ辻，景色超美"
+            ],
+            important: "傍晚 17:00-18:00 人較少，光線最美，是拍照最佳時段！",
+            color: "red"
         },
         {
+            step: 9,
             time: "18:30",
-            title: "回程",
+            duration: "回程約 20-30 分鐘",
+            title: "【回程】稻荷 → 飯店",
             icon: "🏠",
-            desc: "JR 稻荷站 → 京都站 (可逛一下) → 地鐵烏丸線到九條站 → 步行回飯店",
-            target: "JR 稻荷站",
-            coords: { lat: 34.966900, lng: 135.770200 },
-            tips: ["京都站有很多餐廳和伴手禮店", "辛苦了！今天超充實"]
+            mainDesc: "辛苦了一整天！回飯店好好休息吧。",
+            locations: [
+                { label: "出發", name: "JR 稻荷站", coords: { lat: 34.966900, lng: 135.770200 } },
+                { label: "可選：逛京都站", name: "京都車站", coords: { lat: 34.985849, lng: 135.758767 } },
+                { label: "回飯店", name: "地鐵九條站", coords: { lat: 34.983200, lng: 135.759100 } }
+            ],
+            streetGuide: [
+                "從「JR 稻荷站」搭 JR 回「京都站」",
+                "若還有體力，京都站有很多餐廳和伴手禮店可以逛",
+                "搭地鐵烏丸線一站到「九條站」",
+                "從九條站步行約 5-10 分鐘回飯店"
+            ],
+            important: "今天超充實！明天還有行程，早點休息吧～",
+            color: "blue"
         }
     ];
 
+    // 和服店詳細資訊
     const kimonoShops = [
         {
             name: "梨花和服 清水寺店",
@@ -389,9 +485,10 @@ const KyotoKimonoGuide = () => {
             rating: 4.8,
             reviews: 2800,
             price: "$$",
-            distance: "步行 5 分鐘",
-            highlight: "最好找！",
-            desc: "位於前往清水寺的主幹道上，非常顯眼。沿著五條坂上坡，遇到岔路走左邊比較熱鬧的那條 (松原通)，店鋪在左手邊。",
+            distance: "從公車站步行約 5 分鐘",
+            highlight: "最好找！適合怕迷路的人",
+            desc: "位於前往清水寺的主幹道上，非常顯眼。",
+            streetGuide: "沿著五條坂上坡，遇到岔路（茶碗坂）時走左邊比較熱鬧的那條（松原通/清水道），店鋪就在左手邊。",
             coords: { lat: 34.996195, lng: 135.778553 },
             color: "green"
         },
@@ -401,9 +498,10 @@ const KyotoKimonoGuide = () => {
             rating: 4.6,
             reviews: 3500,
             price: "$$",
-            distance: "步行 8-10 分鐘",
-            highlight: "老字號",
-            desc: "離清水寺最近的老字號名店，但需走一段上坡。沿著五條坂上坡，遇到岔路走右邊較安靜的茶碗坂。",
+            distance: "從公車站步行約 8-10 分鐘（上坡）",
+            highlight: "老字號名店！離清水寺最近",
+            desc: "這間離清水寺最近，但也最「裡面」，需要走一段上坡路。",
+            streetGuide: "沿著五條坂上坡，遇到岔路時走右邊那條比較安靜的坡道（茶碗坂）。一直往上走，店鋪在右手邊一個有庭園入口的地方。",
             coords: { lat: 34.995777, lng: 135.782333 },
             color: "blue"
         },
@@ -413,22 +511,27 @@ const KyotoKimonoGuide = () => {
             rating: 4.5,
             reviews: 1200,
             price: "$$",
-            distance: "步行 1-2 分鐘",
-            highlight: "最近！",
-            desc: "離公車站最近！就在五條坂公車站下車處附近，店面外觀古樸有質感。適合不想穿便服走太遠的人。",
+            distance: "從公車站步行約 1-2 分鐘",
+            highlight: "最近！不想穿便服走太遠首選",
+            desc: "離公車站最近，適合不想穿著便服走太遠的人。",
+            streetGuide: "就在五條坂公車站下車處附近，稍微往回走一點或過馬路（視下車點而定），店面外觀通常比較古樸有質感。",
             coords: { lat: 34.995295, lng: 135.776953 },
             color: "purple"
         }
     ];
 
+    // 必拍景點
     const landmarks = [
-        { name: "渡月橋", icon: "🌉", desc: "嵐山地標，全長155公尺", coords: { lat: 35.013500, lng: 135.677800 } },
-        { name: "竹林小徑", icon: "🎋", desc: "兩旁高聳竹林，必拍", coords: { lat: 35.017200, lng: 135.674500 } },
-        { name: "野宮神社", icon: "⛩️", desc: "求良緣學業", coords: { lat: 35.017800, lng: 135.674200 } },
-        { name: "三年坂", icon: "📸", desc: "階梯拍照熱點", coords: { lat: 34.995950, lng: 135.780500 } },
+        { name: "清水寺仁王門", icon: "⛩️", desc: "世界遺產入口", coords: { lat: 34.994856, lng: 135.785046 } },
+        { name: "三年坂", icon: "📸", desc: "最美階梯拍照點", coords: { lat: 34.995950, lng: 135.780500 } },
+        { name: "渡月橋", icon: "🌉", desc: "嵐山地標 155公尺", coords: { lat: 35.013500, lng: 135.677800 } },
+        { name: "竹林小徑", icon: "🎋", desc: "兩旁高聳竹林", coords: { lat: 35.017200, lng: 135.674500 } },
+        { name: "野宮神社", icon: "💕", desc: "求良緣學業", coords: { lat: 35.017800, lng: 135.674200 } },
+        { name: "千本鳥居", icon: "⛩️", desc: "伏見稻荷必拍", coords: { lat: 34.967150, lng: 135.772700 } },
     ];
 
-    const openGoogleMaps = (coords, name) => {
+    const openGoogleMaps = (coords) => {
+        if (!coords) return;
         window.open(`https://www.google.com/maps/search/?api=1&query=${coords.lat},${coords.lng}`, '_blank');
     };
 
@@ -439,106 +542,198 @@ const KyotoKimonoGuide = () => {
                 <div className="flex items-center gap-3">
                     <span className="text-4xl">👘</span>
                     <div>
-                        <h3 className="font-bold text-gray-800 text-lg">和服神社之旅</h3>
-                        <p className="text-xs text-gray-600">清水寺 → 嵐山 → 伏見稻荷 完整攻略</p>
+                        <h3 className="font-bold text-gray-800 text-lg">和服神社之旅 - 新手完整攻略</h3>
+                        <p className="text-xs text-gray-600">2025/12/10 (三) 京都三大景點移動日</p>
                     </div>
                 </div>
             </div>
 
-            {/* Quick Summary Card */}
+            {/* How to use */}
             <div className="bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200 rounded-2xl p-4 mb-4">
                 <h4 className="font-bold text-amber-800 mb-2 flex items-center gap-2">
+                    💡 使用教學
+                </h4>
+                <p className="text-xs text-amber-700">
+                    您可以直接<b>點擊卡片</b>開啟 Google Maps 導航，或<b>長按座標</b>複製貼上 Google Maps App 的搜尋欄，就會直接標定該位置，完全不用擔心打錯字或找錯店。
+                </p>
+            </div>
+
+            {/* Quick Summary Card */}
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-4 mb-4">
+                <h4 className="font-bold text-blue-800 mb-2 flex items-center gap-2">
                     📋 今日行程總覽 (可截圖)
                 </h4>
-                <div className="text-xs text-amber-700 space-y-1">
-                    <p>⏰ <b>07:30</b> 飯店出發 → <b>08:00</b> 抵達清水寺</p>
-                    <p>👘 <b>09:00</b> 換和服 → <b>12:00</b> 歸還和服</p>
-                    <p>🚃 <b>13:00</b> 嵐山 → <b>16:30</b> 伏見稻荷</p>
-                    <p>🏠 <b>18:30</b> 回程</p>
-                </div>
-                <p className="text-[10px] text-amber-600 mt-2">💡 點擊下方卡片可直接開啟 Google Maps 導航</p>
-            </div>
-
-            {/* Timeline */}
-            <div className="mb-6">
-                <h4 className="font-bold text-gray-800 mb-3 flex items-center gap-2">
-                    🗺️ 詳細行程時間軸
-                </h4>
-                <div className="space-y-3">
-                    {timelineSteps.map((step, idx) => (
-                        <div
-                            key={idx}
-                            className="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm cursor-pointer hover:shadow-md transition-all"
-                            onClick={() => openGoogleMaps(step.coords, step.target)}
-                        >
-                            <div className="flex items-start gap-3">
-                                <div className="bg-blue-500 text-white text-xs font-bold px-2 py-1 rounded-lg shrink-0">
-                                    {step.time}
-                                </div>
-                                <span className="text-2xl">{step.icon}</span>
-                                <div className="flex-1 min-w-0">
-                                    <h5 className="font-bold text-gray-800 text-sm">{step.title}</h5>
-                                    <p className="text-xs text-gray-600 mt-1">{step.desc}</p>
-                                    <div className="flex items-center gap-1 mt-2">
-                                        <MapPin size={12} className="text-blue-500" />
-                                        <span className="text-xs text-blue-600 font-medium">{step.target}</span>
-                                    </div>
-                                    {step.tips.length > 0 && (
-                                        <div className="mt-2 bg-gray-50 rounded-lg p-2">
-                                            {step.tips.map((tip, tipIdx) => (
-                                                <p key={tipIdx} className="text-[10px] text-gray-500 flex items-start gap-1">
-                                                    <ChevronRight size={10} className="text-gray-400 mt-0.5 shrink-0" />
-                                                    {tip}
-                                                </p>
-                                            ))}
-                                        </div>
-                                    )}
-                                </div>
-                                <ExternalLink size={16} className="text-gray-300 shrink-0" />
-                            </div>
-                        </div>
-                    ))}
+                <div className="text-xs text-blue-700 space-y-1">
+                    <p>🏨 <b>07:30</b> 飯店出發 → 步行 2 分鐘到公車站</p>
+                    <p>🚌 <b>07:35</b> 搭 202/207 公車 → 約 20 分鐘</p>
+                    <p>👘 <b>08:00</b> 抵達五條坂 → 去和服店換裝 (約 1 小時)</p>
+                    <p>⛩️ <b>09:30</b> 清水寺+三年坂 → 約 2.5 小時</p>
+                    <p>👔 <b>12:00</b> 歸還和服 → 搭公車+嵐電前往嵐山</p>
+                    <p>🎋 <b>14:00</b> 嵐山散策 → 渡月橋+竹林 約 2 小時</p>
+                    <p>🚃 <b>16:30</b> 搭 JR 前往伏見稻荷 → 約 30 分鐘</p>
+                    <p>⛩️ <b>17:00</b> 千本鳥居 → 約 1.5 小時</p>
+                    <p>🏠 <b>18:30</b> 回程 → 京都站或直接回飯店</p>
                 </div>
             </div>
 
-            {/* Kimono Shops */}
+            {/* Detailed Steps */}
             <div className="mb-6">
                 <h4 className="font-bold text-gray-800 mb-3 flex items-center gap-2">
-                    👘 推薦和服店
+                    🗺️ 超詳細步驟指引
                 </h4>
-                <div className="space-y-3">
-                    {kimonoShops.map((shop, idx) => (
+                <div className="space-y-4">
+                    {detailedSteps.map((step, idx) => (
                         <div
                             key={idx}
-                            className={`bg-white border rounded-2xl p-4 shadow-sm cursor-pointer hover:shadow-md transition-all ${
-                                shop.color === 'green' ? 'border-green-200' :
-                                shop.color === 'blue' ? 'border-blue-200' : 'border-purple-200'
+                            className={`bg-white border-2 rounded-2xl overflow-hidden shadow-sm ${
+                                step.color === 'blue' ? 'border-blue-200' :
+                                step.color === 'green' ? 'border-green-200' :
+                                step.color === 'pink' ? 'border-pink-200' :
+                                step.color === 'red' ? 'border-red-200' :
+                                step.color === 'purple' ? 'border-purple-200' :
+                                step.color === 'orange' ? 'border-orange-200' : 'border-gray-200'
                             }`}
-                            onClick={() => openGoogleMaps(shop.coords, shop.name)}
                         >
-                            <div className="flex items-start justify-between">
-                                <div className="flex-1">
-                                    <div className="flex items-center gap-2">
-                                        <h5 className="font-bold text-gray-800">{shop.name}</h5>
-                                        <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
-                                            shop.color === 'green' ? 'bg-green-100 text-green-600' :
-                                            shop.color === 'blue' ? 'bg-blue-100 text-blue-600' : 'bg-purple-100 text-purple-600'
-                                        }`}>
-                                            {shop.highlight}
-                                        </span>
+                            {/* Step Header */}
+                            <div className={`px-4 py-3 ${
+                                step.color === 'blue' ? 'bg-blue-50' :
+                                step.color === 'green' ? 'bg-green-50' :
+                                step.color === 'pink' ? 'bg-pink-50' :
+                                step.color === 'red' ? 'bg-red-50' :
+                                step.color === 'purple' ? 'bg-purple-50' :
+                                step.color === 'orange' ? 'bg-orange-50' : 'bg-gray-50'
+                            }`}>
+                                <div className="flex items-center gap-3">
+                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm ${
+                                        step.color === 'blue' ? 'bg-blue-500' :
+                                        step.color === 'green' ? 'bg-green-500' :
+                                        step.color === 'pink' ? 'bg-pink-500' :
+                                        step.color === 'red' ? 'bg-red-500' :
+                                        step.color === 'purple' ? 'bg-purple-500' :
+                                        step.color === 'orange' ? 'bg-orange-500' : 'bg-gray-500'
+                                    }`}>
+                                        {step.step}
                                     </div>
-                                    <div className="flex items-center gap-2 mt-1">
-                                        <div className="flex items-center gap-1">
-                                            <Star size={12} className="fill-yellow-400 text-yellow-400" />
-                                            <span className="text-xs font-bold">{shop.rating}</span>
+                                    <span className="text-2xl">{step.icon}</span>
+                                    <div className="flex-1">
+                                        <h5 className="font-bold text-gray-800 text-sm">{step.title}</h5>
+                                        <div className="flex items-center gap-2 mt-0.5">
+                                            <span className="text-xs text-gray-500">⏰ {step.time}</span>
+                                            <span className="text-xs text-gray-400">|</span>
+                                            <span className="text-xs text-gray-500">{step.duration}</span>
                                         </div>
-                                        <span className="text-[10px] text-gray-400">({shop.reviews})</span>
-                                        <span className="text-[10px] text-gray-400">{shop.price}</span>
-                                        <span className="text-[10px] text-blue-500 font-medium">📍 {shop.distance}</span>
                                     </div>
-                                    <p className="text-xs text-gray-600 mt-2">{shop.desc}</p>
                                 </div>
-                                <ExternalLink size={16} className="text-gray-300 shrink-0 ml-2" />
+                            </div>
+
+                            {/* Step Content */}
+                            <div className="p-4">
+                                <p className="text-sm text-gray-700 mb-3">{step.mainDesc}</p>
+
+                                {/* Locations */}
+                                {step.locations.length > 0 && (
+                                    <div className="space-y-2 mb-3">
+                                        {step.locations.map((loc, locIdx) => (
+                                            <div
+                                                key={locIdx}
+                                                className={`flex items-center justify-between p-2 rounded-lg ${loc.coords ? 'bg-gray-50 cursor-pointer hover:bg-gray-100' : 'bg-gray-50'}`}
+                                                onClick={() => loc.coords && openGoogleMaps(loc.coords)}
+                                            >
+                                                <div className="flex items-center gap-2">
+                                                    <MapPin size={14} className={loc.coords ? 'text-blue-500' : 'text-gray-400'} />
+                                                    <div>
+                                                        <span className="text-xs text-gray-500">{loc.label}：</span>
+                                                        <span className="text-xs font-bold text-gray-800"> {loc.name}</span>
+                                                    </div>
+                                                </div>
+                                                {loc.coords && (
+                                                    <div className="flex items-center gap-1">
+                                                        <span className="text-[10px] text-blue-500">{loc.coords.lat.toFixed(4)}, {loc.coords.lng.toFixed(4)}</span>
+                                                        <ExternalLink size={12} className="text-blue-400" />
+                                                    </div>
+                                                )}
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+
+                                {/* Kimono Shops Section */}
+                                {step.isKimonoSection && (
+                                    <div className="space-y-3 mb-3">
+                                        {kimonoShops.map((shop, shopIdx) => (
+                                            <div
+                                                key={shopIdx}
+                                                className={`border rounded-xl p-3 cursor-pointer hover:shadow-md transition-all ${
+                                                    shop.color === 'green' ? 'border-green-200 bg-green-50/50' :
+                                                    shop.color === 'blue' ? 'border-blue-200 bg-blue-50/50' : 'border-purple-200 bg-purple-50/50'
+                                                }`}
+                                                onClick={() => openGoogleMaps(shop.coords)}
+                                            >
+                                                <div className="flex items-start justify-between mb-2">
+                                                    <div>
+                                                        <div className="flex items-center gap-2">
+                                                            <span className="font-bold text-gray-800 text-sm">【推薦{shopIdx + 1}】{shop.name}</span>
+                                                        </div>
+                                                        <p className="text-xs text-gray-500 mt-0.5">{shop.nameEn}</p>
+                                                    </div>
+                                                    <div className="flex items-center gap-1">
+                                                        <Star size={12} className="fill-yellow-400 text-yellow-400" />
+                                                        <span className="text-xs font-bold">{shop.rating}</span>
+                                                        <span className="text-[10px] text-gray-400">({shop.reviews})</span>
+                                                    </div>
+                                                </div>
+                                                <p className={`text-xs font-bold mb-1 ${
+                                                    shop.color === 'green' ? 'text-green-600' :
+                                                    shop.color === 'blue' ? 'text-blue-600' : 'text-purple-600'
+                                                }`}>
+                                                    ⭐ {shop.highlight}
+                                                </p>
+                                                <p className="text-xs text-gray-600 mb-2">{shop.desc}</p>
+                                                <div className="bg-white/70 rounded-lg p-2">
+                                                    <p className="text-[11px] text-gray-700">
+                                                        <span className="font-bold">👀 街景指引：</span>{shop.streetGuide}
+                                                    </p>
+                                                </div>
+                                                <div className="flex items-center justify-between mt-2">
+                                                    <span className="text-xs text-blue-600 font-medium">📍 {shop.distance}</span>
+                                                    <span className="text-[10px] text-gray-400">{shop.coords.lat}, {shop.coords.lng}</span>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+
+                                {/* Street Guide */}
+                                {step.streetGuide.length > 0 && (
+                                    <div className="bg-gray-50 rounded-lg p-3 mb-3">
+                                        <p className="text-xs font-bold text-gray-700 mb-2">👀 街景指引：</p>
+                                        <ol className="space-y-1">
+                                            {step.streetGuide.map((guide, guideIdx) => (
+                                                <li key={guideIdx} className="text-xs text-gray-600 flex items-start gap-2">
+                                                    <span className="text-gray-400 shrink-0">{guideIdx + 1}.</span>
+                                                    <span>{guide}</span>
+                                                </li>
+                                            ))}
+                                        </ol>
+                                    </div>
+                                )}
+
+                                {/* Important Note */}
+                                {step.important && (
+                                    <div className={`rounded-lg p-2 ${
+                                        step.color === 'blue' ? 'bg-blue-100' :
+                                        step.color === 'green' ? 'bg-green-100' :
+                                        step.color === 'pink' ? 'bg-pink-100' :
+                                        step.color === 'red' ? 'bg-red-100' :
+                                        step.color === 'purple' ? 'bg-purple-100' :
+                                        step.color === 'orange' ? 'bg-orange-100' : 'bg-gray-100'
+                                    }`}>
+                                        <p className="text-xs font-bold flex items-start gap-1">
+                                            <AlertTriangle size={14} className="shrink-0 mt-0.5" />
+                                            {step.important}
+                                        </p>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     ))}
@@ -552,7 +747,7 @@ const KyotoKimonoGuide = () => {
                     {landmarks.map((lm, idx) => (
                         <button
                             key={idx}
-                            onClick={() => openGoogleMaps(lm.coords, lm.name)}
+                            onClick={() => openGoogleMaps(lm.coords)}
                             className="bg-white/70 hover:bg-white rounded-xl p-3 text-left transition-all"
                         >
                             <div className="flex items-center gap-2">
@@ -570,24 +765,24 @@ const KyotoKimonoGuide = () => {
             {/* Transportation Summary */}
             <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-4">
                 <h4 className="font-bold text-blue-800 mb-3 flex items-center gap-2">
-                    🚌 交通小抄 (可截圖)
+                    📝 給新手的交通總結小抄 (可截圖)
                 </h4>
                 <div className="space-y-2 text-xs">
-                    <div className="bg-white/70 rounded-lg p-2">
+                    <div className="bg-white/70 rounded-lg p-3">
                         <span className="font-bold text-blue-700">早上：</span>
-                        <span className="text-gray-600"> 飯店 → 大石橋站 (202/207公車) → 五條坂</span>
+                        <p className="text-gray-600 mt-1">飯店出門左轉到大馬路(九條通) → 右轉不需過馬路 → 站牌「大石橋」搭 202/207 公車 → 「五條坂」下車</p>
                     </div>
-                    <div className="bg-white/70 rounded-lg p-2">
-                        <span className="font-bold text-blue-700">中午：</span>
-                        <span className="text-gray-600"> 清水道 (207公車) → 四條大宮 (嵐電) → 嵐山</span>
+                    <div className="bg-white/70 rounded-lg p-3">
+                        <span className="font-bold text-purple-700">中午：</span>
+                        <p className="text-gray-600 mt-1">「清水道」搭 207 公車 → 「四條大宮」下車 → 換嵐電(紫色電車) → 「嵐山」終點站下車</p>
                     </div>
-                    <div className="bg-white/70 rounded-lg p-2">
-                        <span className="font-bold text-blue-700">傍晚：</span>
-                        <span className="text-gray-600"> JR嵯峨嵐山 → 京都站 (JR奈良線) → 稻荷站</span>
+                    <div className="bg-white/70 rounded-lg p-3">
+                        <span className="font-bold text-orange-700">傍晚：</span>
+                        <p className="text-gray-600 mt-1">走路到 JR 嵯峨嵐山站 → 搭 JR 到「京都站」換車 → 搭 JR 奈良線 (第8-10月台) 到「稻荷站」</p>
                     </div>
-                    <div className="bg-white/70 rounded-lg p-2">
-                        <span className="font-bold text-blue-700">晚上：</span>
-                        <span className="text-gray-600"> JR稻荷 → 京都站 (地鐵烏丸線) → 九條站</span>
+                    <div className="bg-white/70 rounded-lg p-3">
+                        <span className="font-bold text-green-700">晚上：</span>
+                        <p className="text-gray-600 mt-1">從「JR 稻荷站」搭 JR 回「京都站」，若還有體力可逛京都站，或搭地鐵一站回「九條站」回飯店</p>
                     </div>
                 </div>
             </div>
