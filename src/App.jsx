@@ -795,7 +795,7 @@ const KyotoKimonoGuide = () => {
 
 // --- Umeda Guide Component ---
 const UmedaGuide = () => {
-    // 詳細步驟行程
+    // 詳細步驟行程 (含精確經緯度，支援距離計算)
     const detailedSteps = [
         {
             step: 1,
@@ -806,8 +806,8 @@ const UmedaGuide = () => {
             icon: "🎮",
             mainDesc: "抵達 JR 大阪站後，直接進入相連的「大丸梅田店」，搭電梯直達 13 樓朝聖！任天堂和寶可夢中心在同一層樓，一次逛完。",
             locations: [
-                { label: "任天堂大阪", name: "Nintendo OSAKA (大丸梅田 13F)", mapQuery: "Nintendo OSAKA 大丸梅田" },
-                { label: "寶可夢中心", name: "Pokémon Center Osaka", mapQuery: "ポケモンセンターオーサカ" }
+                { label: "任天堂大阪", name: "Nintendo OSAKA (大丸梅田 13F)", mapQuery: "Nintendo OSAKA 大丸梅田", coords: { lat: 34.7025, lng: 135.4968 } },
+                { label: "寶可夢中心", name: "Pokémon Center Osaka", mapQuery: "ポケモンセンターオーサカ", coords: { lat: 34.7025, lng: 135.4968 } }
             ],
             streetGuide: [
                 "從 JR 大阪站「中央口」或「南口」出站",
@@ -827,7 +827,7 @@ const UmedaGuide = () => {
             icon: "🍰",
             mainDesc: "逛累了直接搭電梯下到 6 樓，完全不用走出戶外找路！HARBS 是日本超人氣甜點店，必點水果千層蛋糕 (Mille Crepes)。",
             locations: [
-                { label: "HARBS 大丸店", name: "HARBS 大丸梅田店 (6F)", mapQuery: "HARBS 大丸梅田店" }
+                { label: "HARBS 大丸店", name: "HARBS 大丸梅田店 (6F)", mapQuery: "HARBS 大丸梅田店", coords: { lat: 34.7025, lng: 135.4968 } }
             ],
             streetGuide: [
                 "從 13 樓直接搭電梯下到 6 樓",
@@ -845,7 +845,7 @@ const UmedaGuide = () => {
             icon: "🥐",
             mainDesc: "IG 爆紅甜點！必點「烤布蕾千層酥 Brûlée Mille-feuille」，酥皮超級酥脆，卡士達醬爆漿。因為剛吃過 HARBS，建議買一份大家分食嘗鮮即可，邊走邊吃前往下一站。",
             locations: [
-                { label: "Grenier", name: "Grenier グルニエ (阪急 Grand Building 1F)", mapQuery: "グルニエ 梅田" }
+                { label: "Grenier", name: "Grenier グルニエ (阪急 Grand Building 1F)", mapQuery: "グルニエ 梅田", coords: { lat: 34.7048, lng: 135.4995 } }
             ],
             streetGuide: [
                 "從大丸 1F 出來",
@@ -864,7 +864,7 @@ const UmedaGuide = () => {
             icon: "🍣",
             mainDesc: "網友激推「吃了會感動」的迴轉壽司！金澤直送海鮮，必點「能登黑喉魚 No-doguro」、「富山白蝦 Shiro-ebi」、「加賀螃蟹」。選擇這個時間點是因為 Grenier 往北走剛好會經過 LUCUA，且吃完後 LUCUA 離藍天大廈的通道最近。",
             locations: [
-                { label: "金沢まいもん寿司", name: "金沢まいもん寿司 (LUCUA 1100 10F)", mapQuery: "金沢まいもん寿司 ルクア大阪店" }
+                { label: "金沢まいもん寿司", name: "金沢まいもん寿司 (LUCUA 1100 10F)", mapQuery: "金沢まいもん寿司 ルクア大阪店", coords: { lat: 34.7024, lng: 135.4965 } }
             ],
             streetGuide: [
                 "從 Grenier 往回走",
@@ -883,7 +883,7 @@ const UmedaGuide = () => {
             icon: "🌃",
             mainDesc: "大阪最佳夜景之一！搭乘懸空手扶梯通往 173 公尺高空，頂樓是 360 度露天展望台 (Sky Walk)，地上有螢光石鋪成的銀河步道。",
             locations: [
-                { label: "藍天大廈", name: "梅田藍天大廈 空中庭園展望台", mapQuery: "梅田スカイビル 空中庭園展望台" }
+                { label: "藍天大廈", name: "梅田藍天大廈 空中庭園展望台", mapQuery: "梅田スカイビル 空中庭園展望台", coords: { lat: 34.7052, lng: 135.4901 } }
             ],
             streetGuide: [
                 "⚠️ 這是梅田最難找的路段！",
@@ -905,7 +905,7 @@ const UmedaGuide = () => {
             icon: "🥞",
             mainDesc: "米其林必比登推薦！位於藍天大廈 B1「瀧見小路」懷舊美食街，重現昭和時代的復古氛圍。老闆非常熱情，必點「摩登燒 Modan-yaki」，用完美的大阪燒畫下今天的句點。",
             locations: [
-                { label: "大阪燒木地", name: "きじ 梅田スカイビル店", mapQuery: "きじ 梅田スカイビル" }
+                { label: "大阪燒木地", name: "きじ 梅田スカイビル店", mapQuery: "きじ 梅田スカイビル", coords: { lat: 34.7052, lng: 135.4901 } }
             ],
             streetGuide: [
                 "看完夜景直接搭電梯到 B1",
@@ -913,7 +913,7 @@ const UmedaGuide = () => {
                 "這條復古美食街很有昭和風情，慢慢逛"
             ],
             tips: "如果排隊超過 1 小時，備案可搭計程車回東邊的「龜壽司」(曾根崎)",
-            backup: { name: "龜壽司 總本店", mapQuery: "龜壽司總本店 曽根崎" },
+            backup: { name: "龜壽司 總本店", mapQuery: "龜壽司總本店 曽根崎", coords: { lat: 34.7033, lng: 135.5005 } },
             color: "purple"
         }
     ];
@@ -1051,20 +1051,23 @@ const UmedaGuide = () => {
                                             step.color === 'indigo' ? 'bg-indigo-50 hover:bg-indigo-100' : 'bg-purple-50 hover:bg-purple-100'
                                         }`}
                                     >
-                                        <div className="flex items-center gap-2">
-                                            <MapPin size={14} className={
+                                        <div className="flex items-center gap-2 flex-1 min-w-0">
+                                            <MapPin size={14} className={`shrink-0 ${
                                                 step.color === 'pink' ? 'text-pink-500' :
                                                 step.color === 'yellow' ? 'text-yellow-500' :
                                                 step.color === 'orange' ? 'text-orange-500' :
                                                 step.color === 'blue' ? 'text-blue-500' :
                                                 step.color === 'indigo' ? 'text-indigo-500' : 'text-purple-500'
-                                            } />
-                                            <div className="text-left">
+                                            }`} />
+                                            <div className="text-left min-w-0">
                                                 <div className="text-[10px] text-gray-400">{loc.label}</div>
-                                                <div className="font-medium text-xs text-gray-700">{loc.name}</div>
+                                                <div className="font-medium text-xs text-gray-700 truncate">{loc.name}</div>
                                             </div>
                                         </div>
-                                        <ExternalLink size={14} className="text-gray-400" />
+                                        <div className="flex items-center gap-2 shrink-0">
+                                            {loc.coords && <DistanceBadge coords={loc.coords} />}
+                                            <ExternalLink size={14} className="text-gray-400" />
+                                        </div>
                                     </button>
                                 ))}
                             </div>
@@ -1111,14 +1114,17 @@ const UmedaGuide = () => {
                                     onClick={() => openGoogleMaps(step.backup.mapQuery)}
                                     className="w-full flex items-center justify-between p-3 bg-gray-100 hover:bg-gray-200 rounded-xl transition-all"
                                 >
-                                    <div className="flex items-center gap-2">
+                                    <div className="flex items-center gap-2 flex-1 min-w-0">
                                         <span className="text-sm">🔄</span>
-                                        <div className="text-left">
+                                        <div className="text-left min-w-0">
                                             <div className="text-[10px] text-gray-400">備案餐廳</div>
-                                            <div className="font-medium text-xs text-gray-700">{step.backup.name}</div>
+                                            <div className="font-medium text-xs text-gray-700 truncate">{step.backup.name}</div>
                                         </div>
                                     </div>
-                                    <ExternalLink size={14} className="text-gray-400" />
+                                    <div className="flex items-center gap-2 shrink-0">
+                                        {step.backup.coords && <DistanceBadge coords={step.backup.coords} />}
+                                        <ExternalLink size={14} className="text-gray-400" />
+                                    </div>
                                 </button>
                             )}
                         </div>
